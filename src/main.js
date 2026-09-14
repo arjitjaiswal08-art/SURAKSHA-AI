@@ -329,8 +329,8 @@ function init() {
     riskLevel: 'LOW',
     biggestThreat: 'System Diagnostics OK',
     immediateAction: 'Autonomous Safety Shield Active',
-    location: 'Kalamboli, Navi Mumbai',
-    gpsCoords: '18.9902° N, 73.1277° E',
+    location: 'Assi Ghat, Varanasi (Purvanchal, UP)',
+    gpsCoords: '25.2905° N, 82.9965° E',
     latG: 0.04,
     lonG: 0.02,
     driverState: 'Alert & Focused',
@@ -1225,7 +1225,7 @@ function setupEventListeners() {
       if (targetTab === 'gmap') {
         if (!fullGpsMap && document.getElementById('gps-full-map')) {
           fullGpsMap = new GpsMapComponent('gps-full-map');
-          fullGpsMap.loadCorridor(gpsMap ? gpsMap.currentCorridor : 'chennai_omr');
+          fullGpsMap.loadCorridor(gpsMap ? gpsMap.currentCorridor : 'purvanchal_up');
         }
         setTimeout(() => {
           if (fullGpsMap) fullGpsMap.map.invalidateSize();
@@ -1403,22 +1403,34 @@ function handleVoiceCommand(cmd) {
   } 
   // 2. Navigation Commands
   else if (lower.includes('navigate') || lower.includes('directions') || lower.includes('drive to') || lower.includes('route to')) {
-    let destName = 'TIDEL Park';
-    let lat = 12.9892;
-    let lng = 80.2475;
+    let destName = 'Shri Kashi Vishwanath Dham';
+    let lat = 25.3109;
+    let lng = 83.0107;
 
-    if (lower.includes('ascendas') || lower.includes('pinnacle')) {
-      destName = 'Ascendas IT Park';
-      lat = 12.9750;
-      lng = 80.2485;
-    } else if (lower.includes('iit') || lower.includes('madras')) {
-      destName = 'IIT Madras Campus';
-      lat = 12.98289;
-      lng = 80.23586;
-    } else if (lower.includes('velachery') || lower.includes('phoenix')) {
-      destName = 'Velachery Phoenix Marketcity';
-      lat = 12.9925;
-      lng = 80.2170;
+    if (lower.includes('assi') || lower.includes('ghat')) {
+      destName = 'Assi Ghat, Varanasi';
+      lat = 25.2905;
+      lng = 82.9965;
+    } else if (lower.includes('gorakhpur') || lower.includes('gorakhnath')) {
+      destName = 'Gorakhnath Temple, Gorakhpur';
+      lat = 26.7720;
+      lng = 83.3550;
+    } else if (lower.includes('ramgarh') || lower.includes('taal')) {
+      destName = 'Ramgarh Taal Marine Drive, Gorakhpur';
+      lat = 26.7420;
+      lng = 83.3980;
+    } else if (lower.includes('ayodhya') || lower.includes('ram mandir')) {
+      destName = 'Shri Ram Janmabhoomi Mandir, Ayodhya';
+      lat = 26.7950;
+      lng = 82.1940;
+    } else if (lower.includes('prayagraj') || lower.includes('sangam')) {
+      destName = 'Triveni Sangam, Prayagraj';
+      lat = 25.4299;
+      lng = 81.8824;
+    } else if (lower.includes('purvanchal') || lower.includes('expressway') || lower.includes('azamgarh')) {
+      destName = 'Purvanchal Expressway (Azamgarh Toll)';
+      lat = 26.0235;
+      lng = 83.1782;
     } else if (lower.includes('mumbai') || lower.includes('marine')) {
       destName = 'Marine Drive, Mumbai';
       lat = 18.9438;

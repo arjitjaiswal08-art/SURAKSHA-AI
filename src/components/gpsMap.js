@@ -26,7 +26,7 @@ export class GpsMapComponent {
     this.userReportedMarkers = [];
     this.traveledPath = [];
     this.routeIndex = 0;
-    this.currentCorridor = 'chennai_omr'; // Default to user's screenshot location
+    this.currentCorridor = 'purvanchal_up'; // Default to Purvanchal, Uttar Pradesh
     this.currentLayerType = 'satellite'; // Google Satellite Hybrid
     this.tileLayers = {};
     this.isFollowCar = true;
@@ -49,15 +49,58 @@ export class GpsMapComponent {
       altitude: null,
       speed: null,
       heading: null,
-      locationName: 'Simulated Highway Corridor',
-      city: 'India',
-      state: '',
+      locationName: 'Assi Ghat, Varanasi (Purvanchal, UP)',
+      city: 'Varanasi',
+      state: 'Uttar Pradesh',
       isLive: false,
     };
     this.onLocationUpdateCallback = null;
 
     // Defined realistic Indian driving corridors with waypoints and turn-by-turn maneuvers
     this.corridors = {
+      purvanchal_up: {
+        name: 'Purvanchal Expressway & Varanasi Kashi Corridor (Uttar Pradesh)',
+        type: 'Expressway & Cultural Highway (Purvanchal, UP)',
+        defaultSpeedLimit: 100,
+        totalKm: 135.0,
+        waypoints: [
+          [25.2905, 82.9965], // Assi Ghat / BHU Lanka, Varanasi
+          [25.3109, 83.0107], // Kashi Vishwanath Dham / Godowlia Junction
+          [25.3450, 82.9850], // Varanasi Cantt / Shivpur Ring Road
+          [25.4526, 82.8596], // Lal Bahadur Shastri International Airport (Babatpur VNS)
+          [25.6850, 82.7200], // Jaunpur Gomti River Corridor
+          [26.0235, 83.1782], // Purvanchal Expressway Azamgarh Interchange
+          [26.7606, 83.3732], // Gorakhpur (Ramgarh Taal & Gorakhnath)
+        ],
+        maneuvers: [
+          { atPct: 0.15, icon: '⬆️', text: 'Continue along Assi Ghat Rd past BHU Gate towards Kashi Vishwanath Corridor', distance: '1.2 km' },
+          { atPct: 0.35, icon: '↗️', text: 'Take Varanasi Ring Road Phase-2 towards Babatpur International Airport', distance: '800 m' },
+          { atPct: 0.60, icon: '🛣️', text: 'Merge onto Purvanchal Expressway (6-Lane Access-Controlled Highway)', distance: '2.4 km' },
+          { atPct: 0.85, icon: '🛑', text: 'Approaching Azamgarh Toll Plaza: Speed Limit 100 km/h (FASTag Lanes 1-8)', distance: '1.0 km' },
+        ],
+        hazards: [
+          { lat: 25.3109, lng: 83.0107, type: 'traffic', title: 'Godowlia-Dashashwamedh Pilgrim Congestion Zone' },
+          { lat: 25.4526, lng: 82.8596, type: 'camera', title: 'NH31 Overhead AI Speed Radar (80 km/h Limit)' },
+          { lat: 25.6850, lng: 82.7200, type: 'cattle', title: 'Rural Purvanchal Stray Cattle Crossing Zone' },
+          { lat: 26.0235, lng: 83.1782, type: 'camera', title: 'Purvanchal Expressway Gantry Automated Speed Sensor (100 km/h)' },
+        ],
+        pois: [
+          { name: 'Kashi Vishwanath Dham & Temple', cat: 'things_to_do', lat: 25.3109, lng: 83.0107, rating: 4.9, icon: '🛕', desc: 'Sacred Shri Kashi Vishwanath Corridor, Varanasi' },
+          { name: 'Assi Ghat Ganga Aarti', cat: 'things_to_do', lat: 25.2905, lng: 82.9965, rating: 4.9, icon: '🌅', desc: 'Subah-e-Banaras Cultural Riverfront, Varanasi' },
+          { name: 'Baati Chokha Restaurant | Anand Mandir', cat: 'restaurants', lat: 25.3210, lng: 82.9850, rating: 4.8, icon: '🍽️', desc: 'Traditional Purvanchal Baati Chokha & Banarasi Thali' },
+          { name: 'Pahalwan Lassi | Lanka BHU', cat: 'restaurants', lat: 25.2750, lng: 82.9930, rating: 4.9, icon: '🥛', desc: 'Famous Malai Rabdi Banarasi Lassi' },
+          { name: 'Kashi Chat Bhandar | Godowlia', cat: 'restaurants', lat: 25.3090, lng: 83.0070, rating: 4.7, icon: '🍲', desc: 'Legendary Tamatar Chaat & Golgappe' },
+          { name: 'BrijRama Palace Heritage Hotel', cat: 'hotels', lat: 25.3060, lng: 83.0120, rating: 4.9, icon: '🏨', desc: 'Historic 5-Star Heritage Palace on Ganga River' },
+          { name: 'Taj Ganges Varanasi', cat: 'hotels', lat: 25.3340, lng: 82.9820, rating: 4.8, icon: '🏨', desc: '5-Star Luxury Resort, Nadesar Varanasi' },
+          { name: 'Varanasi Cantt Railway Junction (BSB)', cat: 'transit', lat: 25.3270, lng: 82.9850, rating: 4.5, icon: '🚊', desc: 'Major Northern Railway Terminus, Varanasi' },
+          { name: 'Lal Bahadur Shastri Airport Babatpur', cat: 'transit', lat: 25.4526, lng: 82.8596, rating: 4.6, icon: '✈️', desc: 'Varanasi International Airport Terminal' },
+          { name: 'BHU Trauma Centre & Hospital', cat: 'pharmacy', lat: 25.2720, lng: 82.9890, rating: 4.8, icon: '💊', desc: '24/7 Super-Specialty Medical Emergency Hospital' },
+          { name: 'Indian Oil & EV Fast Charging | Purvanchal Expway', cat: 'fuel', lat: 26.0230, lng: 83.1780, rating: 4.7, icon: '⛽', desc: '24/7 Fuel & DC Fast Electric Vehicle Charging' },
+          { name: 'Purvanchal AI Speed Radar Gantry', cat: 'speed_traps', lat: 26.0240, lng: 83.1790, rating: 5.0, icon: '📸', desc: 'Automated 100 km/h Highway Speed Limit Camera' },
+          { name: 'Gorakhnath Temple & Math, Gorakhpur', cat: 'things_to_do', lat: 26.7720, lng: 83.3550, rating: 4.9, icon: '🛕', desc: 'Historic Nath Monastic Center, Gorakhpur' },
+          { name: 'Ramgarh Taal Marine Drive, Gorakhpur', cat: 'things_to_do', lat: 26.7420, lng: 83.3980, rating: 4.7, icon: '⛵', desc: 'Scenic Lakefront Promenade, Gorakhpur' },
+        ],
+      },
       chennai_omr: {
         name: 'Chennai OMR & IIT Madras (Velachery - Taramani)',
         type: 'State IT Highway & Tech Corridor (OMR)',
@@ -524,16 +567,16 @@ export class GpsMapComponent {
       }
     }
 
-    // 2. Known Landmarks
+    // 2. Known Landmarks (Purvanchal, Uttar Pradesh & Major Indian Corridors)
     const landmarks = [
-      { name: 'TIDEL Park, OMR Chennai', desc: 'Major Tech IT Park Junction', icon: '🏢', lat: 12.9892, lng: 80.2475 },
-      { name: 'Ascendas IT Park (Pinnacle)', desc: 'Taramani Tech Corridor', icon: '🏢', lat: 12.9750, lng: 80.2485 },
-      { name: 'IIT Madras Campus', desc: 'Premier Institute, Guindy/Velachery', icon: '🎓', lat: 12.98289, lng: 80.23586 },
-      { name: 'Velachery Phoenix Marketcity', desc: 'Shopping Mall & Entertainment Hub', icon: '🛍️', lat: 12.9925, lng: 80.2170 },
-      { name: 'CSIR Road & Taramani MRTS', desc: 'Suburban Transit & Expressway', icon: '🚊', lat: 12.9845, lng: 80.2405 },
-      { name: 'OMR Overhead Speed Radar Gantry', desc: 'AI Radar Speed Limit 60 km/h', icon: '📸', lat: 12.9885, lng: 80.2460 },
-      { name: 'Marine Drive, Mumbai', desc: 'Coastal Road Promenade', icon: '🌊', lat: 18.9438, lng: 72.8232 },
-      { name: 'Outer Ring Road, Bengaluru', desc: 'Marathahalli-Bellandur Corridor', icon: '🛣️', lat: 12.9352, lng: 77.6245 },
+      { name: 'Kashi Vishwanath Dham, Varanasi', desc: 'Sacred Jyotirlinga & Cultural Corridor, UP', icon: '🛕', lat: 25.3109, lng: 83.0107 },
+      { name: 'Assi Ghat & Subah-e-Banaras, Varanasi', desc: 'Sacred Ganga Riverfront & Aarti, UP', icon: '🌅', lat: 25.2905, lng: 82.9965 },
+      { name: 'Gorakhnath Temple & Math, Gorakhpur', desc: 'Historic Nath Monastic Center, Purvanchal', icon: '🛕', lat: 26.7720, lng: 83.3550 },
+      { name: 'Ramgarh Taal Marine Drive, Gorakhpur', desc: 'Scenic Waterfront Tourism Promenade, UP', icon: '⛵', lat: 26.7420, lng: 83.3980 },
+      { name: 'Shri Ram Janmabhoomi Mandir, Ayodhya', desc: 'Grand Ram Mandir Complex, UP', icon: '🛕', lat: 26.7950, lng: 82.1940 },
+      { name: 'Triveni Sangam, Prayagraj', desc: 'Holy Confluence of Ganga, Yamuna & Saraswati', icon: '🕉️', lat: 25.4299, lng: 81.8824 },
+      { name: 'Purvanchal Expressway 100 km/h Gantry', desc: '6-Lane Access-Controlled Highway, UP', icon: '🛣️', lat: 26.0235, lng: 83.1782 },
+      { name: 'BHU Campus & Trauma Centre, Varanasi', desc: 'Premier Banaras Hindu University, UP', icon: '🎓', lat: 25.2677, lng: 82.9913 },
     ];
 
     for (const lm of landmarks) {
@@ -552,26 +595,32 @@ export class GpsMapComponent {
     const q = query.trim().toLowerCase();
 
     const knownLocations = {
+      'kashi vishwanath': { name: 'Shri Kashi Vishwanath Dham, Varanasi, Uttar Pradesh', lat: 25.3109, lng: 83.0107, zoom: 16 },
+      'kashi': { name: 'Shri Kashi Vishwanath Dham, Varanasi, Uttar Pradesh', lat: 25.3109, lng: 83.0107, zoom: 16 },
+      'assi ghat': { name: 'Assi Ghat, Varanasi, Uttar Pradesh', lat: 25.2905, lng: 82.9965, zoom: 16 },
+      'assi': { name: 'Assi Ghat, Varanasi, Uttar Pradesh', lat: 25.2905, lng: 82.9965, zoom: 16 },
+      'varanasi': { name: 'Varanasi (Kashi / Banaras), Purvanchal, Uttar Pradesh', lat: 25.3176, lng: 82.9739, zoom: 15 },
+      'banaras': { name: 'Varanasi (Kashi / Banaras), Purvanchal, Uttar Pradesh', lat: 25.3176, lng: 82.9739, zoom: 15 },
+      'gorakhpur': { name: 'Gorakhpur (Gorakhnath Temple & Ramgarh Taal), Purvanchal, UP', lat: 26.7606, lng: 83.3732, zoom: 15 },
+      'ramgarh taal': { name: 'Ramgarh Taal Lake Promenade, Gorakhpur, Uttar Pradesh', lat: 26.7420, lng: 83.3980, zoom: 16 },
+      'gorakhnath': { name: 'Gorakhnath Temple & Math, Gorakhpur, Uttar Pradesh', lat: 26.7720, lng: 83.3550, zoom: 16 },
+      'ayodhya': { name: 'Shri Ram Janmabhoomi Mandir & Saryu Ghat, Ayodhya, UP', lat: 26.7922, lng: 82.1998, zoom: 15 },
+      'ram mandir': { name: 'Shri Ram Janmabhoomi Mandir, Ayodhya, Uttar Pradesh', lat: 26.7950, lng: 82.1940, zoom: 16 },
+      'prayagraj': { name: 'Triveni Sangam, Prayagraj, Purvanchal, Uttar Pradesh', lat: 25.4299, lng: 81.8824, zoom: 15 },
+      'sangam': { name: 'Triveni Sangam, Prayagraj, Uttar Pradesh', lat: 25.4299, lng: 81.8824, zoom: 16 },
+      'purvanchal expressway': { name: 'Purvanchal Expressway (Azamgarh - Ghazipur), Uttar Pradesh', lat: 26.0235, lng: 83.1782, zoom: 14 },
+      'purvanchal': { name: 'Purvanchal Expressway (Azamgarh - Ghazipur), Uttar Pradesh', lat: 26.0235, lng: 83.1782, zoom: 14 },
+      'azamgarh': { name: 'Azamgarh, Purvanchal, Uttar Pradesh', lat: 26.0687, lng: 83.1840, zoom: 15 },
+      'jaunpur': { name: 'Jaunpur Shahi Bridge, Purvanchal, Uttar Pradesh', lat: 25.7464, lng: 82.6837, zoom: 15 },
+      'ghazipur': { name: 'Ghazipur, Purvanchal, Uttar Pradesh', lat: 25.5840, lng: 83.5770, zoom: 15 },
+      'mirzapur': { name: 'Mirzapur Vindhyachal Dham, Purvanchal, Uttar Pradesh', lat: 25.1337, lng: 82.5644, zoom: 15 },
+      'bhu': { name: 'Banaras Hindu University (BHU), Varanasi, Uttar Pradesh', lat: 25.2677, lng: 82.9913, zoom: 16 },
+      'sarnath': { name: 'Dhamek Stupa, Sarnath, Varanasi, Uttar Pradesh', lat: 25.3811, lng: 83.0214, zoom: 16 },
+      'babatpur': { name: 'Lal Bahadur Shastri International Airport (Babatpur VNS)', lat: 25.4526, lng: 82.8596, zoom: 16 },
       'tidel park': { name: 'TIDEL Park, Rajiv Gandhi IT Expressway (OMR), Chennai', lat: 12.9892, lng: 80.2475, zoom: 16 },
-      'tidel': { name: 'TIDEL Park, Rajiv Gandhi IT Expressway (OMR), Chennai', lat: 12.9892, lng: 80.2475, zoom: 16 },
-      'ascendas': { name: 'Ascendas IT Park (Pinnacle), Taramani, Chennai', lat: 12.9750, lng: 80.2485, zoom: 16 },
-      'iit madras': { name: 'IIT Madras Campus, Chennai', lat: 12.98289, lng: 80.23586, zoom: 16 },
-      'iit': { name: 'IIT Madras Campus, Chennai', lat: 12.98289, lng: 80.23586, zoom: 16 },
-      'velachery': { name: 'Velachery, Chennai', lat: 12.9818, lng: 80.2210, zoom: 15 },
-      'taramani': { name: 'Taramani CSIR Rd, Chennai', lat: 12.9845, lng: 80.2405, zoom: 16 },
-      'omr': { name: 'Rajiv Gandhi Salai (OMR), Chennai', lat: 12.9750, lng: 80.2485, zoom: 15 },
-      'phoenix': { name: 'Phoenix Marketcity, Velachery, Chennai', lat: 12.9925, lng: 80.2170, zoom: 16 },
-      'kallu kuttai': { name: 'Kallu Kuttai Lake, Velachery, Chennai', lat: 12.9815, lng: 80.2370, zoom: 16 },
-      'guindy': { name: 'Guindy Kathipara Flyover, Chennai', lat: 13.0067, lng: 80.2025, zoom: 15 },
-      'adyar': { name: 'Adyar Circle, Chennai', lat: 13.0012, lng: 80.2565, zoom: 15 },
-      'airport': { name: 'Chennai International Airport (MAA)', lat: 12.9941, lng: 80.1709, zoom: 15 },
       'mumbai': { name: 'Marine Drive, Mumbai', lat: 18.9438, lng: 72.8232, zoom: 14 },
-      'pune': { name: 'Hinjewadi Tech Park, Pune', lat: 18.5913, lng: 73.7389, zoom: 14 },
       'delhi': { name: 'Connaught Place, New Delhi', lat: 28.6315, lng: 77.2167, zoom: 14 },
       'bangalore': { name: 'Outer Ring Road, Bengaluru', lat: 12.9352, lng: 77.6245, zoom: 14 },
-      'bengaluru': { name: 'Outer Ring Road, Bengaluru', lat: 12.9352, lng: 77.6245, zoom: 14 },
-      'shimla': { name: 'Mall Road, Shimla', lat: 31.1048, lng: 77.1734, zoom: 14 },
-      'varanasi': { name: 'Assi Ghat, Varanasi', lat: 25.2905, lng: 82.9965, zoom: 14 },
     };
 
     let matched = null;
@@ -591,8 +640,8 @@ export class GpsMapComponent {
     } else {
       try {
         let searchParam = query;
-        if (this.currentCorridor === 'chennai_omr' && !q.includes('chennai') && !q.includes('mumbai') && !q.includes('delhi') && !q.includes('pune')) {
-          searchParam = `${query}, Chennai`;
+        if (!q.includes('uttar pradesh') && !q.includes('up') && !q.includes('india') && !q.includes('mumbai') && !q.includes('delhi')) {
+          searchParam = `${query}, Uttar Pradesh, India`;
         }
         const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchParam)}&countrycodes=in&limit=1`);
         if (resp.ok) {
@@ -600,7 +649,7 @@ export class GpsMapComponent {
           if (data && data.length > 0) {
             lat = parseFloat(data[0].lat);
             lng = parseFloat(data[0].lon);
-            name = data[0].display_name.split(',')[0] + ', India';
+            name = data[0].display_name.split(',')[0] + ', Uttar Pradesh';
             zoom = 15;
           }
         }
@@ -610,7 +659,7 @@ export class GpsMapComponent {
     }
 
     if (!lat || !lng) {
-      alert(`Location "${query}" not found. Try "TIDEL Park", "IIT Madras", "Velachery", "OMR", "Mumbai", or "Delhi".`);
+      alert(`Location "${query}" not found. Try "Kashi Vishwanath", "Assi Ghat", "Gorakhpur", "Purvanchal Expressway", "Ayodhya", or "Prayagraj".`);
       return null;
     }
 
