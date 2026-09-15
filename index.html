@@ -15,6 +15,16 @@
     <link rel="stylesheet" href="./src/styles/main.css" />
   </head>
   <body>
+    <!-- Cockpit Dynamic High-Definition Wallpaper & Atmosphere Layer -->
+    <div id="cockpit-wallpaper-layer" class="cockpit-wallpaper-layer" data-wallpaper="purvanchal_sunset" data-intensity="balanced">
+      <div class="wallpaper-image-container">
+        <div id="wallpaper-bg-current" class="wallpaper-img active" style="background-image: url('/wallpapers/purvanchal_sunset.jpg');"></div>
+        <div id="wallpaper-bg-next" class="wallpaper-img"></div>
+      </div>
+      <div class="wallpaper-ambient-fx"></div>
+      <div class="wallpaper-overlay"></div>
+    </div>
+
     <!-- App Header -->
     <header class="app-header">
       <div class="brand-wrapper">
@@ -61,6 +71,11 @@
         <button id="btn-header-about" class="btn-icon" title="About SURAKSHA-AI & How to Use (Made by Arjit Jaiswal)">
           <span class="icon">ℹ️</span>
           <span class="btn-text">About</span>
+        </button>
+
+        <button id="btn-header-wallpaper" class="btn-icon" title="Customize Cockpit Atmosphere & High-Definition Wallpapers">
+          <span class="icon">🎨</span>
+          <span class="btn-text">Atmosphere</span>
         </button>
       </div>
     </header>
@@ -1156,6 +1171,137 @@
           <button id="btn-close-sos" class="btn-icon">Close Simulation</button>
         </div>
       </div>
+    </div>
+
+    <!-- Cockpit Atmosphere & Wallpaper Gallery Modal -->
+    <div id="wallpaper-modal" class="wallpaper-modal-overlay" style="display:none;">
+      <div class="wallpaper-modal-card">
+        <div class="wallpaper-modal-header">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">🎨</span>
+            <div>
+              <h2 style="font-size:18px; font-weight:700; color:#fff; font-family:var(--font-display); margin-bottom:2px;">
+                Cockpit Atmosphere & HD Wallpapers
+              </h2>
+              <p style="font-size:12px; color:var(--text-secondary);">
+                Select an ultra-attractive, cinematic background to personalize your ADAS driving cockpit.
+              </p>
+            </div>
+          </div>
+          <button id="btn-close-wallpaper" class="btn-icon" style="padding:6px 14px; font-size:13px; font-weight:700;">✕ Close</button>
+        </div>
+
+        <div class="wallpaper-modal-body">
+          <div class="wallpaper-grid" id="wallpaper-grid-container">
+            <!-- Wallpaper 1: Purvanchal Sunset -->
+            <div class="wallpaper-card active" data-wallpaper="purvanchal_sunset">
+              <div class="wallpaper-thumb-wrapper">
+                <img src="/wallpapers/purvanchal_sunset.jpg" alt="Purvanchal Sunset Expressway" class="wallpaper-thumb" loading="lazy" />
+                <span class="wallpaper-tag-badge">🌅 Golden Hour Expressway</span>
+                <span class="wallpaper-active-badge">ACTIVE</span>
+              </div>
+              <div class="wallpaper-card-content">
+                <div class="wallpaper-card-title">Purvanchal Sunset Expressway</div>
+                <div class="wallpaper-card-desc">Warm twilight over Uttar Pradesh 8-lane expressway with dramatic orange & violet horizon clouds.</div>
+                <div class="wallpaper-apply-btn">Selected</div>
+              </div>
+            </div>
+
+            <!-- Wallpaper 2: Cyberpunk Midnight -->
+            <div class="wallpaper-card" data-wallpaper="cyber_night">
+              <div class="wallpaper-thumb-wrapper">
+                <img src="/wallpapers/cyber_night.jpg" alt="Cyberpunk Midnight" class="wallpaper-thumb" loading="lazy" />
+                <span class="wallpaper-tag-badge">⚡ Neon Cyberpunk</span>
+                <span class="wallpaper-active-badge">ACTIVE</span>
+              </div>
+              <div class="wallpaper-card-content">
+                <div class="wallpaper-card-title">Cyberpunk Midnight</div>
+                <div class="wallpaper-card-desc">Wet midnight asphalt reflecting vivid cyan & blue lights with towering sci-fi skyline and speed light trails.</div>
+                <div class="wallpaper-apply-btn">Apply Atmosphere</div>
+              </div>
+            </div>
+
+            <!-- Wallpaper 3: Monsoon Highway Neon -->
+            <div class="wallpaper-card" data-wallpaper="monsoon_neon">
+              <div class="wallpaper-thumb-wrapper">
+                <img src="/wallpapers/monsoon_neon.jpg" alt="Monsoon Highway Neon" class="wallpaper-thumb" loading="lazy" />
+                <span class="wallpaper-tag-badge">🌧️ Monsoon Night Drive</span>
+                <span class="wallpaper-active-badge">ACTIVE</span>
+              </div>
+              <div class="wallpaper-card-content">
+                <div class="wallpaper-card-title">Monsoon Highway Neon</div>
+                <div class="wallpaper-card-desc">Authentic Indian highway rain ambiance with gleaming wet road reflections, windshield rain beads, and truck halos.</div>
+                <div class="wallpaper-apply-btn">Apply Atmosphere</div>
+              </div>
+            </div>
+
+            <!-- Wallpaper 4: Stealth Cockpit HUD -->
+            <div class="wallpaper-card" data-wallpaper="stealth_cockpit">
+              <div class="wallpaper-thumb-wrapper">
+                <img src="/wallpapers/stealth_cockpit.jpg" alt="Stealth Cockpit HUD" class="wallpaper-thumb" loading="lazy" />
+                <span class="wallpaper-tag-badge">🏎️ Aerospace ADAS</span>
+                <span class="wallpaper-active-badge">ACTIVE</span>
+              </div>
+              <div class="wallpaper-card-content">
+                <div class="wallpaper-card-title">Stealth Cockpit HUD</div>
+                <div class="wallpaper-card-desc">Matte carbon fiber hypercar cockpit perspective with glowing cyan holographic telemetry guidance lines.</div>
+                <div class="wallpaper-apply-btn">Apply Atmosphere</div>
+              </div>
+            </div>
+
+            <!-- Wallpaper 5: Satellite Orbit Night -->
+            <div class="wallpaper-card" data-wallpaper="satellite_orbit">
+              <div class="wallpaper-thumb-wrapper">
+                <img src="/wallpapers/satellite_orbit.jpg" alt="Satellite Orbit Night" class="wallpaper-thumb" loading="lazy" />
+                <span class="wallpaper-tag-badge">🛰️ ISRO / NASA Space</span>
+                <span class="wallpaper-active-badge">ACTIVE</span>
+              </div>
+              <div class="wallpaper-card-content">
+                <div class="wallpaper-card-title">Satellite Orbit Night (India)</div>
+                <div class="wallpaper-card-desc">Space station low orbit perspective of the Indian subcontinent glowing with highway networks & cities.</div>
+                <div class="wallpaper-apply-btn">Apply Atmosphere</div>
+              </div>
+            </div>
+
+            <!-- Wallpaper 6: Deep Space Cyber Grid -->
+            <div class="wallpaper-card" data-wallpaper="cyber_grid">
+              <div class="wallpaper-thumb-wrapper" style="background: radial-gradient(circle, #0e1e38 0%, #060913 100%); display:flex; align-items:center; justify-content:center;">
+                <div style="font-size:36px;">🌌 📐</div>
+                <span class="wallpaper-tag-badge">🌌 Minimalist Grid</span>
+                <span class="wallpaper-active-badge">ACTIVE</span>
+              </div>
+              <div class="wallpaper-card-content">
+                <div class="wallpaper-card-title">Deep Space Cyber Grid</div>
+                <div class="wallpaper-card-desc">Deep cosmic dark slate with dynamic geometric HUD grid lines and subtle glowing horizon aura for battery efficiency.</div>
+                <div class="wallpaper-apply-btn">Apply Atmosphere</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wallpaper-modal-footer">
+          <div class="intensity-picker">
+            <span style="font-size:12px; color:var(--text-secondary); font-weight:600;">Overlay Visibility:</span>
+            <div class="intensity-btn-group">
+              <button class="btn-intensity" data-intensity="subtle">Subtle (Focus)</button>
+              <button class="btn-intensity active" data-intensity="balanced">Balanced</button>
+              <button class="btn-intensity" data-intensity="vivid">Vivid</button>
+            </div>
+          </div>
+          <div class="auto-cycle-group">
+            <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; color:#f8fafc; cursor:pointer;">
+              <input type="checkbox" id="chk-auto-cycle-wallpaper" style="accent-color:var(--accent-cyan); width:15px; height:15px; cursor:pointer;">
+              <span>Auto-Cycle Atmosphere (Every 4 mins)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Atmosphere Quick-Switch Chip -->
+    <div id="floating-atmosphere-chip" class="floating-atmosphere-chip" title="Click to Change Cockpit Atmosphere & Wallpaper">
+      <span>🎨</span>
+      <span id="floating-atmosphere-name">Purvanchal Sunset</span>
     </div>
 
     <!-- Entry Script -->

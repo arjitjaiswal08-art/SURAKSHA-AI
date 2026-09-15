@@ -321,6 +321,7 @@ function init() {
   dmsTracker.resize();
 
   setupEventListeners();
+  setupWallpaperManager();
 
   // Initial blackbox seed
   blackbox.logEvent({
@@ -1401,11 +1402,204 @@ function applyScenario(scenarioKey) {
   document.getElementById('chip-sudden-brake')?.classList.toggle('active', state.suddenBraking);
 }
 
+// ==========================================================================
+// Cockpit Atmosphere & Wallpaper System Manager
+// ==========================================================================
+const WALLPAPERS = {
+  purvanchal_sunset: {
+    id: 'purvanchal_sunset',
+    name: 'Purvanchal Sunset',
+    title: 'Purvanchal Sunset Expressway',
+    url: '/wallpapers/purvanchal_sunset.jpg',
+  },
+  cyber_night: {
+    id: 'cyber_night',
+    name: 'Cyberpunk Midnight',
+    title: 'Cyberpunk Midnight',
+    url: '/wallpapers/cyber_night.jpg',
+  },
+  monsoon_neon: {
+    id: 'monsoon_neon',
+    name: 'Monsoon Highway Neon',
+    title: 'Monsoon Highway Neon',
+    url: '/wallpapers/monsoon_neon.jpg',
+  },
+  stealth_cockpit: {
+    id: 'stealth_cockpit',
+    name: 'Stealth Cockpit HUD',
+    title: 'Stealth Cockpit HUD',
+    url: '/wallpapers/stealth_cockpit.jpg',
+  },
+  satellite_orbit: {
+    id: 'satellite_orbit',
+    name: 'Satellite Orbit Night',
+    title: 'Satellite Orbit Night (India)',
+    url: '/wallpapers/satellite_orbit.jpg',
+  },
+  cyber_grid: {
+    id: 'cyber_grid',
+    name: 'Deep Space Cyber Grid',
+    title: 'Deep Space Cyber Grid',
+    url: '',
+  }
+};
+
+let currentWallpaper = localStorage.getItem('suraksha_wallpaper') || 'purvanchal_sunset';
+let currentIntensity = localStorage.getItem('suraksha_intensity') || 'balanced';
+let autoCycleTimer = null;
+
+function setWallpaper(id, speak = false) {
+  if (!WALLPAPERS[id]) id = 'purvanchal_sunset';
+  currentWallpaper = id;
+  localStorage.setItem('suraksha_wallpaper', id);
+
+  const layer = document.getElementById('cockpit-wallpaper-layer');
+  const bgCurrent = document.getElementById('wallpaper-bg-current');
+  const floatingName = document.getElementById('floating-atmosphere-name');
+
+  if (layer) {
+    layer.setAttribute('data-wallpaper', id);
+  }
+
+  if (bgCurrent) {
+    if (WALLPAPERS[id].url) {
+      bgCurrent.style.backgroundImage = `url('${WALLPAPERS[id].url}')`;
+      bgCurrent.classList.add('active');
+    } else {
+      bgCurrent.style.backgroundImage = 'none';
+      bgCurrent.classList.remove('active');
+    }
+  }
+
+  if (floatingName) {
+    floatingName.textContent = WALLPAPERS[id].name;
+  }
+
+  // Update active state in modal grid
+  document.querySelectorAll('.wallpaper-card').forEach(card => {
+    const isThis = card.getAttribute('data-wallpaper') === id;
+    card.classList.toggle('active', isThis);
+    const btn = card.querySelector('.wallpaper-apply-btn');
+    if (btn) btn.textContent = isThis ? 'Selected' : 'Apply Atmosphere';
+  });
+
+  if (speak && voiceAssistant && voiceEnabled) {
+    voiceAssistant.speakAlert(`Cockpit atmosphere set to ${WALLPAPERS[id].name}.`, 'LOW');
+  }
+}
+
+function setIntensity(intensity) {
+  currentIntensity = intensity;
+  localStorage.setItem('suraksha_intensity', intensity);
+  const layer = document.getElementById('cockpit-wallpaper-layer');
+  if (layer) layer.setAttribute('data-intensity', intensity);
+
+  document.querySelectorAll('.btn-intensity').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-intensity') === intensity);
+  });
+}
+
+function startAutoCycle() {
+  stopAutoCycle();
+  const keys = Object.keys(WALLPAPERS);
+  autoCycleTimer = setInterval(() => {
+    const nextIdx = (keys.indexOf(currentWallpaper) + 1) % keys.length;
+    setWallpaper(keys[nextIdx], false);
+  }, 240000); // 4 minutes
+}
+
+function stopAutoCycle() {
+  if (autoCycleTimer) {
+    clearInterval(autoCycleTimer);
+    autoCycleTimer = null;
+  }
+}
+
+function setupWallpaperManager() {
+  // Restore initial settings
+  setWallpaper(currentWallpaper);
+  setIntensity(currentIntensity);
+
+  // Modal toggle
+  const modal = document.getElementById('wallpaper-modal');
+  const btnHeader = document.getElementById('btn-header-wallpaper');
+  const btnClose = document.getElementById('btn-close-wallpaper');
+  const chipFloating = document.getElementById('floating-atmosphere-chip');
+
+  function openModal() {
+    if (modal) modal.style.display = 'flex';
+  }
+  function closeModal() {
+    if (modal) modal.style.display = 'none';
+  }
+
+  if (btnHeader) btnHeader.addEventListener('click', openModal);
+  if (chipFloating) chipFloating.addEventListener('click', openModal);
+  if (btnClose) btnClose.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  // Card selections
+  document.querySelectorAll('.wallpaper-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.getAttribute('data-wallpaper');
+      setWallpaper(id, true);
+    });
+  });
+
+  // Intensity buttons
+  document.querySelectorAll('.btn-intensity').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = btn.getAttribute('data-intensity');
+      setIntensity(val);
+    });
+  });
+
+  // Auto-Cycle toggle
+  const chkAuto = document.getElementById('chk-auto-cycle-wallpaper');
+  if (chkAuto) {
+    chkAuto.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        startAutoCycle();
+      } else {
+        stopAutoCycle();
+      }
+    });
+  }
+}
+
 function handleVoiceCommand(cmd) {
   const lower = cmd.toLowerCase().trim();
 
+  // Atmosphere / Wallpaper Commands
+  if (lower.includes('wallpaper') || lower.includes('atmosphere') || lower.includes('theme') || lower.includes('background')) {
+    if (lower.includes('sunset') || lower.includes('purvanchal') || lower.includes('orange')) {
+      setWallpaper('purvanchal_sunset', true);
+    } else if (lower.includes('cyber') || lower.includes('neon') || lower.includes('city')) {
+      setWallpaper('cyber_night', true);
+    } else if (lower.includes('monsoon') || lower.includes('rain') || lower.includes('wet')) {
+      setWallpaper('monsoon_neon', true);
+    } else if (lower.includes('cockpit') || lower.includes('stealth') || lower.includes('hud') || lower.includes('car')) {
+      setWallpaper('stealth_cockpit', true);
+    } else if (lower.includes('satellite') || lower.includes('space') || lower.includes('orbit') || lower.includes('earth')) {
+      setWallpaper('satellite_orbit', true);
+    } else if (lower.includes('grid') || lower.includes('minimal')) {
+      setWallpaper('cyber_grid', true);
+    } else if (lower.includes('next')) {
+      const keys = Object.keys(WALLPAPERS);
+      const nextIdx = (keys.indexOf(currentWallpaper) + 1) % keys.length;
+      setWallpaper(keys[nextIdx], true);
+    } else {
+      const modal = document.getElementById('wallpaper-modal');
+      if (modal) modal.style.display = 'flex';
+      voiceAssistant.speakAlert('Opening cockpit atmosphere gallery. Choose between Purvanchal Sunset, Cyberpunk Midnight, Monsoon Neon, Stealth Cockpit, or Satellite Orbit.', 'LOW');
+    }
+  }
   // 1. Speed Query
-  if (lower.includes('speed') || lower.includes('fast')) {
+  else if (lower.includes('speed') || lower.includes('fast')) {
     const text = `Current vehicle speed is ${Math.round(state.speed)} kilometers per hour. Road speed limit is ${state.speedLimit} km/h.`;
     voiceAssistant.speakAlert(text, 'LOW');
   } 

@@ -3016,3 +3016,374 @@ select option {
   }
 }
 
+/* ==========================================================================
+   Cockpit Wallpaper & Atmosphere System
+   ========================================================================== */
+
+.cockpit-wallpaper-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.wallpaper-image-container {
+  position: absolute;
+  inset: -25px; /* Margin for subtle organic drift */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wallpaper-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.85s ease-in-out, transform 24s ease-in-out alternate infinite;
+  transform: scale(1.02);
+}
+
+.wallpaper-img.active {
+  opacity: 1;
+  animation: wallpaperSlowDrift 28s ease-in-out infinite alternate;
+}
+
+@keyframes wallpaperSlowDrift {
+  0% { transform: scale(1.02) translate(0, 0); }
+  50% { transform: scale(1.05) translate(-10px, -6px); }
+  100% { transform: scale(1.03) translate(8px, 6px); }
+}
+
+.wallpaper-ambient-fx {
+  position: absolute;
+  inset: 0;
+  transition: all 0.85s ease;
+  pointer-events: none;
+}
+
+.wallpaper-overlay {
+  position: absolute;
+  inset: 0;
+  transition: background 0.5s ease;
+}
+
+/* Intensity Overlays */
+.cockpit-wallpaper-layer[data-intensity="subtle"] .wallpaper-overlay {
+  background: radial-gradient(circle at 50% 25%, rgba(7, 10, 18, 0.72) 0%, rgba(5, 7, 14, 0.94) 85%),
+              linear-gradient(to bottom, rgba(7, 10, 18, 0.85), rgba(10, 15, 29, 0.96));
+}
+
+.cockpit-wallpaper-layer[data-intensity="balanced"] .wallpaper-overlay {
+  background: radial-gradient(circle at 50% 25%, rgba(7, 10, 18, 0.48) 0%, rgba(5, 7, 14, 0.86) 80%),
+              linear-gradient(to bottom, rgba(7, 10, 18, 0.65), rgba(10, 15, 29, 0.90));
+}
+
+.cockpit-wallpaper-layer[data-intensity="vivid"] .wallpaper-overlay {
+  background: radial-gradient(circle at 50% 25%, rgba(7, 10, 18, 0.28) 0%, rgba(5, 7, 14, 0.76) 80%),
+              linear-gradient(to bottom, rgba(7, 10, 18, 0.45), rgba(10, 15, 29, 0.80));
+}
+
+/* Atmosphere Dynamic Ambient Glows */
+.cockpit-wallpaper-layer[data-wallpaper="cyber_night"] .wallpaper-ambient-fx {
+  background: radial-gradient(circle at 15% 75%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
+              radial-gradient(circle at 85% 25%, rgba(217, 70, 239, 0.12) 0%, transparent 40%);
+}
+
+.cockpit-wallpaper-layer[data-wallpaper="purvanchal_sunset"] .wallpaper-ambient-fx {
+  background: radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.18) 0%, transparent 55%),
+              radial-gradient(circle at 85% 85%, rgba(239, 68, 68, 0.12) 0%, transparent 45%);
+}
+
+.cockpit-wallpaper-layer[data-wallpaper="monsoon_neon"] .wallpaper-ambient-fx {
+  background: radial-gradient(circle at 25% 70%, rgba(16, 185, 129, 0.14) 0%, transparent 50%),
+              radial-gradient(circle at 80% 30%, rgba(56, 189, 248, 0.14) 0%, transparent 50%);
+}
+
+.cockpit-wallpaper-layer[data-wallpaper="stealth_cockpit"] .wallpaper-ambient-fx {
+  background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.10) 0%, transparent 60%),
+              radial-gradient(circle at 15% 15%, rgba(244, 63, 94, 0.10) 0%, transparent 40%);
+}
+
+.cockpit-wallpaper-layer[data-wallpaper="satellite_orbit"] .wallpaper-ambient-fx {
+  background: radial-gradient(circle at 65% 25%, rgba(56, 189, 248, 0.18) 0%, transparent 55%),
+              radial-gradient(circle at 50% 85%, rgba(245, 158, 11, 0.12) 0%, transparent 50%);
+}
+
+.cockpit-wallpaper-layer[data-wallpaper="cyber_grid"] .wallpaper-ambient-fx {
+  background: 
+    linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Wallpaper Gallery Modal */
+.wallpaper-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(4, 7, 15, 0.82);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  padding: 16px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.wallpaper-modal-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(10, 15, 29, 0.98));
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 980px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.12);
+  overflow: hidden;
+}
+
+.wallpaper-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wallpaper-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.wallpaper-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.wallpaper-card {
+  background: rgba(18, 25, 43, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.wallpaper-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+}
+
+.wallpaper-card.active {
+  border: 2px solid var(--accent-cyan);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.wallpaper-thumb-wrapper {
+  position: relative;
+  width: 100%;
+  height: 155px;
+  overflow: hidden;
+  background: #090d1a;
+}
+
+.wallpaper-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.wallpaper-card:hover .wallpaper-thumb {
+  transform: scale(1.06);
+}
+
+.wallpaper-tag-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
+}
+
+.wallpaper-active-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent-cyan);
+  color: #040814;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 6px;
+  display: none;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.5);
+}
+
+.wallpaper-card.active .wallpaper-active-badge {
+  display: block;
+}
+
+.wallpaper-card-content {
+  padding: 14px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.wallpaper-card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.wallpaper-card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.wallpaper-apply-btn {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--accent-cyan);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 6px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.wallpaper-card:hover .wallpaper-apply-btn {
+  background: var(--accent-cyan);
+  color: #060b18;
+}
+
+.wallpaper-card.active .wallpaper-apply-btn {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--accent-emerald);
+  color: #34d399;
+}
+
+/* Modal Footer & Customizer */
+.wallpaper-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(15, 23, 42, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.intensity-picker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.intensity-btn-group {
+  display: flex;
+  gap: 4px;
+  background: rgba(30, 41, 59, 0.7);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-intensity {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-intensity:hover {
+  color: #fff;
+}
+
+.btn-intensity.active {
+  background: var(--accent-cyan);
+  color: #040814;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
+}
+
+.floating-atmosphere-chip {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #f8fafc;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.15);
+  transition: all 0.25s ease;
+}
+
+.floating-atmosphere-chip:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(30, 41, 59, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+}
+
+@media (max-width: 640px) {
+  .wallpaper-grid {
+    grid-template-columns: 1fr;
+  }
+  .wallpaper-modal-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .floating-atmosphere-chip {
+    bottom: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
