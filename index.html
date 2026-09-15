@@ -57,6 +57,11 @@
           <span class="icon">🌐</span>
           <span class="btn-text" id="lang-btn-text">Hinglish 🇮🇳</span>
         </button>
+
+        <button id="btn-header-about" class="btn-icon" title="About SURAKSHA-AI & How to Use (Made by Arjit Jaiswal)">
+          <span class="icon">ℹ️</span>
+          <span class="btn-text">About</span>
+        </button>
       </div>
     </header>
 
@@ -85,6 +90,7 @@
       <button class="nav-tab-btn" data-tab="telemetry">📊 Vehicle Dynamics & Physics</button>
       <button class="nav-tab-btn" data-tab="blackbox">📋 Blackbox Flight Recorder</button>
       <button class="nav-tab-btn" data-tab="settings">⚙️ ADAS Calibration & Settings</button>
+      <button class="nav-tab-btn" data-tab="about">ℹ️ About & Guide</button>
     </div>
 
     <!-- WORKSPACE VIEW 1: COCKPIT HUD -->
@@ -826,6 +832,289 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- WORKSPACE VIEW 6: ABOUT & USER GUIDE (MADE BY ARJIT JAISWAL) -->
+    <div id="view-about" class="workspace-view">
+      <div class="about-container">
+        
+        <!-- Hero Card -->
+        <div class="about-hero">
+          <div class="about-hero-header">
+            <div>
+              <span class="brand-badge" style="margin-bottom: 10px; display: inline-block;">🇮🇳 SURAKSHA-AI (सुरक्षा AI)</span>
+              <h2 class="about-title">Autonomous ADAS & Driving Safety Copilot for Indian Roads</h2>
+              <p class="about-tagline">
+                A state-of-the-art multi-threat cognitive safety shield engineered to tackle the unique, chaotic dynamics of Indian traffic — from sudden stray cattle crossings and crater potholes to aggressive autorickshaw cut-ins, monsoon hydroplaning, and driver microsleep.
+              </p>
+            </div>
+            
+            <div class="about-creator-card" title="Creator & AI Architect">
+              <span class="creator-avatar">👨‍💻</span>
+              <div>
+                <div class="creator-name">Made by Arjit Jaiswal</div>
+                <div class="creator-role">AI Systems Architect & Lead Engineer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-specs-grid">
+            <div class="spec-badge-card">
+              <span class="spec-badge-label">Reasoning Frequency</span>
+              <span class="spec-badge-val" style="color: var(--accent-emerald);">60 Hz Real-Time AI</span>
+            </div>
+            <div class="spec-badge-card">
+              <span class="spec-badge-label">Vision Engine</span>
+              <span class="spec-badge-val" style="color: var(--accent-cyan);">60 FPS Computer Vision & LDW</span>
+            </div>
+            <div class="spec-badge-card">
+              <span class="spec-badge-label">Eye-Tracking</span>
+              <span class="spec-badge-val" style="color: #c084fc;">DMS IR Eye Aspect Ratio (EAR)</span>
+            </div>
+            <div class="spec-badge-card">
+              <span class="spec-badge-label">Voice Copilot</span>
+              <span class="spec-badge-val" style="color: #f59e0b;">Bilingual English + Hinglish 🇮🇳</span>
+            </div>
+            <div class="spec-badge-card">
+              <span class="spec-badge-label">GNSS Satellite Doppler</span>
+              <span class="spec-badge-val" style="color: #38bdf8;">NavIC 🇮🇳 + GPS + GLONASS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 1: How This App Works -->
+        <div class="about-section">
+          <div class="about-section-title">
+            <span>⚙️</span>
+            <span>How This App Works: The Multi-Engine AI Architecture</span>
+          </div>
+          <p class="about-section-desc">
+            SURAKSHA-AI runs an autonomous multi-threat sensor fusion pipeline. Instead of relying on a single sensor, it continuously evaluates 6 distinct safety vectors and passes them through a Master Arbitration Decision Engine at 60 Hz to issue non-intrusive, life-saving directives.
+          </p>
+
+          <div class="engines-grid">
+            <!-- 1. Vision & LDW -->
+            <div class="engine-feature-card">
+              <div class="ef-header">
+                <div class="ef-title"><span>📷</span> 1. Forward Vision & Lane Departure (LDW)</div>
+                <span class="ef-tag">60 FPS CV</span>
+              </div>
+              <p class="ef-body">
+                Converts forward webcam/dashcam imagery into 3D perspective space with dynamic polynomial curved lane prediction.
+              </p>
+              <ul class="ef-list">
+                <li>Real-time lateral offset (&Delta;x in cm) and road curvature (R in meters).</li>
+                <li>Visual status: <code>LANE CENTERED</code>, <code>DRIFTING</code>, <code>LANE DEPARTURE ALERT</code>.</li>
+                <li>3D neural bounding boxes with Distance & Time-to-Collision (TTC).</li>
+              </ul>
+            </div>
+
+            <!-- 2. DMS -->
+            <div class="engine-feature-card">
+              <div class="ef-header">
+                <div class="ef-title"><span>👁️</span> 2. Driver Monitoring System (DMS)</div>
+                <span class="ef-tag">IR Face-Mesh</span>
+              </div>
+              <p class="ef-body">
+                Cabin infrared tracking dedicated to preventing the #1 cause of highway fatalities: microsleep and mobile distraction.
+              </p>
+              <ul class="ef-list">
+                <li>Eye Aspect Ratio (EAR &lt; 0.15) detects micro-naps within 1.0s.</li>
+                <li>In-hand mobile phone usage detection while in motion.</li>
+                <li>Head-pose nod and gaze vector vigilance calculation.</li>
+              </ul>
+            </div>
+
+            <!-- 3. Indian Road Hazards -->
+            <div class="engine-feature-card">
+              <div class="ef-header">
+                <div class="ef-title"><span>🇮🇳</span> 3. Indian Road Hazards Engine</div>
+                <span class="ef-tag">Heuristic Matrix</span>
+              </div>
+              <p class="ef-body">
+                Tailored specifically for Indian road chaos that traditional autopilot algorithms fail to recognize.
+              </p>
+              <ul class="ef-list">
+                <li>Stray cattle / cow crossing carriageways (unpredictable movement).</li>
+                <li>Aggressive autorickshaw cut-ins from blind spots.</li>
+                <li>Crater potholes, unpainted speed-breakers & wrong-way vehicles.</li>
+              </ul>
+            </div>
+
+            <!-- 4. FCW & Collision -->
+            <div class="engine-feature-card">
+              <div class="ef-header">
+                <div class="ef-title"><span>💥</span> 4. Collision Avoidance & AEB</div>
+                <span class="ef-tag">Physics TTC</span>
+              </div>
+              <p class="ef-body">
+                Dynamic physics engine calculating instantaneous Time-to-Collision (TTC = d / v_rel) and emergency stopping distance.
+              </p>
+              <ul class="ef-list">
+                <li>Pre-crash acoustic chimes at TTC &lt; 2.5s.</li>
+                <li>Autonomous Emergency Braking (AEB) simulation threshold.</li>
+                <li>Velocity differential tracking with leading vehicles.</li>
+              </ul>
+            </div>
+
+            <!-- 5. Weather & Monsoon -->
+            <div class="engine-feature-card">
+              <div class="ef-header">
+                <div class="ef-title"><span>🌧️</span> 5. Monsoon & Weather Advisory</div>
+                <span class="ef-tag">Surface Friction</span>
+              </div>
+              <p class="ef-body">
+                Monitors Indian monsoon torrential rain, winter smog/fog in North India, and pitch-dark unlit rural corridors.
+              </p>
+              <ul class="ef-list">
+                <li>Hydroplaning coefficient and 1.6x stopping distance multiplier.</li>
+                <li>Fog headlamp guidance and reduced visibility speed throttling.</li>
+                <li>Waterlogged road depression warnings.</li>
+              </ul>
+            </div>
+
+            <!-- 6. Master Decision & Habit Learning -->
+            <div class="engine-feature-card">
+              <div class="ef-header">
+                <div class="ef-title"><span>🧠</span> 6. Master Arbiter & Habit AI</div>
+                <span class="ef-tag">6-Axis Biometrics</span>
+              </div>
+              <p class="ef-body">
+                Synthesizes all sensors, isolates the single highest-priority threat, and builds a biometric safety fingerprint over time.
+              </p>
+              <ul class="ef-list">
+                <li>Outputs ONE clear, calm instruction (no spam or conflicting alarms).</li>
+                <li>6-axis radar fingerprint (Smoothness, Focus, Reflex, etc.).</li>
+                <li>Calculates real-world Telemetry Insurance Discounts (up to 30%).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: How to Use This App (Step-by-Step Guide) -->
+        <div class="about-section">
+          <div class="about-section-title">
+            <span>📖</span>
+            <span>How to Use SURAKSHA-AI: Step-by-Step Driver Guide</span>
+          </div>
+          <p class="about-section-desc">
+            Follow this simple walkthrough to set up SURAKSHA-AI in your car or test it in the interactive telemetry sandbox.
+          </p>
+
+          <div class="steps-column">
+            <!-- Step 1 -->
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Mount Your Smartphone or Laptop & Enable Live Dashcam</div>
+                <div class="step-desc">
+                  Place your phone on a dashboard mount pointing through the windshield. Click the <strong>📹 Live Dashcam</strong> button at the top of the vision card to pipe live road video directly into the AI lane detection pipeline. The system will automatically calibrate the horizon and draw 3D lane boundaries.
+                </div>
+                <div class="step-tip">💡 Tip: In simulation mode, the HUD generates synthetic 3D perspective traffic, lane curves, and road obstacles at 60 FPS.</div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Activate Driver Monitoring (DMS Eye-Tracker)</div>
+                <div class="step-desc">
+                  Click <strong>📷 Test Webcam</strong> on the DMS Eye-Tracker card to turn on driver alertness tracking. The AI measures your blink duration and Eye Aspect Ratio (EAR). If you close your eyes for more than 1.5 seconds or raise a mobile phone to your ear, the system immediately sounds a fatigue alert.
+                </div>
+                <div class="step-tip">💡 Tip: You can adjust the microsleep sensitivity from strict (1.0s) to relaxed (2.0s) in the Settings tab.</div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Unmute Voice Alerts & Luxury Sound Chimes</div>
+                <div class="step-desc">
+                  By default, SURAKSHA-AI boots in <strong>Quiet Mode</strong> to avoid annoying passengers. Click <strong>🔈 Voice: OFF</strong> to toggle it <strong>ON</strong>, and <strong>🔕 Sound: OFF</strong> to turn on gentle luxury sine acoustic chimes. The system uses strict anti-spam pacing so it only speaks when an actionable threat exists.
+                </div>
+                <div class="step-tip">💡 Tip: Click the 🌐 Hinglish 🇮🇳 button in the header to switch between English and natural Hindi/Hinglish alerts (e.g. <em>"Dhyaan se! Aage bada pothole hai, gaadi dheeri karein!"</em>).</div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">Interact with the Siri / Jarvis Voice Copilot</div>
+                <div class="step-desc">
+                  Tap the floating glowing orb in the top header or click <strong>🎤 Voice Query</strong> and ask questions naturally:
+                  <ul style="margin: 6px 0 0 16px; line-height: 1.6; font-size: 12.5px;">
+                    <li><strong>"What is my speed?"</strong> &rarr; Reports current speed and road speed limit.</li>
+                    <li><strong>"Navigate to Kashi Vishwanath / Assi Ghat / Gorakhpur / Ayodhya"</strong> &rarr; Starts satellite navigation.</li>
+                    <li><strong>"What is my driver score?"</strong> &rarr; Reports safety score, persona, and insurance discount tier.</li>
+                    <li><strong>"Report pothole / cow"</strong> &rarr; Pins an Indian road hazard to the live map.</li>
+                    <li><strong>"Emergency 112"</strong> &rarr; Broadcasts SOS payload with live coordinates.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step-card">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <div class="step-title">Navigate Using Google Satellite Hybrid Maps</div>
+                <div class="step-desc">
+                  Explore realistic Indian corridors like <strong>Purvanchal Expressway (Varanasi - Gorakhpur)</strong>, <strong>Mumbai-Pune Expressway</strong>, or <strong>Yamuna Expressway</strong>. Type landmarks (e.g. <em>Kashi Vishwanath, Assi Ghat, Gorakhpur</em>) into the floating Google Maps search box with instant autocomplete suggestions. Click <strong>"↗️ Start Navigation"</strong> to get real-time turn maneuvers, distance countdown, and speed trap radar warnings.
+                </div>
+                <div class="step-tip">💡 Tip: Click the 🛰️ Google Satellite Maps tab in the top navigation bar for a dedicated full-screen satellite experience.</div>
+              </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step-card">
+              <div class="step-number">6</div>
+              <div class="step-content">
+                <div class="step-title">Lock Real GNSS Doppler Speed or Test Crisis Scenarios</div>
+                <div class="step-desc">
+                  In a real moving vehicle, click <strong>📍 Detect My Location</strong> to compute Doppler ground velocity via satellite. When on desktop or testing, use the <strong>Scenario Sandbox buttons</strong> at the bottom (<em>Mumbai Monsoon, Night Highway Cow, Bangalore Auto Cut-in, Midnight Drowsy, Delhi Rash Weaving</em>) or drag the speed/distance sliders to simulate dangerous emergencies.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="step-card">
+              <div class="step-number">7</div>
+              <div class="step-content">
+                <div class="step-title">Earn Telemetry Insurance Discounts & Inspect Blackbox</div>
+                <div class="step-desc">
+                  Check your 6-axis AI Biometric Fingerprint in the Habit card. Safe driving automatically qualifies you for <strong>🏆 Platinum Shield (30% Discount)</strong> or <strong>🥇 Gold Shield (20% Discount)</strong>. Switch to the <strong>📋 Blackbox Flight Recorder</strong> tab to view timestamped incident records and export official JSON flight logs for insurance claims or safety audits.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Creator & Project Credits -->
+        <div class="about-hero" style="padding: 28px 32px; background: rgba(15, 23, 42, 0.9);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: 18px; color: #fff; margin-bottom: 4px;">
+                SURAKSHA-AI • Designed & Developed by Arjit Jaiswal
+              </h3>
+              <p style="font-size: 12.5px; color: var(--text-secondary);">
+                Built with dedication to revolutionize automotive safety, reduce highway casualties, and bring aerospace-grade ADAS intelligence to Indian roads.
+              </p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a href="https://github.com/arjitjaiswal08-art/SURAKSHA-AI" target="_blank" class="btn-icon" style="text-decoration: none; font-weight: 700;">
+                <span>📂 GitHub Repository</span>
+              </a>
+              <a href="https://suraksha-ai-zeta.vercel.app" target="_blank" class="btn-icon active" style="text-decoration: none; font-weight: 700;">
+                <span>🌐 Live Production App</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

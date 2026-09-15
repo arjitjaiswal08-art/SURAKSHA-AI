@@ -1,5 +1,6 @@
 # 🛡️ SURAKSHA-AI (सुरक्षा AI)
 ### Advanced Automotive ADAS, Telemetry & Intelligent Driving Safety Copilot for Indian Roads
+> **Designed & Developed by Arjit Jaiswal**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Vite](https://img.shields.io/badge/Vite-6.x-646CFF.svg)](https://vitejs.dev/)
@@ -7,7 +8,7 @@
 [![Web Audio API](https://img.shields.io/badge/Audio-Web_Audio_API-orange.svg)]()
 [![Web Speech API](https://img.shields.io/badge/Voice-Web_Speech_API-red.svg)]()
 
-SURAKSHA-AI is a next-generation automotive AI safety assistant engineered specifically to address the unpredictable driving dynamics and hazards of Indian road conditions.
+SURAKSHA-AI is a next-generation automotive AI safety assistant engineered specifically by **Arjit Jaiswal** to address the unpredictable driving dynamics and hazards of Indian road conditions.
 
 ---
 
@@ -32,7 +33,7 @@ SURAKSHA-AI is a next-generation automotive AI safety assistant engineered speci
 - **Hinglish 🇮🇳 / English 🇬🇧 Bilingual Modes**: Instant toggle translating alerts into natural Indian driving directives (*"Dhyaan se! Aage bada pothole hai, gaadi dheeri karein!"*).
 - **Interactive Voice Queries**:
   - *"What's my speed?"*
-  - *"Navigate to TIDEL Park / Ascendas / IIT Madras"*
+  - *"Navigate to Kashi Vishwanath / Assi Ghat / Gorakhpur / Ayodhya"*
   - *"Stop navigation"*
   - *"What is my driver score?"*
   - *"Report pothole / cow"*

@@ -1237,6 +1237,14 @@ function setupEventListeners() {
     });
   });
 
+  // Header About Button Shortcut
+  document.getElementById('btn-header-about')?.addEventListener('click', () => {
+    const aboutTabBtn = document.querySelector('.nav-tab-btn[data-tab="about"]');
+    if (aboutTabBtn) {
+      aboutTabBtn.click();
+    }
+  });
+
   // Export Blackbox JSON
   document.getElementById('btn-export-blackbox')?.addEventListener('click', () => {
     blackbox.exportJson();
@@ -1489,7 +1497,21 @@ function handleVoiceCommand(cmd) {
     dom.btnToggleVoice.classList.remove('active');
     dom.btnToggleVoice.querySelector('.btn-text').textContent = 'Voice: OFF';
   }
-  // 10. Status / General
+  // 10. About & Developer Info (Arjit Jaiswal)
+  else if (lower.includes('about') || lower.includes('who made') || lower.includes('creator') || lower.includes('arjit') || lower.includes('developer')) {
+    const text = 'SURAKSHA-AI was designed and developed by Arjit Jaiswal as an autonomous driving safety copilot for Indian roads.';
+    voiceAssistant.speakAlert(text, 'LOW');
+    const aboutTabBtn = document.querySelector('.nav-tab-btn[data-tab="about"]');
+    if (aboutTabBtn) aboutTabBtn.click();
+  }
+  // 11. How to Use & Guide
+  else if (lower.includes('how to use') || lower.includes('how to work') || lower.includes('guide') || lower.includes('help')) {
+    const text = 'Opening user guide. You can mount your phone for live dashcam vision, enable eye tracking, or use voice navigation.';
+    voiceAssistant.speakAlert(text, 'LOW');
+    const aboutTabBtn = document.querySelector('.nav-tab-btn[data-tab="about"]');
+    if (aboutTabBtn) aboutTabBtn.click();
+  }
+  // 12. Status / General
   else if (lower.includes('status') || lower.includes('report')) {
     const text = `Current risk level is ${lastDecision?.finalRiskLevel}. Speed is ${Math.round(state.speed)} kilometers per hour. All safety shields armed.`;
     voiceAssistant.speakAlert(text, 'LOW');
