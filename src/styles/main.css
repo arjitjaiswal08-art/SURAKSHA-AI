@@ -1621,6 +1621,11 @@ body {
   color: #94a3b8;
 }
 
+/* Authentic Google Maps Cyber Dark Tiles - Zero API Key Required & 0 Watermarks */
+.leaflet-tile.gmap-dark-tiles {
+  filter: invert(100%) hue-rotate(180deg) brightness(88%) contrast(110%) !important;
+}
+
 /* Quick Layer Switcher Buttons in Topbar */
 .gmap-layer-chips {
   display: flex;

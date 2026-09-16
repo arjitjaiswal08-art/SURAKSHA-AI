@@ -341,10 +341,11 @@ export class GpsMapComponent {
       subdomains: ['0', '1', '2', '3'],
     });
 
-    // 4. Cyber Dark Matter Tile Layer (CartoDB)
-    this.tileLayers.dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
-      subdomains: 'abcd',
+    // 4. Cyber Dark Mode Layer (Google Maps Night Style - 100% Free, Zero API Key / No Watermark)
+    this.tileLayers.dark = L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      subdomains: ['0', '1', '2', '3'],
+      className: 'gmap-dark-tiles',
     });
 
     // Add Google Satellite Hybrid as DEFAULT layer
