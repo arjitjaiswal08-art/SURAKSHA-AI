@@ -173,11 +173,63 @@ const dom = {
 
   // Dedicated Full-screen Google Maps Tab Elements
   gmapFvSearchInput: document.getElementById('gmap-fv-search-input'),
+  gmapFvSearchSuggestions: document.getElementById('gmap-fv-search-suggestions'),
   btnGmapFvSearch: document.getElementById('btn-gmap-fv-search'),
   btnGmapFvDir: document.getElementById('btn-gmap-fv-dir'),
   gmapFvSpeedNum: document.getElementById('gmap-fv-speed-num'),
   gmapFvRoadTitle: document.getElementById('gmap-fv-road-title'),
   gmapFvRoadSub: document.getElementById('gmap-fv-road-sub'),
+
+  // Upgraded Hero Section Elements
+  heroSpeedVal: document.getElementById('hero-speed-val'),
+  heroLimitVal: document.getElementById('hero-limit-val'),
+  heroRiskRing: document.getElementById('hero-risk-ring'),
+  heroRiskBadge: document.getElementById('hero-risk-badge'),
+  heroRiskIcon: document.getElementById('hero-risk-icon'),
+  heroCopilotSummary: document.getElementById('hero-copilot-summary'),
+  heroPredictiveText: document.getElementById('hero-predictive-text'),
+
+  // Next Turn Elements
+  heroTurnIcon: document.getElementById('hero-turn-icon'),
+  heroTurnDist: document.getElementById('hero-turn-dist'),
+  heroTurnEta: document.getElementById('hero-turn-eta'),
+  heroTurnText: document.getElementById('hero-turn-text'),
+  btnShortcutMap: document.getElementById('btn-shortcut-map'),
+
+  // 3 Smart Cards
+  smartDriverIcon: document.getElementById('smart-driver-icon'),
+  smartDriverBadge: document.getElementById('smart-driver-badge'),
+  smartDriverStatus: document.getElementById('smart-driver-status'),
+  smartDriverDetail: document.getElementById('smart-driver-detail'),
+  smartRoadIcon: document.getElementById('smart-road-icon'),
+  smartRoadBadge: document.getElementById('smart-road-badge'),
+  smartRoadStatus: document.getElementById('smart-road-status'),
+  smartRoadDetail: document.getElementById('smart-road-detail'),
+  smartHazardIcon: document.getElementById('smart-hazard-icon'),
+  smartHazardBadge: document.getElementById('smart-hazard-badge'),
+  smartHazardStatus: document.getElementById('smart-hazard-status'),
+  smartHazardDetail: document.getElementById('smart-hazard-detail'),
+
+  // Emergency Mode Elements
+  emergencyOverrideBanner: document.getElementById('emergency-override-banner'),
+  emergencyBadgeText: document.getElementById('emergency-badge-text'),
+  emergencyThreatText: document.getElementById('emergency-threat-text'),
+  emergencyActionText: document.getElementById('emergency-action-text'),
+  emergencySosCountdownWrap: document.getElementById('emergency-sos-countdown-wrap'),
+  sosCountdownNum: document.getElementById('sos-countdown-num'),
+  sosCountdownSecs: document.getElementById('sos-countdown-secs'),
+  sosCircleBar: document.getElementById('sos-circle-bar'),
+  btnCancelEmergencySos: document.getElementById('btn-cancel-emergency-sos'),
+  btnInstantDispatchSos: document.getElementById('btn-instant-dispatch-sos'),
+
+  // Focus Mode & Header Settings
+  btnToggleFocusMode: document.getElementById('btn-toggle-focus-mode'),
+  btnHeaderSettings: document.getElementById('btn-header-settings'),
+  btnPreviewCamera: document.getElementById('btn-preview-camera'),
+  btnPreviewMap: document.getElementById('btn-preview-map'),
+  previewCameraContainer: document.getElementById('preview-camera-container'),
+  previewMapContainer: document.getElementById('preview-map-container'),
+  tripSavingsVal: document.getElementById('trip-savings-val'),
 };
 
 // Preset Scenarios Definition
@@ -427,13 +479,19 @@ function telemetryTick() {
   if (dom.gmapFvSpeedNum) dom.gmapFvSpeedNum.textContent = state.speed;
 
   if (navInfo) {
-    if (navInfo.nextManeuver && dom.navManeuverText) {
-      dom.navManeuverIcon.textContent = navInfo.nextManeuver.icon;
-      dom.navManeuverDist.textContent = `In ${navInfo.nextManeuver.distance}`;
-      dom.navManeuverText.textContent = navInfo.nextManeuver.text;
+    if (navInfo.nextManeuver) {
+      if (dom.navManeuverIcon) dom.navManeuverIcon.textContent = navInfo.nextManeuver.icon;
+      if (dom.navManeuverDist) dom.navManeuverDist.textContent = `In ${navInfo.nextManeuver.distance}`;
+      if (dom.navManeuverText) dom.navManeuverText.textContent = navInfo.nextManeuver.text;
+
+      // Upgraded Hero Next Turn Card
+      if (dom.heroTurnIcon) dom.heroTurnIcon.textContent = navInfo.nextManeuver.icon;
+      if (dom.heroTurnDist) dom.heroTurnDist.textContent = `In ${navInfo.nextManeuver.distance}`;
+      if (dom.heroTurnText) dom.heroTurnText.textContent = navInfo.nextManeuver.text;
     }
     if (dom.navEta) dom.navEta.textContent = `ETA: ${navInfo.etaMins}m`;
     if (dom.navKmLeft) dom.navKmLeft.textContent = `${navInfo.kmRemaining} km left`;
+    if (dom.heroTurnEta) dom.heroTurnEta.textContent = `ETA: ${navInfo.etaMins} min • ${navInfo.kmRemaining} km left`;
 
     // Destination Arrival Announcement
     if (navInfo.isCustomNav && navInfo.arrived && !gpsMap._announcedArrival) {
@@ -611,23 +669,187 @@ function updateDashboardUI({ rashOutput, driverOutput, collisionOutput, weatherO
   dom.engIndianTag.className = `risk-tag ${roadOutput.roadRisk.toLowerCase()}`;
 
   // Diagnostics list
-  dom.detectedIssuesList.textContent = decision.summaryIssues.join('  •  ');
+  if (dom.detectedIssuesList) dom.detectedIssuesList.textContent = decision.summaryIssues.join('  •  ');
 
   // DMS Progress Bars
   const isEyeClosed = state.eyeState === 'closed';
   const isEyeDroopy = state.eyeState === 'droopy';
   const earScore = isEyeClosed ? 0 : (isEyeDroopy ? 45 : 90);
-  dom.dmsEyeVal.textContent = isEyeClosed ? 'Closed 😴 (0.05)' : (isEyeDroopy ? 'Droopy 🥱 (0.18)' : 'Open 👀 (0.34)');
-  dom.dmsEyeBar.style.width = `${earScore}%`;
-  dom.dmsEyeBar.style.background = isEyeClosed ? 'var(--accent-crimson)' : (isEyeDroopy ? 'var(--accent-amber)' : 'var(--accent-cyan)');
+  if (dom.dmsEyeVal) dom.dmsEyeVal.textContent = isEyeClosed ? 'Closed 😴 (0.05)' : (isEyeDroopy ? 'Droopy 🥱 (0.18)' : 'Open 👀 (0.34)');
+  if (dom.dmsEyeBar) {
+    dom.dmsEyeBar.style.width = `${earScore}%`;
+    dom.dmsEyeBar.style.background = isEyeClosed ? 'var(--accent-crimson)' : (isEyeDroopy ? 'var(--accent-amber)' : 'var(--accent-cyan)');
+  }
 
   const isDistracted = state.attentionLevel === 'distracted';
-  dom.dmsAttentionVal.textContent = isDistracted ? 'Distracted ⚠️ (42%)' : 'Focused 🎯 (98%)';
-  dom.dmsAttentionBar.style.width = isDistracted ? '42%' : '98%';
-  dom.dmsAttentionBar.style.background = isDistracted ? 'var(--accent-rose)' : 'var(--accent-emerald)';
+  if (dom.dmsAttentionVal) dom.dmsAttentionVal.textContent = isDistracted ? 'Distracted ⚠️ (42%)' : 'Focused 🎯 (98%)';
+  if (dom.dmsAttentionBar) {
+    dom.dmsAttentionBar.style.width = isDistracted ? '42%' : '98%';
+    dom.dmsAttentionBar.style.background = isDistracted ? 'var(--accent-rose)' : 'var(--accent-emerald)';
+  }
 
-  dom.dmsPhoneVal.textContent = state.phoneUsage ? 'DETECTED IN HAND 📱' : 'None Detected';
-  dom.dmsPhoneVal.style.color = state.phoneUsage ? 'var(--accent-crimson)' : 'var(--accent-emerald)';
+  if (dom.dmsPhoneVal) {
+    dom.dmsPhoneVal.textContent = state.phoneUsage ? 'DETECTED IN HAND 📱' : 'None Detected';
+    dom.dmsPhoneVal.style.color = state.phoneUsage ? 'var(--accent-crimson)' : 'var(--accent-emerald)';
+  }
+
+  // =========================================================================
+  // UPGRADED TESLA-STYLE DASHBOARD RENDERING (Hero, Smart Cards, Emergency)
+  // =========================================================================
+
+  // 1. Hero Section Speed & Limit
+  if (dom.heroSpeedVal) dom.heroSpeedVal.textContent = Math.round(state.speed);
+  if (dom.heroLimitVal) dom.heroLimitVal.textContent = state.speedLimit;
+
+  // 2. Hero Animated Glowing Risk Ring
+  if (dom.heroRiskRing && dom.heroRiskBadge && dom.heroRiskIcon) {
+    dom.heroRiskRing.className = 'risk-glow-ring';
+    if (decision.finalRiskLevel === 'CRITICAL') {
+      dom.heroRiskRing.classList.add('ring-danger');
+      dom.heroRiskBadge.textContent = 'DANGER';
+      dom.heroRiskIcon.textContent = '🔴';
+    } else if (decision.finalRiskLevel === 'HIGH') {
+      dom.heroRiskRing.classList.add('ring-danger');
+      dom.heroRiskBadge.textContent = 'HIGH';
+      dom.heroRiskIcon.textContent = '🟠';
+    } else if (decision.finalRiskLevel === 'MEDIUM') {
+      dom.heroRiskRing.classList.add('ring-caution');
+      dom.heroRiskBadge.textContent = 'CAUTION';
+      dom.heroRiskIcon.textContent = '🟡';
+    } else {
+      dom.heroRiskRing.classList.add('ring-safe');
+      dom.heroRiskBadge.textContent = 'SAFE';
+      dom.heroRiskIcon.textContent = '🟢';
+    }
+  }
+
+  // 3. Dynamic AI Copilot Headline Summary & Predictive Threat
+  if (dom.heroCopilotSummary) {
+    dom.heroCopilotSummary.textContent = `“${decision.copilotSummary || 'Road clear. Maintain lane and speed.'}”`;
+  }
+  if (dom.heroPredictiveText) {
+    dom.heroPredictiveText.textContent = decision.predictiveAlert || 'Optimal corridor trajectory • Safe distance maintained.';
+  }
+
+  // 4. Three Smart Cards (Converting Data -> Human Meaning)
+  if (decision.driverFocusCard) {
+    if (dom.smartDriverIcon) dom.smartDriverIcon.textContent = decision.driverFocusCard.icon;
+    if (dom.smartDriverStatus) dom.smartDriverStatus.textContent = decision.driverFocusCard.status;
+    if (dom.smartDriverDetail) dom.smartDriverDetail.textContent = decision.driverFocusCard.detail;
+    if (dom.smartDriverBadge) {
+      dom.smartDriverBadge.className = `smart-card-badge ${decision.driverFocusCard.level}`;
+      dom.smartDriverBadge.textContent = decision.driverFocusCard.level.toUpperCase();
+    }
+  }
+
+  if (decision.roadStatusCard) {
+    if (dom.smartRoadIcon) dom.smartRoadIcon.textContent = decision.roadStatusCard.icon;
+    if (dom.smartRoadStatus) dom.smartRoadStatus.textContent = decision.roadStatusCard.status;
+    if (dom.smartRoadDetail) dom.smartRoadDetail.textContent = decision.roadStatusCard.detail;
+    if (dom.smartRoadBadge) {
+      dom.smartRoadBadge.className = `smart-card-badge ${decision.roadStatusCard.level}`;
+      dom.smartRoadBadge.textContent = decision.roadStatusCard.level.toUpperCase();
+    }
+  }
+
+  if (decision.hazardCard) {
+    if (dom.smartHazardIcon) dom.smartHazardIcon.textContent = decision.hazardCard.icon;
+    if (dom.smartHazardStatus) dom.smartHazardStatus.textContent = decision.hazardCard.status;
+    if (dom.smartHazardDetail) dom.smartHazardDetail.textContent = decision.hazardCard.detail;
+    if (dom.smartHazardBadge) {
+      dom.smartHazardBadge.className = `smart-card-badge ${decision.hazardCard.level}`;
+      dom.smartHazardBadge.textContent = decision.hazardCard.level.toUpperCase();
+    }
+  }
+
+  // 5. Smart Emergency Override Alert System
+  handleEmergencyOverride(decision);
+}
+
+// Emergency Override State & Helpers
+let emergencyCountdownTimer = null;
+let emergencyCountdownSeconds = 5;
+let emergencyDismissed = false;
+
+function handleEmergencyOverride(decision) {
+  if (!dom.emergencyOverrideBanner) return;
+
+  const isCritical = decision.finalRiskLevel === 'CRITICAL';
+  const isHigh = decision.finalRiskLevel === 'HIGH';
+
+  if (isCritical) {
+    if (!emergencyDismissed) {
+      dom.emergencyOverrideBanner.style.display = 'block';
+      if (dom.emergencyBadgeText) dom.emergencyBadgeText.textContent = '🚨 CRITICAL HAZARD DETECTED';
+      if (dom.emergencyThreatText) dom.emergencyThreatText.textContent = decision.biggestThreat || 'CRITICAL ACCIDENT THREAT!';
+      if (dom.emergencyActionText) dom.emergencyActionText.textContent = decision.immediateAction || 'Immediate emergency braking required!';
+
+      // Show auto-SOS countdown if critical (collision / microsleep)
+      if (dom.emergencySosCountdownWrap) {
+        dom.emergencySosCountdownWrap.style.display = 'flex';
+      }
+
+      if (!emergencyCountdownTimer) {
+        emergencyCountdownSeconds = 5;
+        updateSosCountdownDisplay(5);
+        emergencyCountdownTimer = setInterval(() => {
+          emergencyCountdownSeconds -= 1;
+          updateSosCountdownDisplay(emergencyCountdownSeconds);
+          if (emergencyCountdownSeconds <= 0) {
+            clearInterval(emergencyCountdownTimer);
+            emergencyCountdownTimer = null;
+            triggerEmergencySos(true);
+          }
+        }, 1000);
+      }
+    }
+  } else if (isHigh) {
+    if (!emergencyDismissed) {
+      dom.emergencyOverrideBanner.style.display = 'block';
+      if (dom.emergencyBadgeText) dom.emergencyBadgeText.textContent = '⚠️ HIGH THREAT ADVISORY';
+      if (dom.emergencyThreatText) dom.emergencyThreatText.textContent = decision.biggestThreat;
+      if (dom.emergencyActionText) dom.emergencyActionText.textContent = decision.immediateAction;
+      if (dom.emergencySosCountdownWrap) {
+        dom.emergencySosCountdownWrap.style.display = 'none';
+      }
+    }
+  } else {
+    // Normal / Low risk: reset
+    dom.emergencyOverrideBanner.style.display = 'none';
+    emergencyDismissed = false;
+    if (emergencyCountdownTimer) {
+      clearInterval(emergencyCountdownTimer);
+      emergencyCountdownTimer = null;
+    }
+  }
+}
+
+function updateSosCountdownDisplay(sec) {
+  if (dom.sosCountdownNum) dom.sosCountdownNum.textContent = Math.max(0, sec);
+  if (dom.sosCountdownSecs) dom.sosCountdownSecs.textContent = Math.max(0, sec);
+  if (dom.sosCircleBar) {
+    const totalLength = 276;
+    const progress = Math.max(0, sec) / 5;
+    const offset = totalLength - (progress * totalLength);
+    dom.sosCircleBar.style.strokeDashoffset = offset;
+  }
+}
+
+function triggerEmergencySos(isAuto = false) {
+  const payload = blackbox.generateSosPayload();
+  const modal = document.getElementById('sos-modal');
+  const textElem = document.getElementById('sos-payload-text');
+  if (modal && textElem) {
+    textElem.textContent = JSON.stringify(payload, null, 2);
+    modal.style.display = 'flex';
+    audioEffects.playCriticalEmergencyAlarm();
+    voiceAssistant.speakAlert(
+      isAuto 
+        ? 'Auto Emergency 112 SOS dispatched with GPS coordinates and vehicle impact metrics.' 
+        : 'Emergency 112 SOS dispatched with GPS coordinates.',
+      'CRITICAL'
+    );
+  }
 }
 
 function updateHabitProfileUI() {
@@ -640,6 +862,12 @@ function updateHabitProfileUI() {
   // Telemetry Insurance Discount Pill
   if (dom.habitInsurancePill) {
     dom.habitInsurancePill.textContent = `${profile.insuranceTier} • ${profile.insuranceDiscount}% Premium Discount`;
+  }
+
+  // Calculate Fuel & Brake Pad Savings in Rupees (Gamified Safety)
+  if (dom.tripSavingsVal) {
+    const savings = Math.max(40, Math.round((profile.safetyScore / 100) * 140 + (profile.kmDriven * 2)));
+    dom.tripSavingsVal.textContent = savings;
   }
 
   // 6-Axis Biometrics Readouts
@@ -799,7 +1027,8 @@ function setupEventListeners() {
         fullGpsMap.loadCorridor(corKey);
       }
       const badgeText = btn.textContent.split(' ')[0] + ' ' + (btn.textContent.split(' ')[1] || '');
-      document.getElementById('corridor-badge').textContent = badgeText;
+      const cBadge = document.getElementById('corridor-badge');
+      if (cBadge) cBadge.textContent = badgeText;
       
       const cor = gpsMap.corridors[corKey];
       if (cor) {
@@ -917,14 +1146,14 @@ function setupEventListeners() {
   });
 
   // Google Maps Autocomplete Suggestions & Place Search
-  const showSearchSuggestions = (query) => {
-    if (!dom.gmapSearchSuggestions || !gpsMap) return;
+  const showSearchSuggestions = (query, dropdownEl = dom.gmapSearchSuggestions, inputEl = dom.gmapSearchInput) => {
+    if (!dropdownEl || !gpsMap) return;
     const suggestions = gpsMap.getSearchSuggestions(query);
     if (!suggestions || suggestions.length === 0) {
-      dom.gmapSearchSuggestions.style.display = 'none';
+      dropdownEl.style.display = 'none';
       return;
     }
-    dom.gmapSearchSuggestions.innerHTML = suggestions.map(s => `
+    dropdownEl.innerHTML = suggestions.map(s => `
       <div class="gmap-suggestion-item" data-name="${s.name.replace(/"/g, '&quot;')}" data-lat="${s.lat}" data-lng="${s.lng}">
         <span class="sug-icon">${s.icon || '📍'}</span>
         <div class="sug-info">
@@ -933,45 +1162,71 @@ function setupEventListeners() {
         </div>
       </div>
     `).join('');
-    dom.gmapSearchSuggestions.style.display = 'flex';
+    dropdownEl.style.display = 'flex';
 
-    dom.gmapSearchSuggestions.querySelectorAll('.gmap-suggestion-item').forEach(item => {
+    dropdownEl.querySelectorAll('.gmap-suggestion-item').forEach(item => {
       item.addEventListener('click', (e) => {
         e.stopPropagation();
         const name = item.dataset.name;
-        if (dom.gmapSearchInput) dom.gmapSearchInput.value = name;
-        dom.gmapSearchSuggestions.style.display = 'none';
-        handlePlaceSearch(dom.gmapSearchInput);
+        if (inputEl) inputEl.value = name;
+        dropdownEl.style.display = 'none';
+        handlePlaceSearch(inputEl);
       });
     });
   };
 
+  // Mini Radar Map Search Input Listeners
   dom.gmapSearchInput?.addEventListener('input', (e) => {
-    showSearchSuggestions(e.target.value);
+    showSearchSuggestions(e.target.value, dom.gmapSearchSuggestions, dom.gmapSearchInput);
   });
   dom.gmapSearchInput?.addEventListener('focus', (e) => {
-    showSearchSuggestions(e.target.value);
+    showSearchSuggestions(e.target.value, dom.gmapSearchSuggestions, dom.gmapSearchInput);
   });
 
+  // Fullview Dedicated Map Search Input Listeners
+  const btnFvClear = document.getElementById('btn-gmap-fv-clear');
+  dom.gmapFvSearchInput?.addEventListener('input', (e) => {
+    if (btnFvClear) btnFvClear.style.display = e.target.value ? 'inline-block' : 'none';
+    showSearchSuggestions(e.target.value, dom.gmapFvSearchSuggestions, dom.gmapFvSearchInput);
+  });
+  dom.gmapFvSearchInput?.addEventListener('focus', (e) => {
+    showSearchSuggestions(e.target.value, dom.gmapFvSearchSuggestions, dom.gmapFvSearchInput);
+  });
+  btnFvClear?.addEventListener('click', () => {
+    if (dom.gmapFvSearchInput) {
+      dom.gmapFvSearchInput.value = '';
+      btnFvClear.style.display = 'none';
+      if (dom.gmapFvSearchSuggestions) dom.gmapFvSearchSuggestions.style.display = 'none';
+      dom.gmapFvSearchInput.focus();
+    }
+  });
+
+  // Close dropdowns on outside click
   document.addEventListener('click', (e) => {
     if (dom.gmapSearchSuggestions && !dom.gmapSearchInput?.contains(e.target) && !dom.gmapSearchSuggestions.contains(e.target)) {
       dom.gmapSearchSuggestions.style.display = 'none';
+    }
+    if (dom.gmapFvSearchSuggestions && !dom.gmapFvSearchInput?.contains(e.target) && !dom.gmapFvSearchSuggestions.contains(e.target)) {
+      dom.gmapFvSearchSuggestions.style.display = 'none';
     }
   });
 
   const handlePlaceSearch = async (inputEl) => {
     if (!inputEl) return;
     if (dom.gmapSearchSuggestions) dom.gmapSearchSuggestions.style.display = 'none';
+    if (dom.gmapFvSearchSuggestions) dom.gmapFvSearchSuggestions.style.display = 'none';
     const q = inputEl.value.trim();
     if (!q) return;
+
     let res = null;
-    if (gpsMap) res = await gpsMap.searchPlace(q);
-    if (fullGpsMap) await fullGpsMap.searchPlace(q);
+    if (fullGpsMap) res = await fullGpsMap.searchPlace(q);
+    if (gpsMap) {
+      const miniRes = await gpsMap.searchPlace(q);
+      if (!res) res = miniRes;
+    }
+
     if (res) {
-      voiceAssistant.speakAlert(`Found ${res.name} on Google Maps Satellite.`, 'LOW');
-      audioEffects.playChime();
-    } else {
-      voiceAssistant.speakAlert(`Location searched: ${q}. Satellite viewport centered.`, 'LOW');
+      voiceAssistant.speakAlert(`Found ${res.name} on Google Satellite.`, 'LOW');
       audioEffects.playChime();
     }
   };
@@ -986,29 +1241,33 @@ function setupEventListeners() {
     if (e.key === 'Enter') handlePlaceSearch(dom.gmapFvSearchInput);
   });
 
-  // Directions buttons
+  // Directions / Recenter buttons
   dom.btnGmapDirections?.addEventListener('click', () => {
     gpsMap?.recenterOnCar();
     audioEffects.playChime();
-    voiceAssistant.speakAlert('Turn-by-turn satellite route active towards destination.', 'LOW');
+    gpsMap?.showToast('Centered on vehicle', 'info');
   });
   dom.btnGmapFvDir?.addEventListener('click', () => {
     fullGpsMap?.recenterOnCar();
     gpsMap?.recenterOnCar();
     audioEffects.playChime();
-    voiceAssistant.speakAlert('Turn-by-turn satellite route active towards destination.', 'LOW');
+    fullGpsMap?.showToast('Centered on vehicle', 'info');
   });
 
   // Global Real-Time Navigation Execution
   window.startNavigationTo = async (lat, lng, name) => {
-    if (!gpsMap) return;
-    gpsMap._announcedArrival = false;
-    const navResult = await gpsMap.startNavigationTo(lat, lng, name);
+    if (!gpsMap && !fullGpsMap) return;
+    if (gpsMap) {
+      gpsMap._announcedArrival = false;
+      var navResult = await gpsMap.startNavigationTo(lat, lng, name);
+    }
     if (fullGpsMap) {
       fullGpsMap._announcedArrival = false;
-      await fullGpsMap.startNavigationTo(lat, lng, name);
+      const fnr = await fullGpsMap.startNavigationTo(lat, lng, name);
+      if (!navResult) navResult = fnr;
     }
 
+    // Update Mini HUD
     if (dom.navManeuverIcon) dom.navManeuverIcon.textContent = '↗️';
     if (dom.navManeuverDist) dom.navManeuverDist.textContent = 'In 200 m';
     if (dom.navManeuverText) dom.navManeuverText.textContent = `Head towards ${name}`;
@@ -1018,8 +1277,49 @@ function setupEventListeners() {
     const btnStopNav = document.getElementById('btn-stop-nav');
     if (btnStopNav) btnStopNav.style.display = 'inline-flex';
 
+    // Update Floating Nav Card on Map Screen
+    const fvNavCard = document.getElementById('gmap-fv-nav-card');
+    if (fvNavCard) {
+      fvNavCard.style.display = 'flex';
+      const fvManeuver = document.getElementById('gnav-fv-text');
+      const fvDist = document.getElementById('gnav-fv-dist');
+      const fvEta = document.getElementById('gnav-fv-eta');
+      const fvDest = document.getElementById('gnav-fv-dest');
+      if (fvManeuver) fvManeuver.textContent = `Head towards ${name}`;
+      if (fvDist) fvDist.textContent = 'In 200 m';
+      if (fvEta && navResult) fvEta.textContent = `${navResult.estimatedMins} min (${navResult.distanceKm} km)`;
+      if (fvDest) fvDest.textContent = name;
+    }
+
     audioEffects.playChime();
     voiceAssistant.speakAlert(`Starting navigation to ${name}. Route calculated. Drive safely.`, 'LOW');
+    fullGpsMap?.showToast(`Navigating to ${name}`, 'success');
+  };
+
+  // Global Teleport Vehicle (Drive Around Here)
+  window.teleportCarTo = (lat, lng, name) => {
+    const newPos = [lat, lng];
+    if (fullGpsMap) {
+      if (fullGpsMap.vehicleMarker) fullGpsMap.vehicleMarker.setLatLng(newPos);
+      if (fullGpsMap.map) fullGpsMap.map.flyTo(newPos, 16, { duration: 1.2 });
+      fullGpsMap.traveledPath = [newPos];
+      fullGpsMap.map.closePopup();
+      fullGpsMap.showToast(`Vehicle relocated to ${name}`, 'success');
+    }
+    if (gpsMap) {
+      if (gpsMap.vehicleMarker) gpsMap.vehicleMarker.setLatLng(newPos);
+      if (gpsMap.map) gpsMap.map.setView(newPos, 15);
+      gpsMap.traveledPath = [newPos];
+      gpsMap.map.closePopup();
+    }
+
+    const locNameEl = document.getElementById('gps-location-name');
+    if (locNameEl) locNameEl.textContent = name;
+    const coordsEl = document.getElementById('gps-coords');
+    if (coordsEl) coordsEl.textContent = `${lat.toFixed(5)}° N, ${lng.toFixed(5)}° E`;
+
+    audioEffects.playChime();
+    voiceAssistant.speakAlert(`Vehicle positioned at ${name}. Local telemetry active.`, 'LOW');
   };
 
   window.stopNavigation = () => {
@@ -1027,12 +1327,50 @@ function setupEventListeners() {
     if (fullGpsMap) fullGpsMap.stopNavigation();
     const btnStopNav = document.getElementById('btn-stop-nav');
     if (btnStopNav) btnStopNav.style.display = 'none';
+    const fvNavCard = document.getElementById('gmap-fv-nav-card');
+    if (fvNavCard) fvNavCard.style.display = 'none';
+
     audioEffects.playChime();
-    voiceAssistant.speakAlert('Navigation ended. Returned to standard highway corridor mode.', 'LOW');
+    voiceAssistant.speakAlert('Navigation ended.', 'LOW');
+    fullGpsMap?.showToast('Navigation ended', 'info');
   };
 
   document.getElementById('btn-stop-nav')?.addEventListener('click', () => {
     window.stopNavigation();
+  });
+  document.getElementById('btn-gmap-fv-stop-nav')?.addEventListener('click', () => {
+    window.stopNavigation();
+  });
+
+  // Floating Controls on Map View
+  document.getElementById('btn-gmap-fv-zoomin')?.addEventListener('click', () => {
+    fullGpsMap?.zoomIn();
+  });
+  document.getElementById('btn-gmap-fv-zoomout')?.addEventListener('click', () => {
+    fullGpsMap?.zoomOut();
+  });
+  document.getElementById('btn-gmap-fv-recenter')?.addEventListener('click', () => {
+    fullGpsMap?.recenterOnCar();
+    fullGpsMap?.showToast('Centered on vehicle', 'info');
+  });
+  document.getElementById('btn-gmap-fv-follow')?.addEventListener('click', function() {
+    if (fullGpsMap) {
+      const isFollow = fullGpsMap.toggleFollowCar();
+      this.classList.toggle('active', isFollow);
+      fullGpsMap.showToast(isFollow ? 'Follow Vehicle: ON' : 'Free Roam Map', 'info');
+    }
+  });
+
+  // Topbar Layer Switcher Buttons
+  document.querySelectorAll('.gmap-layer-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gmap-layer-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const layerKey = btn.dataset.layer;
+      gpsMap?.setLayer(layerKey);
+      fullGpsMap?.setLayer(layerKey);
+      fullGpsMap?.showToast(`Map Layer: ${btn.textContent.trim()}`, 'info');
+    });
   });
 
   // Google Maps Category Chips Filtering
@@ -1209,41 +1547,128 @@ function setupEventListeners() {
     dom.btnToggleWebcam.querySelector('span').textContent = active ? '🔴 Stop Webcam' : '📹 Test Webcam';
   });
 
-  // Workspace Navigation Tabs
-  const tabBtns = document.querySelectorAll('.nav-tab-btn');
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const targetTab = btn.dataset.tab;
-      document.querySelectorAll('.workspace-view').forEach(view => view.classList.remove('active'));
-      const activeView = document.getElementById(`view-${targetTab}`);
-      if (activeView) activeView.classList.add('active');
+  // Unified Workspace Tab Switcher (Top Tabs + Bottom Navigation)
+  function switchWorkspaceTab(targetTab) {
+    const canonicalTab = (targetTab === 'cockpit') ? 'drive' : targetTab;
 
-      if (targetTab === 'cockpit' && gpsMap) {
-        setTimeout(() => gpsMap.map.invalidateSize(), 150);
-      }
-      if (targetTab === 'gmap') {
-        if (!fullGpsMap && document.getElementById('gps-full-map')) {
-          fullGpsMap = new GpsMapComponent('gps-full-map');
-          fullGpsMap.loadCorridor(gpsMap ? gpsMap.currentCorridor : 'purvanchal_up');
-        }
-        setTimeout(() => {
-          if (fullGpsMap) fullGpsMap.map.invalidateSize();
-        }, 150);
-      }
-      if (targetTab === 'blackbox') {
-        renderBlackboxTable();
-      }
+    // Update top tabs
+    document.querySelectorAll('.nav-tab-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === canonicalTab || (b.dataset.tab === 'drive' && canonicalTab === 'cockpit'));
     });
+
+    // Update bottom nav items
+    document.querySelectorAll('.bottom-nav-item').forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === canonicalTab || (b.dataset.tab === 'drive' && canonicalTab === 'cockpit'));
+    });
+
+    // Toggle views
+    document.querySelectorAll('.workspace-view').forEach(view => view.classList.remove('active'));
+    
+    let activeView = document.getElementById(`view-${canonicalTab}`);
+    if (!activeView && canonicalTab === 'drive') {
+      activeView = document.getElementById('view-cockpit');
+    }
+    if (activeView) activeView.classList.add('active');
+
+    if ((canonicalTab === 'drive' || canonicalTab === 'cockpit') && gpsMap && gpsMap.map) {
+      setTimeout(() => gpsMap.map.invalidateSize(), 150);
+    }
+    if (canonicalTab === 'gmap') {
+      if (!fullGpsMap && document.getElementById('gps-full-map')) {
+        fullGpsMap = new GpsMapComponent('gps-full-map');
+        fullGpsMap.loadCorridor(gpsMap ? gpsMap.currentCorridor : 'purvanchal_up');
+      }
+      setTimeout(() => {
+        if (fullGpsMap && fullGpsMap.map) fullGpsMap.map.invalidateSize();
+      }, 150);
+    }
+    if (canonicalTab === 'insights') {
+      updateHabitProfileUI();
+    }
+    if (canonicalTab === 'settings' || canonicalTab === 'blackbox') {
+      renderBlackboxTable();
+    }
+  }
+
+  // Bind top tabs
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchWorkspaceTab(btn.dataset.tab));
   });
 
-  // Header About Button Shortcut
-  document.getElementById('btn-header-about')?.addEventListener('click', () => {
-    const aboutTabBtn = document.querySelector('.nav-tab-btn[data-tab="about"]');
-    if (aboutTabBtn) {
-      aboutTabBtn.click();
+  // Bind bottom nav items
+  document.querySelectorAll('.bottom-nav-item').forEach(btn => {
+    btn.addEventListener('click', () => switchWorkspaceTab(btn.dataset.tab));
+  });
+
+  // Header Settings Button Shortcut
+  dom.btnHeaderSettings?.addEventListener('click', () => {
+    switchWorkspaceTab('settings');
+  });
+
+  // Next Turn Map Shortcut Button
+  dom.btnShortcutMap?.addEventListener('click', () => {
+    switchWorkspaceTab('gmap');
+  });
+
+  // Focus Mode Toggle (Distraction Free)
+  dom.btnToggleFocusMode?.addEventListener('click', () => {
+    const isFocus = document.body.classList.toggle('focus-mode-active');
+    dom.btnToggleFocusMode.classList.toggle('active', isFocus);
+    audioEffects.playChime();
+    voiceAssistant.speakAlert(
+      isFocus ? 'Focus Mode active. Distractions hidden.' : 'Standard Drive Mode restored.',
+      'LOW'
+    );
+  });
+
+  // Preview Switcher (Camera HUD vs Mini Map)
+  dom.btnPreviewCamera?.addEventListener('click', () => {
+    dom.btnPreviewCamera.classList.add('active');
+    dom.btnPreviewMap?.classList.remove('active');
+    dom.previewCameraContainer?.classList.add('active');
+    dom.previewMapContainer?.classList.remove('active');
+  });
+
+  dom.btnPreviewMap?.addEventListener('click', () => {
+    dom.btnPreviewMap.classList.add('active');
+    dom.btnPreviewCamera?.classList.remove('active');
+    dom.previewMapContainer?.classList.add('active');
+    dom.previewCameraContainer?.classList.remove('active');
+    if (gpsMap && gpsMap.map) {
+      setTimeout(() => gpsMap.map.invalidateSize(), 150);
     }
+  });
+
+  // Emergency SOS Buttons
+  dom.btnCancelEmergencySos?.addEventListener('click', () => {
+    if (emergencyCountdownTimer) {
+      clearInterval(emergencyCountdownTimer);
+      emergencyCountdownTimer = null;
+    }
+    emergencyDismissed = true;
+    if (dom.emergencyOverrideBanner) {
+      dom.emergencyOverrideBanner.style.display = 'none';
+    }
+    audioEffects.playChime();
+    voiceAssistant.speakAlert('Emergency SOS cancelled. Driver confirmed safe.', 'LOW');
+  });
+
+  dom.btnInstantDispatchSos?.addEventListener('click', () => {
+    if (emergencyCountdownTimer) {
+      clearInterval(emergencyCountdownTimer);
+      emergencyCountdownTimer = null;
+    }
+    triggerEmergencySos(false);
+  });
+
+  // Settings view button helpers
+  document.getElementById('btn-toggle-lang-settings')?.addEventListener('click', () => {
+    dom.btnToggleLanguage?.click();
+  });
+
+  document.getElementById('btn-open-wallpaper-gallery')?.addEventListener('click', () => {
+    const modal = document.getElementById('wallpaper-modal');
+    if (modal) modal.style.display = 'flex';
   });
 
   // Export Blackbox JSON
@@ -1647,19 +2072,61 @@ function handleVoiceCommand(cmd) {
   else if (lower.includes('stop nav') || lower.includes('cancel route') || lower.includes('end nav')) {
     if (window.stopNavigation) window.stopNavigation();
   }
-  // 4. Driver Habits & Insurance Discount
-  else if (lower.includes('score') || lower.includes('habit') || lower.includes('insurance') || lower.includes('discount')) {
+  // 4. Driver Habits, Score & Savings
+  else if (lower.includes('score') || lower.includes('how am i driving') || lower.includes("how's my driving") || lower.includes('performance') || lower.includes('habit') || lower.includes('insurance') || lower.includes('discount') || lower.includes('savings')) {
     const prof = habitEngine.getProfile();
-    const text = `Safety score is ${prof.safetyScore} points out of 100. Driver persona: ${prof.persona}. You qualify for ${prof.insuranceTier} with ${prof.insuranceDiscount}% insurance discount.`;
+    const savings = Math.max(40, Math.round((prof.safetyScore / 100) * 140 + (prof.kmDriven * 2)));
+    const text = `Safety score is ${prof.safetyScore} points out of 100. Driver persona: ${prof.persona}. You have saved approximately ${savings} rupees through defensive driving and qualify for ${prof.insuranceTier}.`;
     voiceAssistant.speakAlert(text, 'LOW');
   }
-  // 5. Camera & Lane Departure
+  // 5. Hazard Check Ahead
+  else if (lower.includes('any hazard') || lower.includes('threat ahead') || lower.includes('hazard ahead') || lower.includes('danger ahead') || lower.includes('any threats')) {
+    if (lastDecision && lastDecision.hazardCard && lastDecision.hazardCard.status !== 'None Detected') {
+      voiceAssistant.speakAlert(`Alert: ${lastDecision.hazardCard.status}. ${lastDecision.hazardCard.detail}`, 'MEDIUM');
+    } else {
+      voiceAssistant.speakAlert('All clear ahead. No obstacles or road threats detected for the next 2 kilometers.', 'LOW');
+    }
+  }
+  // 6. Focus Mode
+  else if (lower.includes('focus mode') || lower.includes('zen mode')) {
+    if (lower.includes('exit') || lower.includes('off') || lower.includes('stop') || lower.includes('cancel')) {
+      document.body.classList.remove('focus-mode-active');
+      if (dom.btnToggleFocusMode) dom.btnToggleFocusMode.classList.remove('active');
+      voiceAssistant.speakAlert('Focus mode deactivated. Normal cockpit HUD restored.', 'LOW');
+    } else {
+      document.body.classList.add('focus-mode-active');
+      if (dom.btnToggleFocusMode) dom.btnToggleFocusMode.classList.add('active');
+      voiceAssistant.speakAlert('Focus Mode engaged. Secondary distractions hidden. Safe cruising.', 'LOW');
+    }
+  }
+  // 7. Screen Switch Voice Shortcuts
+  else if (lower.includes('drive mode') || lower.includes('cockpit') || lower.includes('home screen')) {
+    const driveTab = document.querySelector('.bottom-nav-item[data-tab="drive"]');
+    if (driveTab) driveTab.click();
+    voiceAssistant.speakAlert('Switched to primary Drive Mode.', 'LOW');
+  }
+  else if (lower.includes('open map') || lower.includes('show map') || lower.includes('satellite view')) {
+    const mapTab = document.querySelector('.bottom-nav-item[data-tab="gmap"]');
+    if (mapTab) mapTab.click();
+    voiceAssistant.speakAlert('Opening satellite navigation map.', 'LOW');
+  }
+  else if (lower.includes('show insights') || lower.includes('open insights') || lower.includes('biometrics')) {
+    const insTab = document.querySelector('.bottom-nav-item[data-tab="insights"]');
+    if (insTab) insTab.click();
+    voiceAssistant.speakAlert('Opening safety analytics and driver insights.', 'LOW');
+  }
+  else if (lower.includes('open settings') || lower.includes('sandbox') || lower.includes('developer mode')) {
+    const setTab = document.querySelector('.bottom-nav-item[data-tab="settings"]');
+    if (setTab) setTab.click();
+    voiceAssistant.speakAlert('Opening settings and developer sandbox.', 'LOW');
+  }
+  // 8. Camera & Lane Departure
   else if (lower.includes('camera') || lower.includes('dashcam') || lower.includes('lane')) {
     const offset = cameraHud ? cameraHud.lateralOffsetCm : 0;
     const text = `AI lane tracking active. Lateral offset is ${Math.abs(offset)} centimeters ${offset >= 0 ? 'right' : 'left'} of lane center.`;
     voiceAssistant.speakAlert(text, 'LOW');
   }
-  // 6. Language Switch
+  // 9. Language Switch
   else if (lower.includes('hinglish') || lower.includes('hindi') || lower.includes('english') || lower.includes('language')) {
     const newMode = (lower.includes('english')) ? 'en' : 'hinglish';
     voiceAssistant.setLanguageMode(newMode);
@@ -1671,43 +2138,40 @@ function handleVoiceCommand(cmd) {
       'LOW'
     );
   }
-  // 7. Hazard Reporting
-  else if (lower.includes('pothole') || lower.includes('cow') || lower.includes('hazard') || lower.includes('accident')) {
+  // 10. Hazard Reporting
+  else if (lower.includes('pothole') || lower.includes('cow') || lower.includes('accident')) {
     const text = `Hazard acknowledged and pinned to Indian road safety radar. Caution advised.`;
     voiceAssistant.speakAlert(text, 'MEDIUM');
     if (gpsMap) {
       gpsMap.pinUserReportedHazard('Pothole / Road Obstacle Reported via Voice');
     }
   }
-  // 8. Emergency
+  // 11. Emergency
   else if (lower.includes('emergency') || lower.includes('112') || lower.includes('sos') || lower.includes('help')) {
-    const text = `Emergency protocol initiated. Transmitting GNSS coordinates to Indian Emergency 112 hotline.`;
-    voiceAssistant.speakAlert(text, 'CRITICAL');
+    triggerEmergencySos(false);
   }
-  // 9. Mute
+  // 12. Mute
   else if (lower.includes('mute') || lower.includes('quiet')) {
     voiceEnabled = false;
     voiceAssistant.setMuted(true);
     dom.btnToggleVoice.classList.remove('active');
     dom.btnToggleVoice.querySelector('.btn-text').textContent = 'Voice: OFF';
   }
-  // 10. About & Developer Info (Arjit Jaiswal)
+  // 13. About & Developer Info (Arjit Jaiswal)
   else if (lower.includes('about') || lower.includes('who made') || lower.includes('creator') || lower.includes('arjit') || lower.includes('developer')) {
-    const text = 'SURAKSHA-AI was designed and developed by Arjit Jaiswal as an autonomous driving safety copilot for Indian roads.';
+    const text = 'SURAKSHA-AI was designed and developed by Arjit Jaiswal as an autonomous driving safety companion for Indian roads.';
     voiceAssistant.speakAlert(text, 'LOW');
-    const aboutTabBtn = document.querySelector('.nav-tab-btn[data-tab="about"]');
-    if (aboutTabBtn) aboutTabBtn.click();
+    const setTab = document.querySelector('.bottom-nav-item[data-tab="settings"]');
+    if (setTab) setTab.click();
   }
-  // 11. How to Use & Guide
+  // 14. How to Use & Guide
   else if (lower.includes('how to use') || lower.includes('how to work') || lower.includes('guide') || lower.includes('help')) {
-    const text = 'Opening user guide. You can mount your phone for live dashcam vision, enable eye tracking, or use voice navigation.';
+    const text = 'SURAKSHA AI monitors road lanes, warns of cattle, potholes and drowsiness, and supports voice assistance.';
     voiceAssistant.speakAlert(text, 'LOW');
-    const aboutTabBtn = document.querySelector('.nav-tab-btn[data-tab="about"]');
-    if (aboutTabBtn) aboutTabBtn.click();
   }
-  // 12. Status / General
+  // 15. Status / General
   else if (lower.includes('status') || lower.includes('report')) {
-    const text = `Current risk level is ${lastDecision?.finalRiskLevel}. Speed is ${Math.round(state.speed)} kilometers per hour. All safety shields armed.`;
+    const text = `Current risk level is ${lastDecision?.finalRiskLevel || 'LOW'}. Speed is ${Math.round(state.speed)} kilometers per hour. All safety shields armed.`;
     voiceAssistant.speakAlert(text, 'LOW');
   } 
   else {

@@ -567,8 +567,16 @@ export class GpsMapComponent {
       }
     }
 
-    // 2. Known Landmarks (Purvanchal, Uttar Pradesh & Major Indian Corridors)
+    // 2. Known Landmarks & Major Indian Metros
     const landmarks = [
+      { name: 'Pune (FC Road & Shivaji Nagar)', desc: 'Smart City & Auto Tech Hub, Maharashtra', icon: '🏛️', lat: 18.5204, lng: 73.8567 },
+      { name: 'Hinjewadi IT Park, Pune', desc: 'Rajiv Gandhi Infotech Park Phase 1, Maharashtra', icon: '🏢', lat: 18.5913, lng: 73.7389 },
+      { name: 'Mumbai Marine Drive', desc: 'Queen\'s Necklace Coastal Promenade, Maharashtra', icon: '🌊', lat: 18.9438, lng: 72.8232 },
+      { name: 'Bandra-Worli Sea Link, Mumbai', desc: '8-Lane Cable-Stayed Coastal Expressway', icon: '🌉', lat: 19.0350, lng: 72.8220 },
+      { name: 'Connaught Place & India Gate, New Delhi', desc: 'National Capital Central Ring, Delhi', icon: '🇮🇳', lat: 28.6315, lng: 77.2167 },
+      { name: 'Cyber Hub, Gurugram', desc: 'DLF Cyber City Tech Boulevard, Haryana', icon: '🏙️', lat: 28.4952, lng: 77.0895 },
+      { name: 'Outer Ring Road, Bengaluru', desc: 'Silicon Plateau IT Corridor, Karnataka', icon: '💻', lat: 12.9352, lng: 77.6245 },
+      { name: 'Hitec City & Cyber Towers, Hyderabad', desc: 'HITEC IT Corridor & Financial District', icon: '🚀', lat: 17.4504, lng: 78.3808 },
       { name: 'Kashi Vishwanath Dham, Varanasi', desc: 'Sacred Jyotirlinga & Cultural Corridor, UP', icon: '🛕', lat: 25.3109, lng: 83.0107 },
       { name: 'Assi Ghat & Subah-e-Banaras, Varanasi', desc: 'Sacred Ganga Riverfront & Aarti, UP', icon: '🌅', lat: 25.2905, lng: 82.9965 },
       { name: 'Gorakhnath Temple & Math, Gorakhpur', desc: 'Historic Nath Monastic Center, Purvanchal', icon: '🛕', lat: 26.7720, lng: 83.3550 },
@@ -576,6 +584,10 @@ export class GpsMapComponent {
       { name: 'Shri Ram Janmabhoomi Mandir, Ayodhya', desc: 'Grand Ram Mandir Complex, UP', icon: '🛕', lat: 26.7950, lng: 82.1940 },
       { name: 'Triveni Sangam, Prayagraj', desc: 'Holy Confluence of Ganga, Yamuna & Saraswati', icon: '🕉️', lat: 25.4299, lng: 81.8824 },
       { name: 'Purvanchal Expressway 100 km/h Gantry', desc: '6-Lane Access-Controlled Highway, UP', icon: '🛣️', lat: 26.0235, lng: 83.1782 },
+      { name: 'TIDEL Park, Rajiv Gandhi IT Expressway (OMR), Chennai', desc: 'State IT Highway, Chennai', icon: '🏢', lat: 12.9892, lng: 80.2475 },
+      { name: 'Park Street & Victoria Memorial, Kolkata', desc: 'Historic Heritage Corridor, West Bengal', icon: '🏛️', lat: 22.5448, lng: 88.3426 },
+      { name: 'Sabarmati Riverfront, Ahmedabad', desc: 'Iconic Urban Riverfront Promenade, Gujarat', icon: '🌆', lat: 23.0225, lng: 72.5714 },
+      { name: 'Hawa Mahal & MI Road, Jaipur', desc: 'Pink City Heritage Expressway, Rajasthan', icon: '🏰', lat: 26.9239, lng: 75.8267 },
       { name: 'BHU Campus & Trauma Centre, Varanasi', desc: 'Premier Banaras Hindu University, UP', icon: '🎓', lat: 25.2677, lng: 82.9913 },
     ];
 
@@ -587,20 +599,67 @@ export class GpsMapComponent {
       }
     }
 
-    return suggestions.slice(0, 6);
+    return suggestions.slice(0, 8);
+  }
+
+  showToast(msg, type = 'info') {
+    let toast = document.getElementById('gmap-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'gmap-toast';
+      toast.className = 'gmap-toast-pill';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.className = `gmap-toast-pill show ${type}`;
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 4000);
   }
 
   async searchPlace(query) {
     if (!query || !this.map) return null;
     const q = query.trim().toLowerCase();
 
+    // Comprehensive offline dictionary of Indian cities and highway corridors
     const knownLocations = {
-      'kashi vishwanath': { name: 'Shri Kashi Vishwanath Dham, Varanasi, Uttar Pradesh', lat: 25.3109, lng: 83.0107, zoom: 16 },
-      'kashi': { name: 'Shri Kashi Vishwanath Dham, Varanasi, Uttar Pradesh', lat: 25.3109, lng: 83.0107, zoom: 16 },
-      'assi ghat': { name: 'Assi Ghat, Varanasi, Uttar Pradesh', lat: 25.2905, lng: 82.9965, zoom: 16 },
-      'assi': { name: 'Assi Ghat, Varanasi, Uttar Pradesh', lat: 25.2905, lng: 82.9965, zoom: 16 },
+      'pune': { name: 'Pune (FC Road & Shivaji Nagar), Maharashtra', lat: 18.5204, lng: 73.8567, zoom: 15 },
+      'hinjewadi': { name: 'Hinjewadi IT Park Phase 1, Pune, Maharashtra', lat: 18.5913, lng: 73.7389, zoom: 15 },
+      'viman nagar': { name: 'Viman Nagar, Pune, Maharashtra', lat: 18.5679, lng: 73.9143, zoom: 15 },
+      'kothrud': { name: 'Kothrud, Pune, Maharashtra', lat: 18.5074, lng: 73.8077, zoom: 15 },
+      'mumbai': { name: 'Marine Drive & Nariman Point, Mumbai, Maharashtra', lat: 18.9438, lng: 72.8232, zoom: 14 },
+      'bandra': { name: 'Bandra West & Bandra-Worli Sea Link, Mumbai', lat: 19.0596, lng: 72.8295, zoom: 15 },
+      'delhi': { name: 'Connaught Place & India Gate, New Delhi', lat: 28.6315, lng: 77.2167, zoom: 14 },
+      'new delhi': { name: 'Connaught Place & India Gate, New Delhi', lat: 28.6315, lng: 77.2167, zoom: 14 },
+      'noida': { name: 'Sector 18 & Noida Expressway, Uttar Pradesh', lat: 28.5708, lng: 77.3271, zoom: 15 },
+      'gurgaon': { name: 'Cyber Hub & DLF Cyber City, Gurugram, Haryana', lat: 28.4952, lng: 77.0895, zoom: 15 },
+      'gurugram': { name: 'Cyber Hub & DLF Cyber City, Gurugram, Haryana', lat: 28.4952, lng: 77.0895, zoom: 15 },
+      'bangalore': { name: 'Outer Ring Road & Indiranagar, Bengaluru, Karnataka', lat: 12.9716, lng: 77.5946, zoom: 14 },
+      'bengaluru': { name: 'MG Road & Outer Ring Road, Bengaluru, Karnataka', lat: 12.9716, lng: 77.5946, zoom: 14 },
+      'whitefield': { name: 'Whitefield & ITPL Tech Park, Bengaluru, Karnataka', lat: 12.9698, lng: 77.7499, zoom: 15 },
+      'hyderabad': { name: 'Hitec City & Cyber Towers, Hyderabad, Telangana', lat: 17.4504, lng: 78.3808, zoom: 15 },
+      'secunderabad': { name: 'Secunderabad Junction & Clock Tower, Telangana', lat: 17.4399, lng: 78.4983, zoom: 15 },
+      'chennai': { name: 'TIDEL Park, Rajiv Gandhi IT Expressway (OMR), Chennai', lat: 12.9892, lng: 80.2475, zoom: 15 },
+      'kolkata': { name: 'Park Street & Victoria Memorial, Kolkata, West Bengal', lat: 22.5448, lng: 88.3426, zoom: 15 },
+      'howrah': { name: 'Howrah Bridge & Station, Kolkata, West Bengal', lat: 22.5850, lng: 88.3468, zoom: 15 },
+      'ahmedabad': { name: 'Sabarmati Riverfront & SG Highway, Ahmedabad, Gujarat', lat: 23.0225, lng: 72.5714, zoom: 15 },
+      'surat': { name: 'Surat Diamond Bourse & Dumas Road, Surat, Gujarat', lat: 21.1702, lng: 72.8311, zoom: 15 },
+      'jaipur': { name: 'Hawa Mahal & MI Road, Jaipur, Rajasthan', lat: 26.9239, lng: 75.8267, zoom: 15 },
+      'lucknow': { name: 'Hazratganj & Gomti Nagar, Lucknow, Uttar Pradesh', lat: 26.8467, lng: 80.9462, zoom: 15 },
+      'kanpur': { name: 'Mall Road & Civil Lines, Kanpur, Uttar Pradesh', lat: 26.4499, lng: 80.3319, zoom: 15 },
+      'nagpur': { name: 'Zero Mile Stone & Sitabuldi, Nagpur, Maharashtra', lat: 21.1458, lng: 79.0882, zoom: 15 },
+      'indore': { name: 'Rajwada & Vijay Nagar, Indore, Madhya Pradesh', lat: 22.7196, lng: 75.8577, zoom: 15 },
+      'bhopal': { name: 'VIP Road & Upper Lake, Bhopal, Madhya Pradesh', lat: 23.2599, lng: 77.4126, zoom: 15 },
+      'chandigarh': { name: 'Sector 17 Plaza & Sukhna Lake, Chandigarh', lat: 30.7333, lng: 76.7794, zoom: 15 },
+      'goa': { name: 'Panaji Miramar Beach & Candolim, Goa', lat: 15.4909, lng: 73.8278, zoom: 14 },
+      'panaji': { name: 'Panaji Promenade & Mandovi River, Goa', lat: 15.4989, lng: 73.8278, zoom: 15 },
       'varanasi': { name: 'Varanasi (Kashi / Banaras), Purvanchal, Uttar Pradesh', lat: 25.3176, lng: 82.9739, zoom: 15 },
       'banaras': { name: 'Varanasi (Kashi / Banaras), Purvanchal, Uttar Pradesh', lat: 25.3176, lng: 82.9739, zoom: 15 },
+      'kashi': { name: 'Shri Kashi Vishwanath Dham, Varanasi, Uttar Pradesh', lat: 25.3109, lng: 83.0107, zoom: 16 },
+      'kashi vishwanath': { name: 'Shri Kashi Vishwanath Dham, Varanasi, Uttar Pradesh', lat: 25.3109, lng: 83.0107, zoom: 16 },
+      'assi ghat': { name: 'Assi Ghat, Varanasi, Uttar Pradesh', lat: 25.2905, lng: 82.9965, zoom: 16 },
+      'assi': { name: 'Assi Ghat, Varanasi, Uttar Pradesh', lat: 25.2905, lng: 82.9965, zoom: 16 },
       'gorakhpur': { name: 'Gorakhpur (Gorakhnath Temple & Ramgarh Taal), Purvanchal, UP', lat: 26.7606, lng: 83.3732, zoom: 15 },
       'ramgarh taal': { name: 'Ramgarh Taal Lake Promenade, Gorakhpur, Uttar Pradesh', lat: 26.7420, lng: 83.3980, zoom: 16 },
       'gorakhnath': { name: 'Gorakhnath Temple & Math, Gorakhpur, Uttar Pradesh', lat: 26.7720, lng: 83.3550, zoom: 16 },
@@ -608,8 +667,43 @@ export class GpsMapComponent {
       'ram mandir': { name: 'Shri Ram Janmabhoomi Mandir, Ayodhya, Uttar Pradesh', lat: 26.7950, lng: 82.1940, zoom: 16 },
       'prayagraj': { name: 'Triveni Sangam, Prayagraj, Purvanchal, Uttar Pradesh', lat: 25.4299, lng: 81.8824, zoom: 15 },
       'sangam': { name: 'Triveni Sangam, Prayagraj, Uttar Pradesh', lat: 25.4299, lng: 81.8824, zoom: 16 },
+      'allahabad': { name: 'Triveni Sangam, Prayagraj (Allahabad), Uttar Pradesh', lat: 25.4299, lng: 81.8824, zoom: 15 },
       'purvanchal expressway': { name: 'Purvanchal Expressway (Azamgarh - Ghazipur), Uttar Pradesh', lat: 26.0235, lng: 83.1782, zoom: 14 },
       'purvanchal': { name: 'Purvanchal Expressway (Azamgarh - Ghazipur), Uttar Pradesh', lat: 26.0235, lng: 83.1782, zoom: 14 },
+      'agra': { name: 'Taj Mahal & Fatehabad Road, Agra, Uttar Pradesh', lat: 27.1751, lng: 78.0421, zoom: 15 },
+      'taj mahal': { name: 'Taj Mahal, Agra, Uttar Pradesh', lat: 27.1751, lng: 78.0421, zoom: 16 },
+      'mathura': { name: 'Shri Krishna Janmasthan, Mathura, Uttar Pradesh', lat: 27.4924, lng: 77.6737, zoom: 15 },
+      'vrindavan': { name: 'Prem Mandir & ISKCON, Vrindavan, Uttar Pradesh', lat: 27.5706, lng: 77.6598, zoom: 15 },
+      'dehradun': { name: 'Clock Tower & Rajpur Road, Dehradun, Uttarakhand', lat: 30.3165, lng: 78.0322, zoom: 15 },
+      'shimla': { name: 'Mall Road & The Ridge, Shimla, Himachal Pradesh', lat: 31.1048, lng: 77.1734, zoom: 15 },
+      'manali': { name: 'Mall Road & Solang Valley, Manali, Himachal Pradesh', lat: 32.2396, lng: 77.1887, zoom: 15 },
+      'amritsar': { name: 'Golden Temple (Harmandir Sahib), Amritsar, Punjab', lat: 31.6200, lng: 74.8765, zoom: 16 },
+      'golden temple': { name: 'Harmandir Sahib (Golden Temple), Amritsar, Punjab', lat: 31.6200, lng: 74.8765, zoom: 16 },
+      'srinagar': { name: 'Dal Lake & Boulevard Road, Srinagar, Kashmir', lat: 34.0837, lng: 74.7973, zoom: 14 },
+      'patna': { name: 'Gandhi Maidan & Ganga Pathway, Patna, Bihar', lat: 25.5941, lng: 85.1376, zoom: 15 },
+      'ranchi': { name: 'Main Road & Morabadi, Ranchi, Jharkhand', lat: 23.3441, lng: 85.3096, zoom: 15 },
+      'bhubaneswar': { name: 'Janpath & Temple City, Bhubaneswar, Odisha', lat: 20.2961, lng: 85.8245, zoom: 15 },
+      'raipur': { name: 'Marine Drive & Telibandha Lake, Raipur, Chhattisgarh', lat: 21.2514, lng: 81.6296, zoom: 15 },
+      'visakhapatnam': { name: 'RK Beach & Beach Road, Visakhapatnam, Andhra Pradesh', lat: 17.6868, lng: 83.2185, zoom: 15 },
+      'vizag': { name: 'RK Beach & Beach Road, Visakhapatnam, Andhra Pradesh', lat: 17.6868, lng: 83.2185, zoom: 15 },
+      'vijayawada': { name: 'MG Road & Kanaka Durga Temple, Vijayawada, Andhra Pradesh', lat: 16.5062, lng: 80.6480, zoom: 15 },
+      'kochi': { name: 'Marine Drive & MG Road, Kochi, Kerala', lat: 9.9816, lng: 76.2999, zoom: 15 },
+      'cochin': { name: 'Marine Drive & MG Road, Kochi, Kerala', lat: 9.9816, lng: 76.2999, zoom: 15 },
+      'trivandrum': { name: 'MG Road & Kovalam, Thiruvananthapuram, Kerala', lat: 8.5241, lng: 76.9366, zoom: 15 },
+      'thiruvananthapuram': { name: 'MG Road & Kovalam, Thiruvananthapuram, Kerala', lat: 8.5241, lng: 76.9366, zoom: 15 },
+      'coimbatore': { name: 'Avinashi Road & RS Puram, Coimbatore, Tamil Nadu', lat: 11.0168, lng: 76.9558, zoom: 15 },
+      'madurai': { name: 'Meenakshi Amman Temple, Madurai, Tamil Nadu', lat: 9.9195, lng: 78.1193, zoom: 16 },
+      'mysore': { name: 'Mysore Palace & Sayyaji Rao Road, Mysuru, Karnataka', lat: 12.3052, lng: 76.6552, zoom: 15 },
+      'mysuru': { name: 'Mysore Palace & Sayyaji Rao Road, Mysuru, Karnataka', lat: 12.3052, lng: 76.6552, zoom: 15 },
+      'mangalore': { name: 'Panambur & MG Road, Mangaluru, Karnataka', lat: 12.9141, lng: 74.8560, zoom: 15 },
+      'guwahati': { name: 'GS Road & Brahmaputra Riverfront, Guwahati, Assam', lat: 26.1445, lng: 91.7362, zoom: 15 },
+      'jodhpur': { name: 'Mehrangarh Fort & Clock Tower, Jodhpur, Rajasthan', lat: 26.2978, lng: 73.0185, zoom: 15 },
+      'udaipur': { name: 'City Palace & Lake Pichola, Udaipur, Rajasthan', lat: 24.5854, lng: 73.7125, zoom: 15 },
+      'navi mumbai': { name: 'Palm Beach Road & Vashi, Navi Mumbai, Maharashtra', lat: 19.0330, lng: 73.0297, zoom: 15 },
+      'thane': { name: 'Ghodbunder Road & Viviana Mall, Thane, Maharashtra', lat: 19.2183, lng: 72.9781, zoom: 15 },
+      'nashik': { name: 'College Road & Trimbakeshwar Road, Nashik, Maharashtra', lat: 19.9975, lng: 73.7898, zoom: 15 },
+      'vadodara': { name: 'Sayaji Baug & RC Dutt Road, Vadodara, Gujarat', lat: 22.3072, lng: 73.1812, zoom: 15 },
+      'rajkot': { name: 'Yagnik Road & Race Course Ring Road, Rajkot, Gujarat', lat: 22.3039, lng: 70.8022, zoom: 15 },
       'azamgarh': { name: 'Azamgarh, Purvanchal, Uttar Pradesh', lat: 26.0687, lng: 83.1840, zoom: 15 },
       'jaunpur': { name: 'Jaunpur Shahi Bridge, Purvanchal, Uttar Pradesh', lat: 25.7464, lng: 82.6837, zoom: 15 },
       'ghazipur': { name: 'Ghazipur, Purvanchal, Uttar Pradesh', lat: 25.5840, lng: 83.5770, zoom: 15 },
@@ -618,14 +712,12 @@ export class GpsMapComponent {
       'sarnath': { name: 'Dhamek Stupa, Sarnath, Varanasi, Uttar Pradesh', lat: 25.3811, lng: 83.0214, zoom: 16 },
       'babatpur': { name: 'Lal Bahadur Shastri International Airport (Babatpur VNS)', lat: 25.4526, lng: 82.8596, zoom: 16 },
       'tidel park': { name: 'TIDEL Park, Rajiv Gandhi IT Expressway (OMR), Chennai', lat: 12.9892, lng: 80.2475, zoom: 16 },
-      'mumbai': { name: 'Marine Drive, Mumbai', lat: 18.9438, lng: 72.8232, zoom: 14 },
-      'delhi': { name: 'Connaught Place, New Delhi', lat: 28.6315, lng: 77.2167, zoom: 14 },
-      'bangalore': { name: 'Outer Ring Road, Bengaluru', lat: 12.9352, lng: 77.6245, zoom: 14 },
     };
 
+    // 1. Direct or partial match in instant offline dictionary
     let matched = null;
     for (const [k, v] of Object.entries(knownLocations)) {
-      if (q.includes(k) || k.includes(q)) {
+      if (q === k || q.startsWith(k) || k.startsWith(q) || q.includes(k) || k.includes(q)) {
         matched = v;
         break;
       }
@@ -638,32 +730,53 @@ export class GpsMapComponent {
       name = matched.name;
       zoom = matched.zoom;
     } else {
+      // 2. Multi-tier Online Geocoding
       try {
-        let searchParam = query;
-        if (!q.includes('uttar pradesh') && !q.includes('up') && !q.includes('india') && !q.includes('mumbai') && !q.includes('delhi')) {
-          searchParam = `${query}, Uttar Pradesh, India`;
+        let searchParam = query.trim();
+        if (!searchParam.toLowerCase().includes('india')) {
+          searchParam = `${searchParam}, India`;
         }
-        const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchParam)}&countrycodes=in&limit=1`);
+        const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchParam)}&countrycodes=in&limit=3&addressdetails=1`);
         if (resp.ok) {
           const data = await resp.json();
           if (data && data.length > 0) {
             lat = parseFloat(data[0].lat);
             lng = parseFloat(data[0].lon);
-            name = data[0].display_name.split(',')[0] + ', Uttar Pradesh';
+            name = data[0].display_name.split(',').slice(0, 3).join(', ');
             zoom = 15;
           }
         }
       } catch (e) {
-        console.warn('Online place search failed, using fallback:', e);
+        console.warn('Nominatim geocoding failed, trying Photon fallback:', e);
+      }
+
+      // Tier 2: Photon Komoot Geocoder fallback
+      if (!lat || !lng) {
+        try {
+          const pResp = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=3`);
+          if (pResp.ok) {
+            const pData = await pResp.json();
+            if (pData && pData.features && pData.features.length > 0) {
+              const feat = pData.features[0];
+              lng = feat.geometry.coordinates[0];
+              lat = feat.geometry.coordinates[1];
+              const props = feat.properties || {};
+              name = [props.name, props.city, props.state, props.country].filter(Boolean).join(', ');
+              zoom = 15;
+            }
+          }
+        } catch (e) {
+          console.warn('Photon geocoding failed:', e);
+        }
       }
     }
 
     if (!lat || !lng) {
-      alert(`Location "${query}" not found. Try "Kashi Vishwanath", "Assi Ghat", "Gorakhpur", "Purvanchal Expressway", "Ayodhya", or "Prayagraj".`);
+      this.showToast(`Location "${query}" not found in India directory. Try "Pune", "Mumbai", "Delhi", "Bengaluru", "Kashi Vishwanath", etc.`, 'warn');
       return null;
     }
 
-    this.map.flyTo([lat, lng], zoom || 16, { duration: 1.2 });
+    this.map.flyTo([lat, lng], zoom || 15, { duration: 1.2 });
 
     if (this.searchMarker) {
       this.map.removeLayer(this.searchMarker);
@@ -690,17 +803,21 @@ export class GpsMapComponent {
       <div class="gmap-popup-card">
         <div class="gpc-header">
           <h4 class="gpc-name">${name}</h4>
-          <span class="gpc-cat">GOOGLE MAPS SEARCH RESULT</span>
+          <span class="gpc-cat">GOOGLE MAPS SATELLITE</span>
         </div>
         <div class="gpc-desc">${lat.toFixed(5)}° N, ${lng.toFixed(5)}° E</div>
-        <div class="gpc-actions">
+        <div class="gpc-actions" style="display:flex; gap:8px; margin-top:8px;">
           <button class="gpc-nav-btn" onclick="window.startNavigationTo(${lat}, ${lng}, '${safeName}')">
-            <span>↗️</span> Start Navigation
+            <span>↗️</span> Navigate Here
+          </button>
+          <button class="gpc-nav-btn" style="background:#0284c7;" onclick="window.teleportCarTo(${lat}, ${lng}, '${safeName}')">
+            <span>🚗</span> Drive Here
           </button>
         </div>
       </div>
     `, { className: 'gmap-custom-leaflet-popup' }).openPopup();
 
+    this.showToast(`Found: ${name}`, 'success');
     return { lat, lng, name };
   }
 
@@ -1105,7 +1222,7 @@ export class GpsMapComponent {
 
   async detectCurrentLocation() {
     if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser.');
+      this.showToast('Geolocation is not supported by your browser.', 'warn');
       return null;
     }
 
@@ -1195,7 +1312,7 @@ export class GpsMapComponent {
         },
         (err) => {
           console.warn('Geolocation detection error:', err.message);
-          alert(`GPS Location Detection: ${err.message}\nEnsure Location Permission is allowed in your browser.`);
+          this.showToast(`GPS Location Detection: ${err.message}. Please allow Location permission.`, 'warn');
           resolve(null);
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }

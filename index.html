@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Indian Roads AI Driving Safety Assistant | Real-Time Telemetry & Copilot</title>
-    <meta name="description" content="Advanced AI Driving Safety Assistant engineered specifically for Indian road conditions. Prevents accidents, evaluates rash driving, detects potholes & stray cattle, predicts collisions, and issues real-time voice alerts." />
+    <title>SURAKSHA AI | Real-Time AI Driving Companion for Indian Roads</title>
+    <meta name="description" content="Sleek, Tesla-grade AI Driving Safety Companion engineered specifically for Indian road conditions. Glanceable HUD, predictive danger alerts, smart driver focus monitoring, and instant emergency SOS." />
     <meta name="google-site-verification" content="Efu7UiZwO3jCoGO_jkfuS-jzaZxXroSFyMMpKnI9JR8" />
     
     <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
@@ -26,21 +26,27 @@
       <div class="wallpaper-overlay"></div>
     </div>
 
-    <!-- App Header -->
+    <!-- App Header: Clean, Minimalist & Focused -->
     <header class="app-header">
       <div class="brand-wrapper">
-        <span class="brand-badge">🇮🇳 SURAKSHA-AI</span>
+        <span class="brand-badge">🇮🇳 SURAKSHA AI</span>
         <div>
-          <h1 class="brand-title">Indian Roads AI Driving Safety Assistant</h1>
-          <p class="brand-subtitle">Real-Time Collision Avoidance • DMS Eye Tracker • Indian Hazard Intelligence</p>
+          <h1 class="brand-title">AI Driving Companion</h1>
+          <p class="brand-subtitle">Real-Time Co-Driver for Indian Roads</p>
         </div>
       </div>
 
       <div class="header-actions">
         <div class="live-pill">
           <span class="live-dot"></span>
-          <span>SYSTEM ACTIVE (60 Hz)</span>
+          <span>AI ACTIVE</span>
         </div>
+
+        <!-- Focus Mode Toggle (Distraction Free) -->
+        <button id="btn-toggle-focus-mode" class="btn-icon-clean" title="Toggle Distraction-Free Focus Driving Mode">
+          <span class="icon">🎯</span>
+          <span class="btn-text">Focus Mode</span>
+        </button>
 
         <!-- Siri / Jarvis Style Floating Pulsing Audio Orb -->
         <div id="voice-assistant-orb" class="voice-assistant-orb" title="Suraksha AI Neural Voice Copilot (Listening / Speaking)">
@@ -49,40 +55,40 @@
           <div class="orb-ring ring-2"></div>
         </div>
 
-        <button id="btn-toggle-voice" class="btn-icon" title="Toggle Real-time Voice Alerts (Currently Muted)">
+        <button id="btn-toggle-voice" class="btn-icon-clean" title="Toggle Real-time Voice Alerts">
           <span class="icon">🔈</span>
           <span class="btn-text">Voice: OFF</span>
         </button>
 
-        <button id="btn-toggle-audio" class="btn-icon" title="Toggle Emergency Chimes & Warning Sounds (Currently Muted)">
-          <span class="icon">🔕</span>
-          <span class="btn-text">Sound: OFF</span>
-        </button>
-
-        <button id="btn-voice-command" class="btn-icon" title="Speak Voice Command to Copilot">
+        <button id="btn-voice-command" class="btn-icon-clean" title="Speak Voice Command to Copilot">
           <span class="icon">🎤</span>
           <span class="btn-text">Voice Query</span>
         </button>
 
-        <button id="btn-toggle-language" class="btn-icon" title="Toggle English / Hinglish Copilot Voice">
-          <span class="icon">🌐</span>
-          <span class="btn-text" id="lang-btn-text">Hinglish 🇮🇳</span>
+        <!-- Header Settings Button -->
+        <button id="btn-header-settings" class="btn-icon-clean" title="Settings & Developer Sandbox">
+          <span class="icon">⚙️</span>
+          <span class="btn-text">Settings</span>
         </button>
 
-        <button id="btn-header-about" class="btn-icon" title="About SURAKSHA-AI & How to Use (Made by Arjit Jaiswal)">
-          <span class="icon">ℹ️</span>
-          <span class="btn-text">About</span>
-        </button>
-
-        <button id="btn-header-wallpaper" class="btn-icon" title="Customize Cockpit Atmosphere & High-Definition Wallpapers">
-          <span class="icon">🎨</span>
-          <span class="btn-text">Atmosphere</span>
-        </button>
+        <!-- Hidden / Backwards-compatibility header buttons -->
+        <button id="btn-toggle-audio" style="display:none;" title="Toggle Sounds"><span class="icon">🔕</span><span class="btn-text">Sound: OFF</span></button>
+        <button id="btn-toggle-language" style="display:none;" title="Language"><span id="lang-btn-text">Hinglish 🇮🇳</span></button>
+        <button id="btn-header-about" style="display:none;" title="About">About</button>
+        <button id="btn-header-wallpaper" style="display:none;" title="Atmosphere">Atmosphere</button>
       </div>
     </header>
 
-    <!-- Tier-1 Automotive ADAS Active System Status Strip -->
-    <div class="adas-status-strip">
+    <!-- Top Workspace Navigation Tabs -->
+    <div class="cockpit-tabs-bar" id="cockpit-tabs-bar">
+      <button class="nav-tab-btn active" data-tab="drive">🚗 Drive Mode</button>
+      <button class="nav-tab-btn" data-tab="gmap">🗺️ Navigation</button>
+      <button class="nav-tab-btn" data-tab="insights">📊 Insights & Score</button>
+      <button class="nav-tab-btn" data-tab="settings">⚙️ Settings & Sandbox</button>
+    </div>
+
+    <!-- Hidden ADAS System Status Strip (Retained for automated status pings & test trigger) -->
+    <div class="adas-status-strip" style="display:none;">
       <div class="adas-pill-list">
         <span class="adas-pill" id="adas-lka"><span class="adas-dot"></span> LKA: ACTIVE</span>
         <span class="adas-pill" id="adas-fcw"><span class="adas-dot"></span> FCW: READY</span>
@@ -92,85 +98,438 @@
         <span class="adas-pill" id="adas-tsr"><span class="adas-dot"></span> TSR: 80 KM/H</span>
         <span class="adas-pill" id="adas-sos"><span class="adas-dot"></span> NERS 112 SOS</span>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <button id="btn-trigger-sos" class="btn-icon" style="background:rgba(239,68,68,0.25); border-color:#ef4444; color:#fca5a5; font-weight:700; padding:4px 10px; font-size:11px;">
-          <span>🚨 Test 112 SOS</span>
-        </button>
-      </div>
+      <button id="btn-trigger-sos">🚨 SOS</button>
     </div>
 
-    <!-- Cockpit Workspace Navigation Tabs -->
-    <div class="cockpit-tabs-bar">
-      <button class="nav-tab-btn active" data-tab="cockpit">🏎️ Cockpit ADAS & HUD</button>
-      <button class="nav-tab-btn" data-tab="gmap">🛰️ Google Satellite Maps</button>
-      <button class="nav-tab-btn" data-tab="telemetry">📊 Vehicle Dynamics & Physics</button>
-      <button class="nav-tab-btn" data-tab="blackbox">📋 Blackbox Flight Recorder</button>
-      <button class="nav-tab-btn" data-tab="settings">⚙️ ADAS Calibration & Settings</button>
-      <button class="nav-tab-btn" data-tab="about">ℹ️ About & Guide</button>
-    </div>
-
-    <!-- WORKSPACE VIEW 1: COCKPIT HUD -->
-    <div id="view-cockpit" class="workspace-view active">
-
-    <!-- Master Arbiter Decision Banner -->
-    <section id="master-banner" class="master-banner risk-LOW">
-      <div class="risk-level-badge">
-        <span class="label">OVERALL RISK</span>
-        <span id="risk-val" class="val">LOW</span>
-      </div>
-      <div class="banner-content">
-        <div class="threat-row">
-          <span class="threat-icon">⚠️</span>
-          <span class="threat-label">BIGGEST THREAT:</span>
-          <span id="biggest-threat" class="threat-text">System nominal. Safe following distance maintained.</span>
-        </div>
-        <div class="action-row">
-          <span class="action-label">ACTION DIRECTIVE:</span>
-          <span id="immediate-action" class="action-text">Safe buffer. Cruise normally.</span>
-        </div>
-      </div>
-      <div class="voice-bubble">
-        <div class="voice-header">
-          <span class="voice-icon">🗣️</span>
-          <span class="voice-label">COPILOT VOICE ALERT</span>
-        </div>
-        <div id="voice-message" class="voice-text">“Safe driving. Monitoring road ahead.”</div>
-      </div>
-    </section>
-
-    <!-- Main Grid: 3 Column Tier-1 Automotive Cockpit -->
-    <main class="cockpit-grid">
+    <!-- ==========================================================================
+         SCREEN 1: 🚗 DRIVE MODE (DEFAULT - 90% OF USER TIME)
+         Simple • Cool • Attractive • Glanceable in 1-2 Seconds
+         ========================================================================== -->
+    <div id="view-drive" class="workspace-view active">
       
-      <!-- Left Column: Forward Dashcam Vision & DMS -->
-      <section class="col-vision hud-card">
-        <div class="card-header">
-          <h2 class="card-title">📷 Forward AI Dashcam & Lane Vision</h2>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <button id="btn-toggle-dashcam" class="btn-icon" style="padding: 2px 8px; font-size: 11px; background: rgba(56, 189, 248, 0.15); border-color: var(--accent-cyan);" title="Toggle Real-Time Mobile / Road Facing Webcam Stream">
-              <span id="dashcam-btn-text">📹 Live Dashcam</span>
+      <!-- Smart Emergency Override Alert Banner (Overrides UI on Critical Hazard) -->
+      <div id="emergency-override-banner" class="emergency-override-banner" style="display: none;">
+        <div class="emergency-override-content">
+          <div class="emergency-pulse-badge">
+            <span class="strobe-dot"></span>
+            <span id="emergency-badge-text">CRITICAL HAZARD DETECTED</span>
+          </div>
+          <h2 id="emergency-threat-text" class="emergency-threat-text">BRAKE NOW! OBSTACLE AHEAD!</h2>
+          <p id="emergency-action-text" class="emergency-action-text">Immediate deceleration required. Stop vehicle safely.</p>
+          
+          <div class="emergency-sos-countdown-wrap" id="emergency-sos-countdown-wrap">
+            <div class="sos-timer-ring">
+              <svg class="sos-progress-svg" viewBox="0 0 100 100">
+                <circle class="sos-circle-bg" cx="50" cy="50" r="44"></circle>
+                <circle class="sos-circle-bar" id="sos-circle-bar" cx="50" cy="50" r="44"></circle>
+              </svg>
+              <div class="sos-timer-num" id="sos-countdown-num">5</div>
+            </div>
+            <div class="sos-countdown-info">
+              <strong>Auto-Dispatching 112 Emergency SOS in <span id="sos-countdown-secs">5</span>s</strong>
+              <span>Live GPS coordinates & vehicle impact metrics will be transmitted to Indian Emergency Services.</span>
+            </div>
+          </div>
+          
+          <div class="emergency-actions-row">
+            <button id="btn-cancel-emergency-sos" class="btn-cancel-sos">
+              <span>✅ I'm Safe (Cancel SOS)</span>
             </button>
-            <span class="card-badge" id="cam-fps">60 FPS</span>
+            <button id="btn-instant-dispatch-sos" class="btn-instant-sos">
+              <span>🚨 Dispatch 112 SOS Now</span>
+            </button>
           </div>
         </div>
-        <div class="canvas-container">
-          <canvas id="camera-canvas" width="640" height="380"></canvas>
-          <video id="road-camera-video" playsinline muted style="display: none;"></video>
+      </div>
+
+      <div class="drive-screen-container">
+
+        <!-- 1. PRIMARY HERO SECTION (The Glanceable Focal Point) -->
+        <section class="drive-hero-card" id="drive-hero-card">
+          <!-- Top Row: Driving Mode & Road Limit -->
+          <div class="hero-top-row">
+            <div class="hero-mode-pill">
+              <span class="hero-mode-dot"></span>
+              <span id="hero-mode-title">SAFE DRIVING COMPANION</span>
+            </div>
+            <div class="hero-speed-limit-pill" title="Road Speed Limit">
+              <span class="lbl">LIMIT</span>
+              <span class="val" id="hero-limit-val">80</span>
+              <span class="unit">km/h</span>
+            </div>
+          </div>
+
+          <!-- Center Row: Big Speed & Animated Glowing Risk Indicator -->
+          <div class="hero-center-row">
+            <div class="hero-speed-display">
+              <span id="hero-speed-val" class="hero-speed-num">72</span>
+              <span class="hero-speed-unit">KM/H</span>
+            </div>
+
+            <!-- Glowing Pulsing Risk Orb -->
+            <div class="hero-risk-orb-container">
+              <div class="risk-glow-ring ring-safe" id="hero-risk-ring">
+                <div class="risk-inner-core">
+                  <span class="risk-status-icon" id="hero-risk-icon">🟢</span>
+                  <span class="risk-status-label" id="hero-risk-badge">SAFE</span>
+                </div>
+              </div>
+              <span class="risk-sub-label">OVERALL RISK</span>
+            </div>
+          </div>
+
+          <!-- AI Copilot Dynamic Insight Banner (MOST IMPORTANT COMPONENT) -->
+          <div class="hero-copilot-banner" id="hero-copilot-banner">
+            <div class="copilot-header">
+              <span class="copilot-icon">🧠</span>
+              <span class="copilot-title">AI COPILOT</span>
+              <span class="copilot-live-tag">LIVE</span>
+            </div>
+            <div class="hero-copilot-summary" id="hero-copilot-summary">
+              “Road clear. Maintain lane and speed.”
+            </div>
+            <div class="hero-predictive-insight" id="hero-predictive-text">
+              Optimal corridor trajectory • Safe distance maintained.
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. NEXT TURN MANEUVER CARD (Clean & High Contrast) -->
+        <section class="drive-next-turn-card" id="drive-next-turn-card">
+          <div class="next-turn-icon-box" id="hero-turn-icon">⬆️</div>
+          <div class="next-turn-details">
+            <div class="next-turn-dist-row">
+              <span class="next-turn-dist" id="hero-turn-dist">In 1.2 km</span>
+              <span class="next-turn-eta" id="hero-turn-eta">ETA: 18 min • 18.5 km left</span>
+            </div>
+            <div class="next-turn-instruction" id="hero-turn-text">
+              Continue straight along Assi Ghat Rd towards Kashi Vishwanath Corridor
+            </div>
+          </div>
+          <button class="btn-turn-map-shortcut" id="btn-shortcut-map" title="Open Full Satellite Map">
+            <span>🗺️ Map</span>
+          </button>
+        </section>
+
+        <!-- 3. THREE SMART INSIGHT CARDS (Data -> Human Insights) -->
+        <section class="smart-cards-grid" id="drive-smart-cards-grid">
+          <!-- Smart Card 1: Driver Focus -->
+          <div class="smart-card" id="card-smart-driver">
+            <div class="smart-card-top">
+              <span class="smart-card-icon" id="smart-driver-icon">👁️</span>
+              <span class="smart-card-title">Driver Focus</span>
+              <span class="smart-card-badge safe" id="smart-driver-badge">OPTIMAL</span>
+            </div>
+            <div class="smart-card-status" id="smart-driver-status">Focused & Alert</div>
+            <div class="smart-card-desc" id="smart-driver-detail">Eyes on road • No fatigue detected</div>
+          </div>
+
+          <!-- Smart Card 2: Road Status -->
+          <div class="smart-card" id="card-smart-road">
+            <div class="smart-card-top">
+              <span class="smart-card-icon" id="smart-road-icon">🛣️</span>
+              <span class="smart-card-title">Road Status</span>
+              <span class="smart-card-badge safe" id="smart-road-badge">OPTIMAL</span>
+            </div>
+            <div class="smart-card-status" id="smart-road-status">Clear Bitumen</div>
+            <div class="smart-card-desc" id="smart-road-detail">Optimal traction • Dry surface</div>
+          </div>
+
+          <!-- Smart Card 3: Hazard Detection -->
+          <div class="smart-card" id="card-smart-hazard">
+            <div class="smart-card-top">
+              <span class="smart-card-icon" id="smart-hazard-icon">⚠️</span>
+              <span class="smart-card-title">Hazards</span>
+              <span class="smart-card-badge safe" id="smart-hazard-badge">NONE</span>
+            </div>
+            <div class="smart-card-status" id="smart-hazard-status">None Detected</div>
+            <div class="smart-card-desc" id="smart-hazard-detail">Corridor clear for next 2.4 km</div>
+          </div>
+        </section>
+
+        <!-- 4. COMPACT LIVE ROAD PREVIEW (AI Vision HUD / Mini Radar Map) -->
+        <section class="drive-preview-section" id="drive-preview-section">
+          <div class="preview-header">
+            <div class="preview-tabs">
+              <button class="preview-tab-btn active" id="btn-preview-camera">📹 Forward AI Dashcam (60 FPS)</button>
+              <button class="preview-tab-btn" id="btn-preview-map">🛰️ Live Mini Radar Map</button>
+            </div>
+            <div class="preview-actions">
+              <button id="btn-toggle-dashcam" class="btn-icon-subtle" title="Toggle Real-time Road Camera">
+                <span id="dashcam-btn-text">📹 Live Dashcam</span>
+              </button>
+              <button id="btn-detect-gps" class="btn-icon-subtle" title="Lock GNSS Location">
+                <span id="btn-detect-gps-text">📍 GPS Lock</span>
+              </button>
+            </div>
+          </div>
+          
+          <div class="preview-stage">
+            <!-- Forward AI Vision HUD Canvas -->
+            <div id="preview-camera-container" class="preview-pane active">
+              <canvas id="camera-canvas" width="640" height="340"></canvas>
+              <video id="road-camera-video" playsinline muted style="display: none;"></video>
+              <div class="cam-overlay-stats">
+                <span class="stat-pill" id="cam-fps">60 FPS AI</span>
+                <span class="stat-pill">Obstacle: <strong id="metric-distance">65</strong>m</span>
+                <span class="stat-pill">TTC: <strong id="metric-ttc">--</strong>s</span>
+              </div>
+            </div>
+
+            <!-- Mini Map Radar Canvas -->
+            <div id="preview-map-container" class="preview-pane">
+              <div id="map-wrapper-element" class="mini-map-wrap">
+                <div id="gps-map"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Supporting hidden/legacy anchors to preserve script compatibility -->
+      <div style="display:none;">
+        <section id="master-banner" class="master-banner risk-LOW"><span id="risk-val">LOW</span><span id="biggest-threat"></span><span id="immediate-action"></span><div id="voice-message"></div></section>
+        <span id="metric-speed">72</span>
+        <span id="metric-speed-limit">80</span>
+        <span id="telemetry-clock">12:00:00</span>
+        <div id="nav-maneuver-banner"><div id="nav-maneuver-icon"></div><div id="nav-maneuver-dist"></div><div id="nav-maneuver-text"></div><div id="nav-eta"></div><div id="nav-km-left"></div><button id="btn-stop-nav"></button></div>
+        <div id="nav-radar-alert"><span id="nav-radar-text"></span></div>
+        <span id="gmap-hud-speed">72</span><span id="gmap-hud-limit">80</span>
+        <div id="digital-instrument-cluster"></div>
+      </div>
+
+    </div><!-- End #view-drive -->
+
+    <!-- Backwards Compatibility Alias for Cockpit View -->
+    <div id="view-cockpit" class="workspace-view" style="display:none;"></div>
+
+    <!-- ==========================================================================
+         SCREEN 2: 🗺️ FULL NAVIGATION (GOOGLE SATELLITE HYBRID)
+         ========================================================================== -->
+    <div id="view-gmap" class="workspace-view">
+      <div class="gmap-fullview-container">
+        <!-- Top Search & Route Bar -->
+        <div class="gmap-fv-topbar">
+          <div class="gmap-fv-search-wrapper" style="position: relative;">
+            <div class="gmap-fv-searchbox">
+              <span style="font-size: 18px; margin-right: 8px;">🔍</span>
+              <input type="text" id="gmap-fv-search-input" placeholder="Search any Indian City or Corridor (e.g. Pune, Mumbai, Delhi, Kashi)" autocomplete="off" />
+              <button id="btn-gmap-fv-clear" class="gmap-clear-btn" style="display:none; background:none; border:none; color:#64748b; cursor:pointer; font-size:14px; margin-right:4px;">✕</button>
+              <button id="btn-gmap-fv-search" class="gmap-fv-btn">Search</button>
+              <div class="gmap-search-sep"></div>
+              <button id="btn-gmap-fv-dir" class="gmap-dir-btn" title="Recenter on Vehicle / Route">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zm-8.71 5.71v-3h-4v-2h4v-3l4 4-4 4z"/></svg>
+              </button>
+            </div>
+            <!-- Search Autocomplete Suggestions Dropdown -->
+            <div id="gmap-fv-search-suggestions" class="gmap-suggestions-dropdown" style="display:none;"></div>
+          </div>
+
+          <div class="gmap-category-chips">
+            <button class="gmap-chip active" data-cat="all">All</button>
+            <button class="gmap-chip" data-cat="fuel">⛽ Petrol & EV</button>
+            <button class="gmap-chip" data-cat="speed_traps">📸 Speed Traps</button>
+            <button class="gmap-chip" data-cat="restaurants">🍽️ Dhabas</button>
+            <button class="gmap-chip" data-cat="pharmacy">💊 Emergency</button>
+          </div>
+
+          <!-- Quick Layer Switcher Chips -->
+          <div class="gmap-layer-chips" style="display: flex; gap: 6px; margin-left: auto;">
+            <button class="gmap-layer-btn active" data-layer="satellite" title="Google Satellite Hybrid">🛰️ Satellite</button>
+            <button class="gmap-layer-btn" data-layer="gmap_streets" title="Google Standard Streets">🗺️ Roads</button>
+            <button class="gmap-layer-btn" data-layer="dark" title="Cyber Dark Mode">🌙 Dark</button>
+          </div>
         </div>
 
-        <!-- Driver State Monitoring IR Eye-Tracker -->
-        <div class="dms-card hud-card" style="padding: 10px 14px; margin-top: 10px; background: rgba(10, 14, 26, 0.65);">
-          <div class="card-header" style="margin-bottom: 6px;">
-            <h3 class="card-title" style="font-size: 13px;">👁️ Driver State Monitoring (DMS)</h3>
-            <button id="btn-toggle-webcam" class="btn-icon" style="padding: 2px 8px; font-size: 11px;">
+        <!-- Indian Corridor Selectors -->
+        <div class="map-corridor-selector" style="margin: 8px 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span id="corridor-badge" class="corridor-active-pill" style="padding: 4px 10px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; font-size: 11px; font-weight: 700; color: #38bdf8;">Purvanchal Expressway</span>
+          <button class="btn-corridor active" data-corridor="purvanchal_up">Purvanchal Expressway (Varanasi - Gorakhpur)</button>
+          <button class="btn-corridor" data-corridor="chennai_omr">Chennai OMR (IIT Madras)</button>
+          <button class="btn-corridor" data-corridor="mumbai_pune">NH48 Mumbai-Pune</button>
+          <button class="btn-corridor" data-corridor="yamuna_exp">Yamuna Exp (Delhi-Agra)</button>
+          <button class="btn-corridor" data-corridor="bangalore_orr">Bangalore ORR</button>
+          <button class="btn-corridor" data-corridor="coastal_road">Mumbai Coastal Road</button>
+        </div>
+
+        <!-- Map Container with Floating HUD and Controls -->
+        <div class="gmap-canvas-stage" style="position: relative; flex: 1; min-height: 450px;">
+          <div id="gps-full-map" class="gps-full-map"></div>
+
+          <!-- Floating Turn-by-Turn Navigation HUD Card -->
+          <div id="gmap-fv-nav-card" class="gmap-fv-nav-card" style="display: none;">
+            <div class="gnav-icon" id="gnav-fv-icon">↗️</div>
+            <div class="gnav-body">
+              <div class="gnav-maneuver" id="gnav-fv-text">Turn right onto NH48 Expressway</div>
+              <div class="gnav-sub">
+                <span id="gnav-fv-dist">In 350 m</span> • 
+                <span id="gnav-fv-eta">14 min</span> • 
+                <span id="gnav-fv-dest">Destination</span>
+              </div>
+            </div>
+            <button id="btn-gmap-fv-stop-nav" class="gnav-stop-btn" title="End Route">✕</button>
+          </div>
+
+          <!-- Floating Map Quick Control Buttons (Zoom, Recenter, Follow) -->
+          <div class="gmap-fv-floating-controls">
+            <button id="btn-gmap-fv-recenter" class="gmap-fab-btn" title="Center on Vehicle">
+              <span>🎯</span>
+            </button>
+            <button id="btn-gmap-fv-follow" class="gmap-fab-btn active" title="Toggle Follow Car">
+              <span>🚗</span>
+            </button>
+            <div class="gmap-fab-divider"></div>
+            <button id="btn-gmap-fv-zoomin" class="gmap-fab-btn" title="Zoom In">
+              <span>➕</span>
+            </button>
+            <button id="btn-gmap-fv-zoomout" class="gmap-fab-btn" title="Zoom Out">
+              <span>➖</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Satellite GNSS Telemetry Strip -->
+        <div class="satellite-terminal-card" style="margin: 12px 16px;">
+          <div class="sat-term-header">
+            <div class="sat-term-brand">
+              <span class="lls-status-dot" id="gps-status-dot"></span>
+              <span class="sat-title-text" id="gps-fix-title">🛰️ SATELLITE GNSS DOPPLER SPEED</span>
+            </div>
+            <div class="sat-badges-row">
+              <span class="badge-gmap">GMAP SATELLITE</span>
+              <span class="badge-gnss" id="sat-constellation-badge">NavIC 🇮🇳 + GPS</span>
+              <span class="card-badge" id="gps-accuracy-badge">±4m WGS-84</span>
+            </div>
+          </div>
+          <div class="sat-speed-grid">
+            <div class="sat-speed-block">
+              <div class="sat-metric-label">DETECTED GROUND SPEED</div>
+              <div class="sat-speed-val-row">
+                <span class="sat-speed-num" id="sat-detected-speed">72</span>
+                <span class="sat-speed-unit">KM/H</span>
+                <span class="sat-speed-indicator" id="sat-speed-mode">DOPPLER FIX</span>
+              </div>
+            </div>
+            <div class="sat-alt-block">
+              <div class="sat-metric-label">MSL ALTITUDE</div>
+              <div class="sat-metric-val"><span id="sat-altitude-val">218</span> <small>m</small></div>
+              <div class="sat-metric-sub">Precision HDOP: <strong id="sat-hdop-val">0.82</strong></div>
+            </div>
+          </div>
+          <div class="sat-coords-container">
+            <div class="sat-road-row">
+              <span class="sat-pin">📍</span>
+              <span id="gps-location-name" class="sat-road-text">Purvanchal Expressway Corridor, Uttar Pradesh</span>
+            </div>
+            <div class="sat-sub-telemetry">
+              <span id="gps-coords" class="sat-coord-mono">25.31090° N, 83.01070° E</span>
+              <div class="sat-signal-meter">
+                <span class="sat-bars-label">LOCK: <strong id="sat-locked-count">16/22</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Live Telemetry HUD Bar on Top of Map -->
+        <div class="gmap-fv-hud-overlay">
+          <div class="gmap-fv-hud-card">
+            <div class="gmap-fv-speed-circle">
+              <span id="gmap-fv-speed-num">72</span>
+              <span class="unit">KM/H</span>
+            </div>
+            <div class="gmap-fv-route-info">
+              <div class="title" id="gmap-fv-road-title">Assi Ghat Rd • Varanasi Corridor</div>
+              <div class="subtitle" id="gmap-fv-road-sub">Speed Limit: 80 km/h • NavIC 🇮🇳 Locked (16 Sats) • HDOP: 0.82</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         SCREEN 3: 📊 INSIGHTS & DRIVING SCORE (GAMIFIED SAFETY ENGINE)
+         ========================================================================== -->
+    <div id="view-insights" class="workspace-view">
+      <div class="insights-screen-container">
+        
+        <!-- Top Score Banner & Fuel Savings Engine -->
+        <div class="insights-hero-card">
+          <div class="insights-hero-left">
+            <div class="score-circle-large">
+              <span class="num" id="habit-score">92</span>
+              <span class="sub">SAFETY</span>
+            </div>
+            <div class="persona-details">
+              <div class="persona-title" id="driver-persona">Defensive Navigator 🛡️</div>
+              <div class="persona-sub" id="coaching-tip">Smooth accelerator control. 0 near-misses recorded.</div>
+              <div class="insurance-badge-row">
+                <span class="insurance-pill" id="habit-insurance-pill">🏆 Platinum Shield • 30% Premium Discount</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fuel & Vehicle Wear Savings Gamification Card -->
+          <div class="savings-card">
+            <div class="savings-label">ESTIMATED TRIP SAVINGS</div>
+            <div class="savings-val-row">
+              <span class="savings-symbol">₹</span>
+              <span class="savings-num" id="trip-savings-val">140</span>
+            </div>
+            <div class="savings-desc">Saved on fuel & brake pad wear through smooth deceleration & zero rash maneuvers.</div>
+            <div class="savings-streak">🔥 5-Trip Safe Driving Streak Active</div>
+          </div>
+        </div>
+
+        <!-- 6-Axis AI Behavioral Biometric Fingerprint Radar Chart -->
+        <div class="habit-radar-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase;">6-Axis AI Biometric Driving Fingerprint</h3>
+            <span class="card-badge" id="trip-km">14.2 km</span>
+          </div>
+          <div class="radar-content-flex">
+            <div style="width: 150px; height: 150px; position: relative;">
+              <svg id="habit-radar-svg" width="150" height="150" viewBox="0 0 130 130">
+                <!-- Hexagonal Background Grid -->
+                <polygon points="65,15 108,40 108,90 65,115 22,90 22,40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <polygon points="65,30 94,47 94,83 65,100 36,83 36,47" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <polygon points="65,45 80,54 80,76 65,85 50,76 50,54" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                <!-- Radial Axis lines -->
+                <line x1="65" y1="65" x2="65" y2="15" stroke="rgba(255,255,255,0.15)"/>
+                <line x1="65" y1="65" x2="108" y2="40" stroke="rgba(255,255,255,0.15)"/>
+                <line x1="65" y1="65" x2="108" y2="90" stroke="rgba(255,255,255,0.15)"/>
+                <line x1="65" y1="65" x2="65" y2="115" stroke="rgba(255,255,255,0.15)"/>
+                <line x1="65" y1="65" x2="22" y2="90" stroke="rgba(255,255,255,0.15)"/>
+                <line x1="65" y1="65" x2="22" y2="40" stroke="rgba(255,255,255,0.15)"/>
+                <!-- Dynamic Data Polygon -->
+                <polygon id="radar-data-polygon" points="65,20 102,43 104,87 65,110 26,87 25,43" fill="rgba(56, 189, 248, 0.35)" stroke="#38bdf8" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="bio-stats-grid">
+              <div class="bio-stat-row"><span>Smoothness:</span> <strong id="bio-val-smooth" style="color:#34d399;">94%</strong></div>
+              <div class="bio-stat-row"><span>Anticipation:</span> <strong id="bio-val-anticipate" style="color:#38bdf8;">90%</strong></div>
+              <div class="bio-stat-row"><span>Speed Discipline:</span> <strong id="bio-val-speed" style="color:#34d399;">88%</strong></div>
+              <div class="bio-stat-row"><span>Driver Focus:</span> <strong id="bio-val-focus" style="color:#38bdf8;">95%</strong></div>
+              <div class="bio-stat-row"><span>Lane Stability:</span> <strong id="bio-val-lane" style="color:#34d399;">92%</strong></div>
+              <div class="bio-stat-row"><span>Hazard Reflex:</span> <strong id="bio-val-hazard" style="color:#38bdf8;">93%</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Driver Monitoring System (DMS Eye-Tracker Card) -->
+        <div class="dms-card hud-card" style="padding: 16px; margin-top: 14px;">
+          <div class="card-header" style="margin-bottom: 10px;">
+            <h3 class="card-title" style="font-size: 14px;">👁️ Driver State Monitoring (DMS IR Tracker)</h3>
+            <button id="btn-toggle-webcam" class="btn-icon" style="padding: 4px 10px; font-size: 11px;">
               <span>📷 Test Webcam</span>
             </button>
           </div>
-          <div class="dms-layout" style="display: flex; gap: 12px; align-items: center;">
-            <div style="width: 140px; height: 95px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-subtle); position: relative; background: #000;">
+          <div class="dms-layout" style="display: flex; gap: 16px; align-items: center;">
+            <div style="width: 140px; height: 95px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-subtle); position: relative; background: #000;">
               <canvas id="dms-canvas" width="140" height="95"></canvas>
               <video id="webcam-video" playsinline muted style="display: none;"></video>
             </div>
-            <div style="flex: 1; font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
+            <div style="flex: 1; font-size: 12px; display: flex; flex-direction: column; gap: 6px;">
               <div style="display:flex; justify-content:space-between;">
                 <span style="color:var(--text-secondary);">Eye Aspect Ratio (EAR):</span>
                 <span id="dms-ear-val" style="font-family:var(--font-mono); font-weight:700; color:#38bdf8;">0.31</span>
@@ -189,597 +548,48 @@
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <!-- Center Column: Digital Instrument Cluster & Safety Engine Metrics -->
-      <section class="col-telemetry hud-card">
-        <div class="card-header">
-          <h2 class="card-title">⚡ Vehicle Telemetry & Risk Engines</h2>
-          <span class="card-badge" id="telemetry-clock">12:00:00</span>
+          <div style="display:none;"><span id="dms-eye-val"></span><div id="dms-eye-bar"></div><div id="dms-attention-bar"></div><span id="dms-phone-val"></span></div>
         </div>
 
-        <!-- Professional Tier-1 Digital Instrument Cluster -->
-        <div id="digital-instrument-cluster" class="cluster-container"></div>
-
-        <!-- Real-Time Metric Tiles -->
-        <div class="metrics-grid">
-          <div class="metric-tile">
-            <span class="metric-label">CURRENT SPEED</span>
-            <div class="metric-value-row">
-              <span id="metric-speed" class="metric-val">72</span>
-              <span class="metric-unit">km/h</span>
-            </div>
-            <span class="metric-sub">Limit: <strong id="metric-speed-limit">80</strong> km/h</span>
-          </div>
-
-          <div class="metric-tile">
-            <span class="metric-label">OBSTACLE DISTANCE</span>
-            <div class="metric-value-row">
-              <span id="metric-distance" class="metric-val">65</span>
-              <span class="metric-unit">meters</span>
-            </div>
-            <span class="metric-sub">TTC: <strong id="metric-ttc">--</strong>s</span>
-          </div>
-        </div>
-
-        <!-- 5 Sub-Engine Real-Time Cards -->
-        <div class="sub-engines-list">
-          <!-- Engine 1: Rash Driving -->
-          <div class="sub-engine-row">
-            <div class="sub-engine-info">
-              <span class="sub-engine-name">🏎️ 1. Rash Driving Behavior</span>
-              <span class="sub-engine-detail" id="eng-rash-detail">Score: 0/100 • Smooth driving</span>
-            </div>
-            <span id="eng-rash-tag" class="risk-tag low">LOW</span>
-          </div>
-
-          <!-- Engine 2: Driver Monitoring -->
-          <div class="sub-engine-row">
-            <div class="sub-engine-info">
-              <span class="sub-engine-name">👁️ 2. Driver Attention & Fatigue</span>
-              <span class="sub-engine-detail" id="eng-dms-detail">Driver Focused • Eyes Open</span>
-            </div>
-            <span id="eng-dms-tag" class="risk-tag low">LOW</span>
-          </div>
-
-          <!-- Engine 3: Collision Risk -->
-          <div class="sub-engine-row">
-            <div class="sub-engine-info">
-              <span class="sub-engine-name">💥 3. Forward Collision Risk (FCW)</span>
-              <span class="sub-engine-detail" id="eng-collision-detail">Safe distance maintained</span>
-            </div>
-            <span id="eng-collision-tag" class="risk-tag low">LOW</span>
-          </div>
-
-          <!-- Engine 4: Weather Advisory -->
-          <div class="sub-engine-row">
-            <div class="sub-engine-info">
-              <span class="sub-engine-name">🌧️ 4. Weather & Environmental Grip</span>
-              <span class="sub-engine-detail" id="eng-weather-detail">Clear Skies • Dry Bitumen</span>
-            </div>
-            <span id="eng-weather-tag" class="risk-tag low">LOW</span>
-          </div>
-
-          <!-- Engine 5: Indian Road Hazards -->
-          <div class="sub-engine-row">
-            <div class="sub-engine-info">
-              <span class="sub-engine-name">🇮🇳 5. Indian Road Hazards</span>
-              <span class="sub-engine-detail" id="eng-indian-detail">Carriageway clear</span>
-            </div>
-            <span id="eng-indian-tag" class="risk-tag low">LOW</span>
-          </div>
-        </div>
-
-        <!-- Diagnostics Issues List -->
-        <div style="background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: var(--radius-sm);">
-          <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px;">Detected System Issues:</div>
-          <div id="detected-issues-list" style="font-size: 12px; color: #cbd5e1;">All sensor streams nominal.</div>
-        </div>
-      </section>
-
-      <!-- Right Column: Interactive Google Satellite Maps & AI Driver Habit Learning -->
-      <section class="col-gps-habits hud-card">
-        <div class="card-header">
-          <h2 class="card-title">📍 Google Maps Satellite Navigation</h2>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <button id="btn-detect-gps" class="btn-icon" style="padding: 4px 10px; font-size: 11px; background: rgba(16, 185, 129, 0.2); border-color: var(--accent-emerald); color: #34d399;" title="Detect and Track Real-World GPS Location">
-              <span id="btn-detect-gps-text">📍 Detect My Location</span>
-            </button>
-            <span class="card-badge" id="corridor-badge">PURVANCHAL (UP)</span>
-          </div>
-        </div>
-
-        <!-- Indian Corridor Selectors -->
-        <div class="map-corridor-selector">
-          <button class="btn-corridor active" data-corridor="purvanchal_up">Purvanchal Expressway (Varanasi - Gorakhpur)</button>
-          <button class="btn-corridor" data-corridor="chennai_omr">Chennai OMR (IIT Madras)</button>
-          <button class="btn-corridor" data-corridor="mumbai_pune">NH48 Mumbai-Pune</button>
-          <button class="btn-corridor" data-corridor="yamuna_exp">Yamuna Exp (Delhi-Agra)</button>
-          <button class="btn-corridor" data-corridor="bangalore_orr">Bangalore ORR</button>
-          <button class="btn-corridor" data-corridor="coastal_road">Mumbai Coastal & Sea Link</button>
-          <button class="btn-corridor" data-corridor="shimla_ghats">Himalayan Shimla Ghats</button>
-          <button class="btn-corridor" data-corridor="varanasi_gt">Varanasi GT Road NH19</button>
-        </div>
-
-        <!-- Turn-by-Turn Maneuver HUD Banner -->
-        <div class="nav-maneuver-banner" id="nav-maneuver-banner">
-          <div class="nav-maneuver-icon" id="nav-maneuver-icon">⬆️</div>
-          <div class="nav-maneuver-content">
-            <div class="nav-maneuver-dist" id="nav-maneuver-dist">In 1.2 km</div>
-            <div class="nav-maneuver-text" id="nav-maneuver-text">Continue along Assi Ghat Rd past BHU Gate towards Kashi Vishwanath Corridor</div>
-          </div>
-          <div class="nav-trip-stats">
-            <div class="nav-eta" id="nav-eta">ETA: 18m</div>
-            <div class="nav-km-left" id="nav-km-left">18.5 km left</div>
-            <button id="btn-stop-nav" class="btn-stop-nav" style="display: none;" title="End Active Navigation">✕ Stop Nav</button>
-          </div>
-        </div>
-
-        <!-- Radar Proximity Alert Pill -->
-        <div class="nav-radar-alert" id="nav-radar-alert" style="display: none;">
-          <span class="radar-ping-icon">📡</span>
-          <span id="nav-radar-text">Radar: Hazard detected ahead!</span>
-        </div>
-
-        <!-- Map Container with Authentic Google Maps Floating Interface -->
-        <div class="map-wrapper" id="map-wrapper-element">
-          
-          <!-- Top Floating Google Maps Search Bar & Category Chips -->
-          <div class="gmap-floating-overlay">
-            <div class="gmap-searchbox-card">
-              <span class="gmap-search-icon">🔍</span>
-              <input type="text" id="gmap-search-input" class="gmap-search-input" placeholder="Search Purvanchal (e.g. Kashi Vishwanath, Assi Ghat, Gorakhpur)" autocomplete="off" />
-              <button id="btn-gmap-search" class="gmap-search-btn" title="Search Location">Search</button>
-              <div class="gmap-search-sep"></div>
-              <button id="btn-gmap-directions" class="gmap-dir-btn" title="Get Directions">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zm-8.71 5.71v-3h-4v-2h4v-3l4 4-4 4z"/></svg>
-              </button>
-            </div>
-            <!-- Live Search Autocomplete Suggestions Dropdown -->
-            <div id="gmap-search-suggestions" class="gmap-suggestions-dropdown" style="display: none;"></div>
-
-            <!-- Category Chips Row (Exact Google Maps Style) -->
-            <div class="gmap-category-chips">
-              <button class="gmap-chip active" data-cat="all">All</button>
-              <button class="gmap-chip" data-cat="restaurants">🍽️ Restaurants</button>
-              <button class="gmap-chip" data-cat="hotels">🏨 Hotels</button>
-              <button class="gmap-chip" data-cat="transit">🚊 Transit</button>
-              <button class="gmap-chip" data-cat="pharmacy">💊 Pharmacies</button>
-              <button class="gmap-chip" data-cat="fuel">⛽ Petrol & EV</button>
-              <button class="gmap-chip" data-cat="speed_traps">📸 Speed Traps</button>
-            </div>
-          </div>
-
-          <!-- The Leaflet Map Canvas -->
-          <div id="gps-map"></div>
-
-          <!-- Bottom Left: Authentic Google Maps "Layers" Button -->
-          <div class="gmap-layers-widget">
-            <button id="btn-gmap-layers" class="gmap-layers-btn" title="Map Layers">
-              <div class="gmap-layers-icon-box">
-                <span style="font-size: 16px;">🛰️</span>
-              </div>
-              <span class="gmap-layers-text">Layers</span>
-            </button>
-            
-            <div id="gmap-layers-menu" class="gmap-layers-dropdown" style="display: none;">
-              <div class="gmap-layer-item active" data-layer="satellite">
-                <div class="layer-sample sat"></div>
-                <span>Satellite (Hybrid)</span>
-              </div>
-              <div class="gmap-layer-item" data-layer="pure_satellite">
-                <div class="layer-sample pure-sat"></div>
-                <span>Pure Satellite</span>
-              </div>
-              <div class="gmap-layer-item" data-layer="gmap_streets">
-                <div class="layer-sample street"></div>
-                <span>Google Default</span>
-              </div>
-              <div class="gmap-layer-item" data-layer="traffic">
-                <div class="layer-sample traf"></div>
-                <span>Live Traffic</span>
-              </div>
-              <div class="gmap-layer-item" data-layer="dark">
-                <div class="layer-sample dark"></div>
-                <span>Cockpit Dark</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom Right: Authentic Google Maps Controls -->
-          <div class="gmap-bottom-right-controls">
-            <!-- Google Navigation Speed Indicator -->
-            <div class="gmap-nav-speed-pill">
-              <span class="gmap-speed-val" id="gmap-hud-speed">72</span>
-              <span class="gmap-speed-lbl">km/h</span>
-              <div class="gmap-speed-sign" title="Speed Limit">
-                <span id="gmap-hud-limit">60</span>
-              </div>
-            </div>
-
-            <!-- Zoom Cluster -->
-            <div class="gmap-btn-group">
-              <button id="btn-gmap-zoomin" class="gmap-white-btn" title="Zoom In">+</button>
-              <div class="gmap-btn-sep"></div>
-              <button id="btn-gmap-zoomout" class="gmap-white-btn" title="Zoom Out">−</button>
-            </div>
-
-            <!-- Recenter GPS button -->
-            <button id="btn-gmap-recenter" class="gmap-white-btn" title="Re-center on Vehicle">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#3c4043"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0013 3.06V1h-2v2.06A8.994 8.994 0 003.06 11H1v2h2.06A8.994 8.994 0 0011 20.94V23h2v-2.06A8.994 8.994 0 0020.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
-            </button>
-
-            <!-- Street View Pegman -->
-            <button id="btn-gmap-pegman" class="gmap-white-btn pegman" title="Google Street View Pegman">
-              <span style="font-size:18px;">🚶‍♂️</span>
-            </button>
-
-            <!-- Fullscreen / Expand button -->
-            <button id="btn-expand-map" class="gmap-white-btn" title="Expand Full-Screen Navigation View">
-              <span>⛶</span>
-            </button>
-
-            <div class="gmap-scale-label">200 m</div>
-          </div>
-        </div>
-        <div class="satellite-terminal-card" id="satellite-terminal-card">
-          <div class="sat-term-header">
-            <div class="sat-term-brand">
-              <span class="lls-status-dot" id="gps-status-dot"></span>
-              <span class="sat-title-text" id="gps-fix-title">🛰️ SATELLITE GNSS DETECTION</span>
-            </div>
-            <div class="sat-badges-row">
-              <span class="badge-gmap">GMAP SATELLITE 3D</span>
-              <span class="badge-gnss" id="sat-constellation-badge">NavIC 🇮🇳 + GPS</span>
-              <span class="card-badge" id="gps-accuracy-badge">±4m WGS-84</span>
-            </div>
-          </div>
-
-          <!-- Speed & Altitude Live Satellite Readout -->
-          <div class="sat-speed-grid">
-            <div class="sat-speed-block">
-              <div class="sat-metric-label">DETECTED SATELLITE GROUND SPEED</div>
-              <div class="sat-speed-val-row">
-                <span class="sat-speed-num" id="sat-detected-speed">78</span>
-                <span class="sat-speed-unit">KM/H</span>
-                <span class="sat-speed-indicator" id="sat-speed-mode">DOPPLER FIX</span>
-              </div>
-            </div>
-            <div class="sat-alt-block">
-              <div class="sat-metric-label">MSL ALTITUDE</div>
-              <div class="sat-metric-val"><span id="sat-altitude-val">218</span> <small>meters</small></div>
-              <div class="sat-metric-sub">Precision HDOP: <strong id="sat-hdop-val">0.82</strong></div>
-            </div>
-          </div>
-
-          <!-- Geodetic Coordinates & Road Info -->
-          <div class="sat-coords-container">
-            <div class="sat-road-row">
-              <span class="sat-pin">📍</span>
-              <span id="gps-location-name" class="sat-road-text">NH48 Mumbai - Pune Expressway, Maharashtra</span>
-            </div>
-            <div class="sat-sub-telemetry">
-              <span id="gps-coords" class="sat-coord-mono">18.75190° N, 73.40790° E</span>
-              <div class="sat-signal-meter" title="Carrier-to-Noise C/N0 Ratio">
-                <span class="sat-bars-label">LOCK: <strong id="sat-locked-count">16/22</strong></span>
-                <div class="signal-bars">
-                  <span class="bar bar-1 active"></span>
-                  <span class="bar bar-2 active"></span>
-                  <span class="bar bar-3 active"></span>
-                  <span class="bar bar-4 active"></span>
-                </div>
-              </div>
+        <!-- Trip Safety Incident History Log -->
+        <div style="margin-top: 14px; background: rgba(14, 20, 36, 0.7); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px;">Trip Safety Events Log:</div>
+          <div id="incident-log" class="incident-pill-list">
+            <div class="incident-row">
+              <span>Trip Initiated</span>
+              <span style="color:var(--accent-emerald);">Optimal</span>
             </div>
           </div>
         </div>
 
-        <!-- AI Driver Habit Learning -->
-        <div class="habit-card hud-card" style="padding: 14px; margin-top: 6px; background: rgba(10, 14, 26, 0.65);">
-          <div class="card-header" style="margin-bottom: 6px;">
-            <h3 class="card-title" style="font-size: 13px;">🤖 AI Driver Habit Learning</h3>
-            <span class="card-badge" id="trip-km">14.2 km</span>
-          </div>
-
-          <div class="habit-score-container">
-            <div class="score-circle">
-              <span class="num" id="habit-score">92</span>
-              <span class="sub">SAFETY</span>
-            </div>
-            <div style="flex: 1;">
-              <div class="persona-title" id="driver-persona">Defensive Navigator 🛡️</div>
-              <div class="persona-sub" id="coaching-tip">Smooth accelerator control. 0 near-misses recorded.</div>
-              <!-- Telemetry Insurance Tier -->
-              <div class="insurance-badge-row" style="margin-top: 6px;">
-                <span class="insurance-pill" id="habit-insurance-pill">🏆 Platinum Shield • 30% Premium Discount</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 6-Axis AI Behavioral Biometric Radar Chart -->
-          <div class="habit-radar-section" style="margin-top: 10px; padding: 10px; background: rgba(15, 23, 42, 0.7); border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase;">6-Axis AI Biometric Driving Fingerprint</span>
-              <span style="font-size: 10px; color: #94a3b8;">Real-time Telemetry</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 130px; height: 130px; position: relative;">
-                <svg id="habit-radar-svg" width="130" height="130" viewBox="0 0 130 130">
-                  <!-- Hexagonal Background Grid -->
-                  <polygon points="65,15 108,40 108,90 65,115 22,90 22,40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                  <polygon points="65,30 94,47 94,83 65,100 36,83 36,47" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-                  <polygon points="65,45 80,54 80,76 65,85 50,76 50,54" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                  <!-- Radial Axis lines -->
-                  <line x1="65" y1="65" x2="65" y2="15" stroke="rgba(255,255,255,0.15)"/>
-                  <line x1="65" y1="65" x2="108" y2="40" stroke="rgba(255,255,255,0.15)"/>
-                  <line x1="65" y1="65" x2="108" y2="90" stroke="rgba(255,255,255,0.15)"/>
-                  <line x1="65" y1="65" x2="65" y2="115" stroke="rgba(255,255,255,0.15)"/>
-                  <line x1="65" y1="65" x2="22" y2="90" stroke="rgba(255,255,255,0.15)"/>
-                  <line x1="65" y1="65" x2="22" y2="40" stroke="rgba(255,255,255,0.15)"/>
-                  <!-- Dynamic Data Polygon -->
-                  <polygon id="radar-data-polygon" points="65,20 102,43 104,87 65,110 26,87 25,43" fill="rgba(56, 189, 248, 0.35)" stroke="#38bdf8" stroke-width="2"/>
-                </svg>
-              </div>
-              <div style="flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 10.5px; font-family: var(--font-mono);">
-                <div style="display: flex; justify-content: space-between;"><span style="color:#94a3b8;">Smoothness:</span> <strong id="bio-val-smooth" style="color:#34d399;">94%</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color:#94a3b8;">Anticipation:</span> <strong id="bio-val-anticipate" style="color:#38bdf8;">90%</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color:#94a3b8;">Speed Discip:</span> <strong id="bio-val-speed" style="color:#34d399;">88%</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color:#94a3b8;">Driver Focus:</span> <strong id="bio-val-focus" style="color:#38bdf8;">95%</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color:#94a3b8;">Lane Stability:</span> <strong id="bio-val-lane" style="color:#34d399;">92%</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color:#94a3b8;">Hazard Reflex:</span> <strong id="bio-val-hazard" style="color:#38bdf8;">93%</strong></div>
-              </div>
-            </div>
-          </div>
-
-          <div style="margin-top: 10px;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 6px;">Trip Safety Events:</div>
-            <div id="incident-log" class="incident-pill-list">
-              <div class="incident-row">
-                <span>Trip Initiated</span>
-                <span style="color:var(--accent-emerald);">Optimal</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- Bottom Controls Console: Scenario Presets & Interactive Sandbox Sliders -->
-    <section class="controls-console">
-      <div class="console-header">
-        <h2 class="section-title">🎮 Scenario Sandbox & Live Manual Telemetry Overrides</h2>
-        <div class="scenarios-track">
-          <button class="scenario-btn active" data-scenario="normal">🟢 Normal Cruise</button>
-          <button class="scenario-btn" data-scenario="monsoon">🌧️ Mumbai Monsoon Hydroplane</button>
-          <button class="scenario-btn" data-scenario="cow">🐄 Night Highway Cow Crossing</button>
-          <button class="scenario-btn" data-scenario="auto">🛺 Bangalore Auto Cut-in</button>
-          <button class="scenario-btn" data-scenario="drowsy">😴 Midnight Drowsiness</button>
-          <button class="scenario-btn" data-scenario="rash">🏎️ Delhi Ring Road Rash Weaving</button>
-        </div>
-      </div>
-
-      <!-- Live Sliders & Selectors -->
-      <div class="sandbox-controls-grid">
-        
-        <!-- Speed Slider -->
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Vehicle Speed</span>
-            <span class="control-val"><span id="ctrl-val-speed">72</span> km/h</span>
-          </div>
-          <input type="range" id="slider-speed" min="0" max="160" value="72" />
-        </div>
-
-        <!-- Speed Limit Slider -->
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Road Speed Limit</span>
-            <span class="control-val"><span id="ctrl-val-limit">80</span> km/h</span>
-          </div>
-          <input type="range" id="slider-speed-limit" min="30" max="120" step="10" value="80" />
-        </div>
-
-        <!-- Obstacle Distance Slider -->
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Distance to Vehicle/Obstacle</span>
-            <span class="control-val"><span id="ctrl-val-distance">48</span> m</span>
-          </div>
-          <input type="range" id="slider-distance" min="3" max="120" value="48" />
-        </div>
-
-        <!-- Weather Selector -->
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Weather & Visibility</span>
-          </div>
-          <select id="select-weather">
-            <option value="clear">☀️ Clear Skies (Dry Bitumen)</option>
-            <option value="rain">🌧️ Monsoon Rain (Wet Asphalt)</option>
-            <option value="fog">🌫️ Dense Fog / Winter Smog</option>
-            <option value="night">🌙 Night Driving (Unlit Corridor)</option>
-          </select>
-        </div>
-
-        <!-- Indian Obstacle Hazard Selector -->
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Indian Road Hazard Detected</span>
-          </div>
-          <select id="select-obstacle">
-            <option value="none">🚗 Normal Leading Vehicle</option>
-            <option value="cattle">🐄 Stray Cattle (Cow on Carriageway)</option>
-            <option value="auto">🛺 Erratic Autorickshaw Cut-in</option>
-            <option value="pothole">🕳️ Deep Crater Potholes</option>
-            <option value="wrong_way">⚠️ Wrong-Way Vehicle Head-on</option>
-            <option value="speed_breaker">🛑 Unmarked Speed Breaker</option>
-          </select>
-        </div>
-
-        <!-- Driver State (Eyes & Phone) Toggles -->
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Driver Eye State</span>
-          </div>
-          <div class="toggle-chip-group">
-            <button class="toggle-chip active" id="chip-eye-open" data-eye="open">Open</button>
-            <button class="toggle-chip" id="chip-eye-droopy" data-eye="droopy">Droopy</button>
-            <button class="toggle-chip" id="chip-eye-closed" data-eye="closed">Closed 😴</button>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Phone Usage</span>
-          </div>
-          <div class="toggle-chip-group">
-            <button class="toggle-chip active" id="chip-phone-no">No Phone</button>
-            <button class="toggle-chip" id="chip-phone-yes">Holding Phone 📱</button>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <div class="control-label-row">
-            <span>Harsh Driving Dynamics</span>
-          </div>
-          <div class="toggle-chip-group">
-            <button class="toggle-chip" id="chip-sudden-accel">Sudden Accel 🚀</button>
-            <button class="toggle-chip" id="chip-sudden-brake">Hard Brake 🛑</button>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    </div><!-- End #view-cockpit -->
-
-    <!-- WORKSPACE VIEW 2: VEHICLE DYNAMICS & PHYSICS -->
-    <div id="view-telemetry" class="workspace-view">
-      <div class="blackbox-container">
-        <div class="blackbox-header">
-          <h2 class="section-title">📊 Real-Time Kinematic & Stopping Physics Diagnostics</h2>
-          <span class="card-badge">CALCULATED AT 60 HZ</span>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
-          <div class="telemetry-pill-card">
-            <span class="tp-title">Kinetic Energy Dissipation</span>
-            <div class="tp-val" id="diag-ke">380 <span class="tp-unit">kJ</span></div>
-            <span style="font-size:11px; color:var(--text-secondary);">Vehicle Mass: 1,450 kg</span>
-          </div>
-          <div class="telemetry-pill-card">
-            <span class="tp-title">Peak Deceleration Vector</span>
-            <div class="tp-val" id="diag-g">-0.72 <span class="tp-unit">G</span></div>
-            <span style="font-size:11px; color:var(--text-secondary);">Dry Bitumen Limit: 0.85 G</span>
-          </div>
-          <div class="telemetry-pill-card">
-            <span class="tp-title">Driver Reaction Latency</span>
-            <div class="tp-val" id="diag-reaction">1.2 <span class="tp-unit">sec</span></div>
-            <span style="font-size:11px; color:var(--text-secondary);">Cognitive state: Focused</span>
-          </div>
-          <div class="telemetry-pill-card">
-            <span class="tp-title">Road Adhesion Coefficient (μ)</span>
-            <div class="tp-val" id="diag-friction">0.75 <span class="tp-unit">μ</span></div>
-            <span style="font-size:11px; color:var(--text-secondary);">Surface: Dry Bituminous Concrete</span>
-          </div>
-        </div>
       </div>
     </div>
 
-    <!-- WORKSPACE VIEW 3: BLACKBOX FLIGHT RECORDER -->
-    <div id="view-blackbox" class="workspace-view">
-      <div class="blackbox-container">
-        <div class="blackbox-header">
-          <div>
-            <h2 class="section-title">📋 Automotive Blackbox Event Flight Recorder</h2>
-            <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Immutable rolling safety incident logs for insurance verification and fleet safety compliance.</p>
-          </div>
-          <div style="display:flex; gap:8px;">
-            <button id="btn-export-blackbox" class="btn-icon active">
-              <span>💾 Export Telemetry JSON</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="table-responsive">
-          <table class="blackbox-table">
-            <thead>
-              <tr>
-                <th>Record ID</th>
-                <th>Timestamp</th>
-                <th>Speed (Limit)</th>
-                <th>Risk Level</th>
-                <th>Threat Assessment</th>
-                <th>Action Directive</th>
-                <th>G-Force</th>
-                <th>GPS Location</th>
-              </tr>
-            </thead>
-            <tbody id="blackbox-table-body">
-              <tr>
-                <td colspan="8" style="text-align:center; color:var(--text-muted); padding:20px;">Monitoring road dynamics... Incident records will automatically log here.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- WORKSPACE VIEW 4: ADAS CALIBRATION & SETTINGS -->
+    <!-- ==========================================================================
+         SCREEN 4: ⚙️ SETTINGS & DEVELOPER SANDBOX
+         Voice • Language • Wallpaper • Developer Sliders • Physics Diagnostics • Blackbox
+         ========================================================================== -->
     <div id="view-settings" class="workspace-view">
-      <div class="settings-container">
+      <div class="settings-screen-container">
+        
+        <!-- Section 1: Audio & Voice Copilot Controls -->
         <div class="settings-card">
-          <div class="settings-card-title">🛡️ Forward Collision Warning (FCW) Calibration</div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">TTC Warning Sensitivity</div>
-              <div class="setting-desc">Adjust time-to-collision warning threshold</div>
-            </div>
-            <select id="cfg-fcw-sensitivity">
-              <option value="conservative">Conservative (Early Warning)</option>
-              <option value="standard" selected>Standard (2.5s TTC)</option>
-              <option value="aggressive">Sport / Close Following</option>
-            </select>
-          </div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">Autonomous Braking Simulation</div>
-              <div class="setting-desc">Simulate AEB auto-brake deceleration</div>
-            </div>
-            <input type="checkbox" id="cfg-aeb-toggle" checked style="accent-color:var(--accent-cyan); width:18px; height:18px;" />
-          </div>
-        </div>
-
-        <div class="settings-card">
-          <div class="settings-card-title">👁️ Driver Monitoring System (DMS) Thresholds</div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">Eye Closure Duration (Microsleep)</div>
-              <div class="setting-desc">Time before drowsiness alarm sounds</div>
-            </div>
-            <select id="cfg-dms-closure">
-              <option value="1.0">Strict (1.0 Second)</option>
-              <option value="1.5" selected>Standard (1.5 Seconds)</option>
-              <option value="2.0">Relaxed (2.0 Seconds)</option>
-            </select>
-          </div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">Mobile Phone Detection Alert</div>
-              <div class="setting-desc">Warn immediately when phone is raised</div>
-            </div>
-            <input type="checkbox" id="cfg-phone-alert" checked style="accent-color:var(--accent-cyan); width:18px; height:18px;" />
-          </div>
-        </div>
-
-        <div class="settings-card">
-          <div class="settings-card-title">🎙️ Audio & Copilot Voice Controls (Anti-Annoyance)</div>
+          <div class="settings-card-title">🎙️ Audio & Voice Copilot Controls (Anti-Annoyance)</div>
           <div class="setting-row">
             <div>
               <div class="setting-label">Master Quiet Mode (Mute All)</div>
-              <div class="setting-desc">Silence all voice alerts and warning chimes</div>
+              <div class="setting-desc">Silence all voice alerts and advisory acoustic chimes</div>
             </div>
             <input type="checkbox" id="cfg-quiet-mode" checked style="accent-color:var(--accent-cyan); width:18px; height:18px;" />
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Voice Assistant Language</div>
+              <div class="setting-desc">Toggle English or natural Indian Hinglish voice alerts</div>
+            </div>
+            <button id="btn-toggle-lang-settings" class="btn-icon">
+              <span>🌐 Switch to Hinglish / English</span>
+            </button>
           </div>
           <div class="setting-row">
             <div>
@@ -802,325 +612,278 @@
             </div>
             <input type="range" id="cfg-voice-rate" min="0.8" max="1.2" step="0.05" value="0.95" style="width:120px;" />
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- WORKSPACE VIEW 5: DEDICATED FULL-SCREEN GOOGLE SATELLITE MAPS -->
-    <div id="view-gmap" class="workspace-view">
-      <div class="gmap-fullview-container">
-        <!-- Google Maps Top Search Header -->
-        <div class="gmap-fv-topbar">
-          <div class="gmap-fv-searchbox">
-            <span style="font-size: 18px; margin-right: 8px;">🔍</span>
-            <input type="text" id="gmap-fv-search-input" placeholder="Search Purvanchal (e.g. Kashi Vishwanath, Assi Ghat, Gorakhpur)" />
-            <button id="btn-gmap-fv-search" class="gmap-fv-btn">Search</button>
-            <div class="gmap-search-sep"></div>
-            <button id="btn-gmap-fv-dir" class="gmap-dir-btn" title="Directions">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.71 11.29l-9-9a1 1 0 00-1.42 0l-9 9a1 1 0 000 1.42l9 9a1 1 0 001.42 0l9-9a1 1 0 000-1.42zm-8.71 5.71v-3h-4v-2h4v-3l4 4-4 4z"/></svg>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Cockpit HD Wallpaper & Atmosphere</div>
+              <div class="setting-desc">Customize background atmosphere (Purvanchal Sunset, Cyber Midnight, etc.)</div>
+            </div>
+            <button id="btn-open-wallpaper-gallery" class="btn-icon">
+              <span>🎨 Open Atmosphere Gallery</span>
             </button>
           </div>
-
-          <div class="gmap-category-chips">
-            <button class="gmap-chip active" data-cat="all">All</button>
-            <button class="gmap-chip" data-cat="restaurants">🍽️ Restaurants</button>
-            <button class="gmap-chip" data-cat="hotels">🏨 Hotels</button>
-            <button class="gmap-chip" data-cat="transit">🚊 Transit</button>
-            <button class="gmap-chip" data-cat="pharmacy">💊 Pharmacies</button>
-            <button class="gmap-chip" data-cat="fuel">⛽ Petrol & EV</button>
-            <button class="gmap-chip" data-cat="speed_traps">📸 Speed Traps</button>
-          </div>
         </div>
 
-        <!-- Fullscreen Leaflet Map Div -->
-        <div id="gps-full-map" class="gps-full-map"></div>
-
-        <!-- Floating Live Telemetry HUD Bar on Top of Map -->
-        <div class="gmap-fv-hud-overlay">
-          <div class="gmap-fv-hud-card">
-            <div class="gmap-fv-speed-circle">
-              <span id="gmap-fv-speed-num">64</span>
-              <span class="unit">KM/H</span>
-            </div>
-            <div class="gmap-fv-route-info">
-              <div class="title" id="gmap-fv-road-title">CSIR Rd • IIT Madras Tech Corridor, Chennai</div>
-              <div class="subtitle" id="gmap-fv-road-sub">Speed Limit: 60 km/h • NavIC 🇮🇳 + GPS Locked (16 Sats) • HDOP: 0.82</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- WORKSPACE VIEW 6: ABOUT & USER GUIDE (MADE BY ARJIT JAISWAL) -->
-    <div id="view-about" class="workspace-view">
-      <div class="about-container">
-        
-        <!-- Hero Card -->
-        <div class="about-hero">
-          <div class="about-hero-header">
+        <!-- Section 2: 🎮 DEVELOPER MODE & SCENARIO SANDBOX (Investor / Demo Controls) -->
+        <div class="settings-card developer-sandbox-card">
+          <div class="sandbox-badge-header">
             <div>
-              <span class="brand-badge" style="margin-bottom: 10px; display: inline-block;">🇮🇳 SURAKSHA-AI (सुरक्षा AI)</span>
-              <h2 class="about-title">Autonomous ADAS & Driving Safety Copilot for Indian Roads</h2>
-              <p class="about-tagline">
-                A state-of-the-art multi-threat cognitive safety shield engineered to tackle the unique, chaotic dynamics of Indian traffic — from sudden stray cattle crossings and crater potholes to aggressive autorickshaw cut-ins, monsoon hydroplaning, and driver microsleep.
-              </p>
+              <div class="settings-card-title" style="color: #38bdf8;">🎮 Developer Mode & Scenario Sandbox</div>
+              <div class="setting-desc" style="margin-top: 2px;">Simulate severe Indian driving conditions, hazard triggers, and test real-time AI arbitration.</div>
             </div>
-            
-            <div class="about-creator-card" title="Creator & AI Architect">
-              <span class="creator-avatar">👨‍💻</span>
-              <div>
-                <div class="creator-name">Made by Arjit Jaiswal</div>
-                <div class="creator-role">AI Systems Architect & Lead Engineer</div>
+            <span class="card-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">DEMO READY</span>
+          </div>
+
+          <!-- Preset Scenario Buttons -->
+          <div class="scenarios-track" style="margin: 14px 0;">
+            <button class="scenario-btn active" data-scenario="normal">🟢 Normal Cruise</button>
+            <button class="scenario-btn" data-scenario="monsoon">🌧️ Mumbai Monsoon Hydroplane</button>
+            <button class="scenario-btn" data-scenario="cow">🐄 Night Highway Cow Crossing</button>
+            <button class="scenario-btn" data-scenario="auto">🛺 Bangalore Auto Cut-in</button>
+            <button class="scenario-btn" data-scenario="drowsy">😴 Midnight Drowsiness</button>
+            <button class="scenario-btn" data-scenario="rash">🏎️ Delhi Ring Road Rash Weaving</button>
+          </div>
+
+          <!-- Live Interactive Sliders -->
+          <div class="sandbox-controls-grid">
+            <!-- Speed Slider -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Vehicle Speed</span>
+                <span class="control-val"><span id="ctrl-val-speed">72</span> km/h</span>
+              </div>
+              <input type="range" id="slider-speed" min="0" max="160" value="72" />
+            </div>
+
+            <!-- Speed Limit Slider -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Road Speed Limit</span>
+                <span class="control-val"><span id="ctrl-val-limit">80</span> km/h</span>
+              </div>
+              <input type="range" id="slider-speed-limit" min="30" max="120" step="10" value="80" />
+            </div>
+
+            <!-- Obstacle Distance Slider -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Distance to Vehicle/Obstacle</span>
+                <span class="control-val"><span id="ctrl-val-distance">48</span> m</span>
+              </div>
+              <input type="range" id="slider-distance" min="3" max="120" value="48" />
+            </div>
+
+            <!-- Weather Selector -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Weather & Visibility</span>
+              </div>
+              <select id="select-weather">
+                <option value="clear">☀️ Clear Skies (Dry Bitumen)</option>
+                <option value="rain">🌧️ Monsoon Rain (Wet Asphalt)</option>
+                <option value="fog">🌫️ Dense Fog / Winter Smog</option>
+                <option value="night">🌙 Night Driving (Unlit Corridor)</option>
+              </select>
+            </div>
+
+            <!-- Indian Obstacle Hazard Selector -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Indian Road Hazard Detected</span>
+              </div>
+              <select id="select-obstacle">
+                <option value="none">🚗 Normal Leading Vehicle</option>
+                <option value="cattle">🐄 Stray Cattle (Cow on Carriageway)</option>
+                <option value="auto">🛺 Erratic Autorickshaw Cut-in</option>
+                <option value="pothole">🕳️ Deep Crater Potholes</option>
+                <option value="wrong_way">⚠️ Wrong-Way Vehicle Head-on</option>
+                <option value="speed_breaker">🛑 Unmarked Speed Breaker</option>
+              </select>
+            </div>
+
+            <!-- Driver State (Eyes & Phone) Toggles -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Driver Eye State</span>
+              </div>
+              <div class="toggle-chip-group">
+                <button class="toggle-chip active" id="chip-eye-open" data-eye="open">Open</button>
+                <button class="toggle-chip" id="chip-eye-droopy" data-eye="droopy">Droopy</button>
+                <button class="toggle-chip" id="chip-eye-closed" data-eye="closed">Closed 😴</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Phone Usage</span>
+              </div>
+              <div class="toggle-chip-group">
+                <button class="toggle-chip active" id="chip-phone-no">No Phone</button>
+                <button class="toggle-chip" id="chip-phone-yes">Holding Phone 📱</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="control-label-row">
+                <span>Harsh Driving Dynamics</span>
+              </div>
+              <div class="toggle-chip-group">
+                <button class="toggle-chip" id="chip-sudden-accel">Sudden Accel 🚀</button>
+                <button class="toggle-chip" id="chip-sudden-brake">Hard Brake 🛑</button>
               </div>
             </div>
           </div>
 
-          <div class="about-specs-grid">
-            <div class="spec-badge-card">
-              <span class="spec-badge-label">Reasoning Frequency</span>
-              <span class="spec-badge-val" style="color: var(--accent-emerald);">60 Hz Real-Time AI</span>
+          <!-- Raw Sub-Engine Telemetry Readouts (Moved from main dashboard) -->
+          <div class="sub-engines-list" style="margin-top: 14px;">
+            <div class="sub-engine-row">
+              <div class="sub-engine-info">
+                <span class="sub-engine-name">🏎️ 1. Rash Driving Behavior</span>
+                <span class="sub-engine-detail" id="eng-rash-detail">Score: 0/100 • Smooth driving</span>
+              </div>
+              <span id="eng-rash-tag" class="risk-tag low">LOW</span>
             </div>
-            <div class="spec-badge-card">
-              <span class="spec-badge-label">Vision Engine</span>
-              <span class="spec-badge-val" style="color: var(--accent-cyan);">60 FPS Computer Vision & LDW</span>
+            <div class="sub-engine-row">
+              <div class="sub-engine-info">
+                <span class="sub-engine-name">👁️ 2. Driver Attention & Fatigue</span>
+                <span class="sub-engine-detail" id="eng-dms-detail">Driver Focused • Eyes Open</span>
+              </div>
+              <span id="eng-dms-tag" class="risk-tag low">LOW</span>
             </div>
-            <div class="spec-badge-card">
-              <span class="spec-badge-label">Eye-Tracking</span>
-              <span class="spec-badge-val" style="color: #c084fc;">DMS IR Eye Aspect Ratio (EAR)</span>
+            <div class="sub-engine-row">
+              <div class="sub-engine-info">
+                <span class="sub-engine-name">💥 3. Forward Collision Risk (FCW)</span>
+                <span class="sub-engine-detail" id="eng-collision-detail">Safe distance maintained</span>
+              </div>
+              <span id="eng-collision-tag" class="risk-tag low">LOW</span>
             </div>
-            <div class="spec-badge-card">
-              <span class="spec-badge-label">Voice Copilot</span>
-              <span class="spec-badge-val" style="color: #f59e0b;">Bilingual English + Hinglish 🇮🇳</span>
+            <div class="sub-engine-row">
+              <div class="sub-engine-info">
+                <span class="sub-engine-name">🌧️ 4. Weather & Environmental Grip</span>
+                <span class="sub-engine-detail" id="eng-weather-detail">Clear Skies • Dry Bitumen</span>
+              </div>
+              <span id="eng-weather-tag" class="risk-tag low">LOW</span>
             </div>
-            <div class="spec-badge-card">
-              <span class="spec-badge-label">GNSS Satellite Doppler</span>
-              <span class="spec-badge-val" style="color: #38bdf8;">NavIC 🇮🇳 + GPS + GLONASS</span>
+            <div class="sub-engine-row">
+              <div class="sub-engine-info">
+                <span class="sub-engine-name">🇮🇳 5. Indian Road Hazards</span>
+                <span class="sub-engine-detail" id="eng-indian-detail">Carriageway clear</span>
+              </div>
+              <span id="eng-indian-tag" class="risk-tag low">LOW</span>
             </div>
           </div>
-        </div>
 
-        <!-- Section 1: How This App Works -->
-        <div class="about-section">
-          <div class="about-section-title">
-            <span>⚙️</span>
-            <span>How This App Works: The Multi-Engine AI Architecture</span>
+          <div style="background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: var(--radius-sm); margin-top: 10px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px;">Detected System Issues:</div>
+            <div id="detected-issues-list" style="font-size: 12px; color: #cbd5e1;">All sensor streams nominal.</div>
           </div>
-          <p class="about-section-desc">
-            SURAKSHA-AI runs an autonomous multi-threat sensor fusion pipeline. Instead of relying on a single sensor, it continuously evaluates 6 distinct safety vectors and passes them through a Master Arbitration Decision Engine at 60 Hz to issue non-intrusive, life-saving directives.
-          </p>
 
-          <div class="engines-grid">
-            <!-- 1. Vision & LDW -->
-            <div class="engine-feature-card">
-              <div class="ef-header">
-                <div class="ef-title"><span>📷</span> 1. Forward Vision & Lane Departure (LDW)</div>
-                <span class="ef-tag">60 FPS CV</span>
-              </div>
-              <p class="ef-body">
-                Converts forward webcam/dashcam imagery into 3D perspective space with dynamic polynomial curved lane prediction.
-              </p>
-              <ul class="ef-list">
-                <li>Real-time lateral offset (&Delta;x in cm) and road curvature (R in meters).</li>
-                <li>Visual status: <code>LANE CENTERED</code>, <code>DRIFTING</code>, <code>LANE DEPARTURE ALERT</code>.</li>
-                <li>3D neural bounding boxes with Distance & Time-to-Collision (TTC).</li>
-              </ul>
+          <!-- Raw Kinematic Stopping Physics Diagnostics -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-top: 14px;">
+            <div class="telemetry-pill-card">
+              <span class="tp-title">Kinetic Energy Dissipation</span>
+              <div class="tp-val" id="diag-ke">380 <span class="tp-unit">kJ</span></div>
             </div>
-
-            <!-- 2. DMS -->
-            <div class="engine-feature-card">
-              <div class="ef-header">
-                <div class="ef-title"><span>👁️</span> 2. Driver Monitoring System (DMS)</div>
-                <span class="ef-tag">IR Face-Mesh</span>
-              </div>
-              <p class="ef-body">
-                Cabin infrared tracking dedicated to preventing the #1 cause of highway fatalities: microsleep and mobile distraction.
-              </p>
-              <ul class="ef-list">
-                <li>Eye Aspect Ratio (EAR &lt; 0.15) detects micro-naps within 1.0s.</li>
-                <li>In-hand mobile phone usage detection while in motion.</li>
-                <li>Head-pose nod and gaze vector vigilance calculation.</li>
-              </ul>
+            <div class="telemetry-pill-card">
+              <span class="tp-title">Peak Deceleration Vector</span>
+              <div class="tp-val" id="diag-g">-0.72 <span class="tp-unit">G</span></div>
             </div>
-
-            <!-- 3. Indian Road Hazards -->
-            <div class="engine-feature-card">
-              <div class="ef-header">
-                <div class="ef-title"><span>🇮🇳</span> 3. Indian Road Hazards Engine</div>
-                <span class="ef-tag">Heuristic Matrix</span>
-              </div>
-              <p class="ef-body">
-                Tailored specifically for Indian road chaos that traditional autopilot algorithms fail to recognize.
-              </p>
-              <ul class="ef-list">
-                <li>Stray cattle / cow crossing carriageways (unpredictable movement).</li>
-                <li>Aggressive autorickshaw cut-ins from blind spots.</li>
-                <li>Crater potholes, unpainted speed-breakers & wrong-way vehicles.</li>
-              </ul>
+            <div class="telemetry-pill-card">
+              <span class="tp-title">Driver Reaction Latency</span>
+              <div class="tp-val" id="diag-reaction">1.2 <span class="tp-unit">sec</span></div>
             </div>
-
-            <!-- 4. FCW & Collision -->
-            <div class="engine-feature-card">
-              <div class="ef-header">
-                <div class="ef-title"><span>💥</span> 4. Collision Avoidance & AEB</div>
-                <span class="ef-tag">Physics TTC</span>
-              </div>
-              <p class="ef-body">
-                Dynamic physics engine calculating instantaneous Time-to-Collision (TTC = d / v_rel) and emergency stopping distance.
-              </p>
-              <ul class="ef-list">
-                <li>Pre-crash acoustic chimes at TTC &lt; 2.5s.</li>
-                <li>Autonomous Emergency Braking (AEB) simulation threshold.</li>
-                <li>Velocity differential tracking with leading vehicles.</li>
-              </ul>
-            </div>
-
-            <!-- 5. Weather & Monsoon -->
-            <div class="engine-feature-card">
-              <div class="ef-header">
-                <div class="ef-title"><span>🌧️</span> 5. Monsoon & Weather Advisory</div>
-                <span class="ef-tag">Surface Friction</span>
-              </div>
-              <p class="ef-body">
-                Monitors Indian monsoon torrential rain, winter smog/fog in North India, and pitch-dark unlit rural corridors.
-              </p>
-              <ul class="ef-list">
-                <li>Hydroplaning coefficient and 1.6x stopping distance multiplier.</li>
-                <li>Fog headlamp guidance and reduced visibility speed throttling.</li>
-                <li>Waterlogged road depression warnings.</li>
-              </ul>
-            </div>
-
-            <!-- 6. Master Decision & Habit Learning -->
-            <div class="engine-feature-card">
-              <div class="ef-header">
-                <div class="ef-title"><span>🧠</span> 6. Master Arbiter & Habit AI</div>
-                <span class="ef-tag">6-Axis Biometrics</span>
-              </div>
-              <p class="ef-body">
-                Synthesizes all sensors, isolates the single highest-priority threat, and builds a biometric safety fingerprint over time.
-              </p>
-              <ul class="ef-list">
-                <li>Outputs ONE clear, calm instruction (no spam or conflicting alarms).</li>
-                <li>6-axis radar fingerprint (Smoothness, Focus, Reflex, etc.).</li>
-                <li>Calculates real-world Telemetry Insurance Discounts (up to 30%).</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Section 2: How to Use This App (Step-by-Step Guide) -->
-        <div class="about-section">
-          <div class="about-section-title">
-            <span>📖</span>
-            <span>How to Use SURAKSHA-AI: Step-by-Step Driver Guide</span>
-          </div>
-          <p class="about-section-desc">
-            Follow this simple walkthrough to set up SURAKSHA-AI in your car or test it in the interactive telemetry sandbox.
-          </p>
-
-          <div class="steps-column">
-            <!-- Step 1 -->
-            <div class="step-card">
-              <div class="step-number">1</div>
-              <div class="step-content">
-                <div class="step-title">Mount Your Smartphone or Laptop & Enable Live Dashcam</div>
-                <div class="step-desc">
-                  Place your phone on a dashboard mount pointing through the windshield. Click the <strong>📹 Live Dashcam</strong> button at the top of the vision card to pipe live road video directly into the AI lane detection pipeline. The system will automatically calibrate the horizon and draw 3D lane boundaries.
-                </div>
-                <div class="step-tip">💡 Tip: In simulation mode, the HUD generates synthetic 3D perspective traffic, lane curves, and road obstacles at 60 FPS.</div>
-              </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="step-card">
-              <div class="step-number">2</div>
-              <div class="step-content">
-                <div class="step-title">Activate Driver Monitoring (DMS Eye-Tracker)</div>
-                <div class="step-desc">
-                  Click <strong>📷 Test Webcam</strong> on the DMS Eye-Tracker card to turn on driver alertness tracking. The AI measures your blink duration and Eye Aspect Ratio (EAR). If you close your eyes for more than 1.5 seconds or raise a mobile phone to your ear, the system immediately sounds a fatigue alert.
-                </div>
-                <div class="step-tip">💡 Tip: You can adjust the microsleep sensitivity from strict (1.0s) to relaxed (2.0s) in the Settings tab.</div>
-              </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="step-card">
-              <div class="step-number">3</div>
-              <div class="step-content">
-                <div class="step-title">Unmute Voice Alerts & Luxury Sound Chimes</div>
-                <div class="step-desc">
-                  By default, SURAKSHA-AI boots in <strong>Quiet Mode</strong> to avoid annoying passengers. Click <strong>🔈 Voice: OFF</strong> to toggle it <strong>ON</strong>, and <strong>🔕 Sound: OFF</strong> to turn on gentle luxury sine acoustic chimes. The system uses strict anti-spam pacing so it only speaks when an actionable threat exists.
-                </div>
-                <div class="step-tip">💡 Tip: Click the 🌐 Hinglish 🇮🇳 button in the header to switch between English and natural Hindi/Hinglish alerts (e.g. <em>"Dhyaan se! Aage bada pothole hai, gaadi dheeri karein!"</em>).</div>
-              </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="step-card">
-              <div class="step-number">4</div>
-              <div class="step-content">
-                <div class="step-title">Interact with the Siri / Jarvis Voice Copilot</div>
-                <div class="step-desc">
-                  Tap the floating glowing orb in the top header or click <strong>🎤 Voice Query</strong> and ask questions naturally:
-                  <ul style="margin: 6px 0 0 16px; line-height: 1.6; font-size: 12.5px;">
-                    <li><strong>"What is my speed?"</strong> &rarr; Reports current speed and road speed limit.</li>
-                    <li><strong>"Navigate to Kashi Vishwanath / Assi Ghat / Gorakhpur / Ayodhya"</strong> &rarr; Starts satellite navigation.</li>
-                    <li><strong>"What is my driver score?"</strong> &rarr; Reports safety score, persona, and insurance discount tier.</li>
-                    <li><strong>"Report pothole / cow"</strong> &rarr; Pins an Indian road hazard to the live map.</li>
-                    <li><strong>"Emergency 112"</strong> &rarr; Broadcasts SOS payload with live coordinates.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Step 5 -->
-            <div class="step-card">
-              <div class="step-number">5</div>
-              <div class="step-content">
-                <div class="step-title">Navigate Using Google Satellite Hybrid Maps</div>
-                <div class="step-desc">
-                  Explore realistic Indian corridors like <strong>Purvanchal Expressway (Varanasi - Gorakhpur)</strong>, <strong>Mumbai-Pune Expressway</strong>, or <strong>Yamuna Expressway</strong>. Type landmarks (e.g. <em>Kashi Vishwanath, Assi Ghat, Gorakhpur</em>) into the floating Google Maps search box with instant autocomplete suggestions. Click <strong>"↗️ Start Navigation"</strong> to get real-time turn maneuvers, distance countdown, and speed trap radar warnings.
-                </div>
-                <div class="step-tip">💡 Tip: Click the 🛰️ Google Satellite Maps tab in the top navigation bar for a dedicated full-screen satellite experience.</div>
-              </div>
-            </div>
-
-            <!-- Step 6 -->
-            <div class="step-card">
-              <div class="step-number">6</div>
-              <div class="step-content">
-                <div class="step-title">Lock Real GNSS Doppler Speed or Test Crisis Scenarios</div>
-                <div class="step-desc">
-                  In a real moving vehicle, click <strong>📍 Detect My Location</strong> to compute Doppler ground velocity via satellite. When on desktop or testing, use the <strong>Scenario Sandbox buttons</strong> at the bottom (<em>Mumbai Monsoon, Night Highway Cow, Bangalore Auto Cut-in, Midnight Drowsy, Delhi Rash Weaving</em>) or drag the speed/distance sliders to simulate dangerous emergencies.
-                </div>
-              </div>
-            </div>
-
-            <!-- Step 7 -->
-            <div class="step-card">
-              <div class="step-number">7</div>
-              <div class="step-content">
-                <div class="step-title">Earn Telemetry Insurance Discounts & Inspect Blackbox</div>
-                <div class="step-desc">
-                  Check your 6-axis AI Biometric Fingerprint in the Habit card. Safe driving automatically qualifies you for <strong>🏆 Platinum Shield (30% Discount)</strong> or <strong>🥇 Gold Shield (20% Discount)</strong>. Switch to the <strong>📋 Blackbox Flight Recorder</strong> tab to view timestamped incident records and export official JSON flight logs for insurance claims or safety audits.
-                </div>
-              </div>
+            <div class="telemetry-pill-card">
+              <span class="tp-title">Road Adhesion Coefficient (μ)</span>
+              <div class="tp-val" id="diag-friction">0.75 <span class="tp-unit">μ</span></div>
             </div>
           </div>
         </div>
 
-        <!-- Section 3: Creator & Project Credits -->
-        <div class="about-hero" style="padding: 28px 32px; background: rgba(15, 23, 42, 0.9);">
+        <!-- Section 3: ADAS Calibration Thresholds -->
+        <div class="settings-card">
+          <div class="settings-card-title">🛡️ Forward Collision & DMS Thresholds</div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">TTC Warning Sensitivity</div>
+              <div class="setting-desc">Adjust time-to-collision warning threshold</div>
+            </div>
+            <select id="cfg-fcw-sensitivity">
+              <option value="conservative">Conservative (Early Warning)</option>
+              <option value="standard" selected>Standard (2.5s TTC)</option>
+              <option value="aggressive">Sport / Close Following</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Autonomous Braking Simulation</div>
+              <div class="setting-desc">Simulate AEB auto-brake deceleration</div>
+            </div>
+            <input type="checkbox" id="cfg-aeb-toggle" checked style="accent-color:var(--accent-cyan); width:18px; height:18px;" />
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Eye Closure Duration (Microsleep)</div>
+              <div class="setting-desc">Time before drowsiness alarm sounds</div>
+            </div>
+            <select id="cfg-dms-closure">
+              <option value="1.0">Strict (1.0 Second)</option>
+              <option value="1.5" selected>Standard (1.5 Seconds)</option>
+              <option value="2.0">Relaxed (2.0 Seconds)</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Mobile Phone Detection Alert</div>
+              <div class="setting-desc">Warn immediately when phone is raised</div>
+            </div>
+            <input type="checkbox" id="cfg-phone-alert" checked style="accent-color:var(--accent-cyan); width:18px; height:18px;" />
+          </div>
+        </div>
+
+        <!-- Section 4: 📋 Automotive Blackbox Event Flight Recorder -->
+        <div class="settings-card">
+          <div class="blackbox-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div>
+              <div class="settings-card-title">📋 Automotive Blackbox Event Flight Recorder</div>
+              <div class="setting-desc">Immutable rolling safety incident logs for insurance verification.</div>
+            </div>
+            <button id="btn-export-blackbox" class="btn-icon active">
+              <span>💾 Export Telemetry JSON</span>
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="blackbox-table">
+              <thead>
+                <tr>
+                  <th>Record ID</th>
+                  <th>Timestamp</th>
+                  <th>Speed</th>
+                  <th>Risk</th>
+                  <th>Threat Assessment</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="blackbox-table-body">
+                <tr>
+                  <td colspan="6" style="text-align:center; color:var(--text-muted); padding:16px;">Monitoring road dynamics... Incident records will automatically log here.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 5: ℹ️ About SURAKSHA AI & Creator Credits -->
+        <div class="about-hero" style="padding: 24px; background: rgba(15, 23, 42, 0.9); border-radius: 12px; border: 1px solid var(--border-subtle);">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
             <div>
+              <span class="brand-badge" style="margin-bottom: 8px; display: inline-block;">🇮🇳 SURAKSHA AI (सुरक्षा AI)</span>
               <h3 style="font-family: var(--font-display); font-size: 18px; color: #fff; margin-bottom: 4px;">
-                SURAKSHA-AI • Designed & Developed by Arjit Jaiswal
+                Designed & Developed by Arjit Jaiswal
               </h3>
-              <p style="font-size: 12.5px; color: var(--text-secondary);">
-                Built with dedication to revolutionize automotive safety, reduce highway casualties, and bring aerospace-grade ADAS intelligence to Indian roads.
+              <p style="font-size: 12.5px; color: var(--text-secondary); max-width: 600px;">
+                Engineered specifically for Indian road conditions. Combines 60 FPS forward road computer vision, DMS cabin infrared eye tracking, Indian hazard intelligence, dynamic voice arbitration, and automatic 112 emergency SOS dispatch.
               </p>
             </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 10px;">
               <a href="https://suraksha-ai-zeta.vercel.app" target="_blank" class="btn-icon active" style="text-decoration: none; font-weight: 700;">
                 <span>🌐 Live Production App</span>
               </a>
@@ -1129,7 +892,29 @@
         </div>
 
       </div>
-    </div>
+    </div><!-- End #view-settings -->
+
+    <!-- ==========================================================================
+         BOTTOM APP NAVIGATION (TESLA / APPLE STYLE FOR TOUCH & QUICK SWITCHING)
+         ========================================================================== -->
+    <nav class="bottom-app-nav" id="bottom-app-nav">
+      <button class="bottom-nav-item active" data-tab="drive">
+        <span class="bnav-icon">🚗</span>
+        <span class="bnav-label">Drive</span>
+      </button>
+      <button class="bottom-nav-item" data-tab="gmap">
+        <span class="bnav-icon">🗺️</span>
+        <span class="bnav-label">Map</span>
+      </button>
+      <button class="bottom-nav-item" data-tab="insights">
+        <span class="bnav-icon">📊</span>
+        <span class="bnav-label">Insights</span>
+      </button>
+      <button class="bottom-nav-item" data-tab="settings">
+        <span class="bnav-icon">⚙️</span>
+        <span class="bnav-label">Settings</span>
+      </button>
+    </nav>
 
     <!-- Google Street View 360 Panorama Modal (Hidden by default) -->
     <div id="pegman-modal" class="pegman-overlay" style="display:none;">
@@ -1148,19 +933,16 @@
           <div style="padding:20px; text-align:center; background:#0f172a; border-radius:4px; color:#f8fafc;">
             <div style="font-size:48px; margin-bottom:12px;">🛰️ 📸</div>
             <h3 style="font-size:16px; margin-bottom:6px; color:#38bdf8;">Street View Panorama Active</h3>
-            <p style="font-size:12px; color:#94a3b8; max-width:400px; margin:0 auto 16px auto;">Viewing 360-degree street level viewpoint at coordinates <strong id="pegman-coords-display" style="color:#fff;">12.98289° N, 80.23586° E</strong> along Rajiv Gandhi IT Expressway.</p>
+            <p style="font-size:12px; color:#94a3b8; max-width:400px; margin:0 auto 16px auto;">Viewing 360-degree street level viewpoint at coordinates <strong id="pegman-coords-display" style="color:#fff;">12.98289° N, 80.23586° E</strong>.</p>
             <a id="pegman-external-link" href="https://maps.google.com/?q=12.98289,80.23586&layer=c" target="_blank" class="btn-icon" style="display:inline-flex; background:#0284c7; color:#fff; text-decoration:none; padding:8px 16px; border-radius:4px; font-weight:700;">
               Open Official 360° Panorama in Google Maps ↗
             </a>
           </div>
         </div>
-        <div class="pegman-footer">
-          <span style="font-size:11px; color:#64748b;">Powered by Google Maps Satellite & Street View Network</span>
-        </div>
       </div>
     </div>
 
-    <!-- Emergency SOS 112 Modal (Hidden by default) -->
+    <!-- Emergency SOS 112 Modal (Dispatched / Confirmation Modal) -->
     <div id="sos-modal" class="sos-overlay" style="display:none;">
       <div class="sos-card">
         <div class="sos-header">
@@ -1288,12 +1070,6 @@
               <button class="btn-intensity active" data-intensity="balanced">Balanced</button>
               <button class="btn-intensity" data-intensity="vivid">Vivid</button>
             </div>
-          </div>
-          <div class="auto-cycle-group">
-            <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; color:#f8fafc; cursor:pointer;">
-              <input type="checkbox" id="chk-auto-cycle-wallpaper" style="accent-color:var(--accent-cyan); width:15px; height:15px; cursor:pointer;">
-              <span>Auto-Cycle Atmosphere (Every 4 mins)</span>
-            </label>
           </div>
         </div>
       </div>

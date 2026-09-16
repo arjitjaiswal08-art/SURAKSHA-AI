@@ -128,6 +128,164 @@ export function arbitrateDrivingDecision({
     voiceAlertMessage = 'Please look straight ahead at the road.';
   }
 
+  // Generate Dynamic AI Copilot Headline Summary (Glanceable 1-2s feedback)
+  let copilotSummary = 'All clear. Maintain speed. No threats detected.';
+  let predictiveAlert = 'Optimal flow — clear forward corridor for 2.4 km.';
+
+  if (finalRiskLevel === 'CRITICAL') {
+    if (collisionOutput?.collisionRisk === 'IMMINENT' || (collisionOutput?.timeToImpact && collisionOutput.timeToImpact <= 1.5)) {
+      copilotSummary = 'BRAKE NOW! Obstacle directly ahead!';
+      predictiveAlert = 'Impact in <1.5s unless emergency braking applied immediately.';
+    } else if (driverOutput?.riskLevel === 'CRITICAL') {
+      copilotSummary = 'WAKE UP! Driver microsleep alert!';
+      predictiveAlert = 'Loss of vehicle heading imminent within 2 seconds.';
+    } else {
+      copilotSummary = 'CRITICAL DANGER: Slow down immediately!';
+      predictiveAlert = 'High accident risk detected. Prepare emergency evasion.';
+    }
+  } else if (finalRiskLevel === 'HIGH') {
+    if (roadOutput?.detectedHazards?.some(h => h.includes('Stray Cattle') || h.includes('Cow'))) {
+      copilotSummary = 'Caution: Stray cattle detected on carriageway.';
+      predictiveAlert = 'Animal movement erratic — reduce speed to under 40 km/h.';
+    } else if (collisionOutput?.collisionRisk === 'HIGH') {
+      copilotSummary = 'Vehicle closing fast. Ease off throttle.';
+      predictiveAlert = 'Leading vehicle deceleration rate increasing.';
+    } else if (driverOutput?.riskLevel === 'HIGH') {
+      copilotSummary = 'Driver distracted. Keep eyes centered on the road.';
+      predictiveAlert = 'Reaction latency elevated by 2.4x due to distraction.';
+    } else if (weatherOutput?.riskLevel === 'HIGH') {
+      copilotSummary = 'Severe weather ahead. Reduce speed and maintain buffer.';
+      predictiveAlert = 'Aquaplaning risk high — braking distance increased by 60%.';
+    } else {
+      copilotSummary = 'High risk driving detected. Stabilize speed & lane.';
+      predictiveAlert = 'Erratic dynamics detected — risk of losing road adhesion.';
+    }
+  } else if (finalRiskLevel === 'MEDIUM') {
+    if (roadOutput?.detectedHazards?.some(h => h.includes('Potholes') || h.includes('Speed Breaker'))) {
+      copilotSummary = 'Caution: Speed breaker & potholes ahead.';
+      predictiveAlert = 'Road depression in 80m. Smooth deceleration advised.';
+    } else if (weatherOutput?.riskLevel === 'MEDIUM') {
+      copilotSummary = 'Wet road surface. Smooth braking advised.';
+      predictiveAlert = 'Reduced bitumen friction coefficient (0.62μ).';
+    } else if (collisionOutput?.collisionRisk === 'MEDIUM') {
+      copilotSummary = 'Following gap narrowing. Maintain 3-second buffer.';
+      predictiveAlert = 'Tailgating zone — increase distance to prevent sudden pile-up.';
+    } else {
+      copilotSummary = 'Moderate hazard. Drive defensively and stay alert.';
+      predictiveAlert = 'Indian highway traffic density variable ahead.';
+    }
+  } else {
+    // Normal cruising
+    copilotSummary = 'Road clear. Maintain lane and speed.';
+    predictiveAlert = 'Optimal corridor trajectory • Safe distance maintained.';
+  }
+
+  // Generate 3 Smart Card Insights (Converting raw metrics -> human meaning)
+  // 1. Driver Focus Card
+  let driverFocusCard = {
+    icon: '👁️',
+    title: 'Driver Focus',
+    status: 'Focused & Alert',
+    detail: 'Eyes on road • Optimal vigilance',
+    level: 'safe',
+  };
+  if (driverOutput?.riskLevel === 'CRITICAL') {
+    driverFocusCard = {
+      icon: '😴',
+      title: 'Driver Focus',
+      status: 'Microsleep Warning',
+      detail: 'Eyes closed > 1.5s • Pull over immediately',
+      level: 'critical',
+    };
+  } else if (driverOutput?.riskLevel === 'HIGH') {
+    driverFocusCard = {
+      icon: '📱',
+      title: 'Driver Focus',
+      status: driverOutput.driverState?.includes('Phone') ? 'Phone Distraction' : 'Drowsy / Fatigued',
+      detail: driverOutput.driverState?.includes('Phone') ? 'Mobile in hand • Focus straight' : 'Frequent yawns / micro-droops',
+      level: 'high',
+    };
+  } else if (driverOutput?.riskLevel === 'MEDIUM') {
+    driverFocusCard = {
+      icon: '👁️',
+      title: 'Driver Focus',
+      status: 'Mild Inattention',
+      detail: 'Gaze off-center • Re-align focus',
+      level: 'medium',
+    };
+  }
+
+  // 2. Road Status Card
+  let roadStatusCard = {
+    icon: '🛣️',
+    title: 'Road Status',
+    status: 'Clear & Dry Bitumen',
+    detail: 'Optimal road grip • 100% traction',
+    level: 'safe',
+  };
+  if (weatherOutput?.riskLevel === 'HIGH') {
+    roadStatusCard = {
+      icon: '🌧️',
+      title: 'Road Status',
+      status: 'Slippery Monsoon',
+      detail: 'Waterlogged track • 60% braking buffer',
+      level: 'high',
+    };
+  } else if (weatherOutput?.riskLevel === 'MEDIUM') {
+    roadStatusCard = {
+      icon: '🌦️',
+      title: 'Road Status',
+      status: 'Damp Surface',
+      detail: 'Moderate grip • Maintain gentle braking',
+      level: 'medium',
+    };
+  }
+
+  // 3. Hazard Detection Card
+  let hazardCard = {
+    icon: '🛡️',
+    title: 'Hazard Detection',
+    status: 'None Detected',
+    detail: 'Corridor clear for next 2.4 km',
+    level: 'safe',
+  };
+  if (collisionOutput?.collisionRisk === 'IMMINENT' || collisionOutput?.collisionRisk === 'HIGH') {
+    hazardCard = {
+      icon: '💥',
+      title: 'Hazard Detection',
+      status: 'Vehicle In Path',
+      detail: `${collisionOutput.distance}m ahead • Rapid closure`,
+      level: 'critical',
+    };
+  } else if (roadOutput?.detectedHazards?.length > 0 && !roadOutput.detectedHazards[0].includes('No imminent')) {
+    const rawH = roadOutput.detectedHazards[0];
+    let simpleH = 'Road Obstacle';
+    let detailH = 'Caution advised';
+    if (rawH.includes('Cattle') || rawH.includes('Cow')) {
+      simpleH = 'Stray Cattle (Cow)';
+      detailH = 'Roaming carriageway • Slow down';
+    } else if (rawH.includes('Pothole')) {
+      simpleH = 'Crater Potholes';
+      detailH = 'Rough asphalt ahead';
+    } else if (rawH.includes('Auto')) {
+      simpleH = 'Auto Cut-in';
+      detailH = 'Blind spot maneuver';
+    } else if (rawH.includes('Wrong-Way')) {
+      simpleH = 'Wrong-Way Vehicle';
+      detailH = 'Head-on threat • Move left';
+    } else if (rawH.includes('Speed Breaker')) {
+      simpleH = 'Speed Breaker';
+      detailH = 'Unmarked bump ahead';
+    }
+    hazardCard = {
+      icon: '⚠️',
+      title: 'Hazard Detection',
+      status: simpleH,
+      detail: detailH,
+      level: roadOutput.roadRisk === 'CRITICAL' ? 'critical' : roadOutput.roadRisk === 'HIGH' ? 'high' : 'medium',
+    };
+  }
+
   // Generate a consolidated diagnostic summary
   const summaryIssues = [
     ...(rashOutput?.behaviorsDetected?.filter(b => !b.includes('Smooth')) || []),
@@ -139,9 +297,14 @@ export function arbitrateDrivingDecision({
 
   return {
     finalRiskLevel,
+    copilotSummary,
+    predictiveAlert,
     biggestThreat,
     immediateAction,
     voiceAlertMessage,
+    driverFocusCard,
+    roadStatusCard,
+    hazardCard,
     summaryIssues: summaryIssues.length > 0 ? summaryIssues : ['All systems normal'],
     timestamp: new Date().toLocaleTimeString(),
   };

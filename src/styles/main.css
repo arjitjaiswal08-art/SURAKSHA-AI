@@ -1621,6 +1621,198 @@ body {
   color: #94a3b8;
 }
 
+/* Quick Layer Switcher Buttons in Topbar */
+.gmap-layer-chips {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.gmap-layer-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  border-radius: 16px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.gmap-layer-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.gmap-layer-btn.active {
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+/* Floating Turn-by-Turn Navigation HUD Card */
+.gmap-fv-nav-card {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 14px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65);
+  animation: slideDownIn 0.3s ease-out;
+  max-width: 420px;
+}
+
+.gnav-icon {
+  font-size: 26px;
+  background: rgba(56, 189, 248, 0.18);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  flex-shrink: 0;
+}
+
+.gnav-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.gnav-maneuver {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.gnav-sub {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.gnav-stop-btn {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  transition: all 0.2s ease;
+}
+
+.gnav-stop-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* Floating Action Buttons on Map */
+.gmap-fv-floating-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.gmap-fab-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: #f8fafc;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
+  transition: all 0.15s ease;
+}
+
+.gmap-fab-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  transform: scale(1.06);
+}
+
+.gmap-fab-btn.active {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.gmap-fab-divider {
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 2px 0;
+}
+
+/* Non-blocking Floating Toast Pill */
+.gmap-toast-pill {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  z-index: 999999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gmap-toast-pill.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.gmap-toast-pill.success {
+  border-color: #10b981;
+  color: #a7f3d0;
+}
+
+.gmap-toast-pill.warn {
+  border-color: #f59e0b;
+  color: #fde68a;
+}
+
 /* Pegman Modal Overlay */
 .pegman-overlay {
   position: fixed;
@@ -3372,6 +3564,1050 @@ select option {
   box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
 }
 
+/* ==========================================================================
+   SURAKSHA AI - TESLA-GRADE MINIMAL COCKPIT DESIGN SYSTEM
+   ========================================================================== */
+
+body {
+  padding-bottom: 84px; /* Clearance for fixed bottom navigation bar */
+}
+
+/* Clean Header Buttons */
+.btn-icon-clean {
+  background: rgba(18, 25, 43, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  color: var(--text-primary);
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-icon-clean:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-icon-clean.active {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: var(--accent-emerald);
+  color: #34d399;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   SCREEN 1: 🚗 DRIVE MODE LAYOUT
+   -------------------------------------------------------------------------- */
+.drive-screen-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px 20px 32px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 1. PRIMARY HERO CARD (Focal Point) */
+.drive-hero-card {
+  background: rgba(14, 22, 38, 0.78);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 24px;
+  padding: 24px 32px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.drive-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+}
+
+/* Hero Top Row */
+.hero-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hero-mode-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #34d399;
+}
+
+.hero-mode-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulse-dot 1.8s infinite;
+}
+
+.hero-speed-limit-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #f8fafc;
+}
+
+.hero-speed-limit-pill .lbl {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.hero-speed-limit-pill .val {
+  font-weight: 800;
+  color: #fff;
+  font-size: 13px;
+}
+
+.hero-speed-limit-pill .unit {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+/* Hero Center Row: Speed & Risk Orb */
+.hero-center-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.hero-speed-display {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.hero-speed-num {
+  font-family: var(--font-display);
+  font-size: 82px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+  background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(255, 255, 255, 0.15));
+}
+
+.hero-speed-unit {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1px;
+}
+
+/* Animated Glowing Risk Ring / Orb */
+.hero-risk-orb-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.risk-glow-ring {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.35s ease;
+  position: relative;
+}
+
+/* Ring color states */
+.risk-glow-ring.ring-safe {
+  border: 3px solid #00FF9C;
+  box-shadow: 0 0 24px rgba(0, 255, 156, 0.35), inset 0 0 16px rgba(0, 255, 156, 0.2);
+  animation: pulse-ring-safe 2.5s infinite;
+}
+
+.risk-glow-ring.ring-caution {
+  border: 3px solid #FFC857;
+  box-shadow: 0 0 28px rgba(255, 200, 87, 0.45), inset 0 0 18px rgba(255, 200, 87, 0.25);
+  animation: pulse-ring-caution 1.8s infinite;
+}
+
+.risk-glow-ring.ring-danger {
+  border: 3px solid #FF4D4D;
+  box-shadow: 0 0 36px rgba(255, 77, 77, 0.65), inset 0 0 24px rgba(255, 77, 77, 0.35);
+  animation: pulse-ring-danger 0.9s infinite;
+}
+
+@keyframes pulse-ring-safe {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 255, 156, 0.3); }
+  50% { transform: scale(1.04); box-shadow: 0 0 32px rgba(0, 255, 156, 0.55); }
+}
+
+@keyframes pulse-ring-caution {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 24px rgba(255, 200, 87, 0.4); }
+  50% { transform: scale(1.06); box-shadow: 0 0 40px rgba(255, 200, 87, 0.7); }
+}
+
+@keyframes pulse-ring-danger {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 32px rgba(255, 77, 77, 0.6); }
+  50% { transform: scale(1.08); box-shadow: 0 0 54px rgba(255, 77, 77, 0.9); }
+}
+
+.risk-inner-core {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 18, 32, 0.85);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+}
+
+.risk-status-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.risk-status-label {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  color: #fff;
+  margin-top: 3px;
+}
+
+.risk-sub-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1px;
+}
+
+/* AI Copilot Dynamic Insight Banner */
+.hero-copilot-banner {
+  background: rgba(10, 16, 30, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.copilot-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--accent-cyan);
+  letter-spacing: 0.8px;
+}
+
+.copilot-live-tag {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-family: var(--font-mono);
+  color: #38bdf8;
+}
+
+.hero-copilot-summary {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: -0.2px;
+  line-height: 1.35;
+}
+
+.hero-predictive-insight {
+  font-size: 12.5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* 2. NEXT TURN MANEUVER CARD */
+.drive-next-turn-card {
+  background: rgba(14, 22, 38, 0.7);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: 18px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.next-turn-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.3), rgba(56, 189, 248, 0.15));
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.next-turn-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.next-turn-dist-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.next-turn-dist {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--accent-cyan);
+}
+
+.next-turn-eta {
+  font-size: 11.5px;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+}
+
+.next-turn-instruction {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #f1f5f9;
+  line-height: 1.3;
+}
+
+.btn-turn-map-shortcut {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.btn-turn-map-shortcut:hover {
+  background: rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+/* 3. THREE SMART CARDS GRID (Data -> Human Meaning) */
+.smart-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.smart-card {
+  background: rgba(14, 22, 38, 0.7);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.smart-card:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  transform: translateY(-2px);
+}
+
+.smart-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.smart-card-icon {
+  font-size: 18px;
+}
+
+.smart-card-title {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  flex: 1;
+  margin-left: 8px;
+}
+
+.smart-card-badge {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.smart-card-badge.safe {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.smart-card-badge.medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.smart-card-badge.critical {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.smart-card-status {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.25;
+}
+
+.smart-card-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+/* 4. COMPACT PREVIEW SECTION (Camera HUD / Mini Radar Map) */
+.drive-preview-section {
+  background: rgba(14, 22, 38, 0.7);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: rgba(10, 15, 28, 0.7);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+}
+
+.preview-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.preview-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preview-tab-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-icon-subtle {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-icon-subtle:hover, .btn-icon-subtle.active {
+  border-color: var(--accent-cyan);
+  color: #fff;
+  background: rgba(56, 189, 248, 0.2);
+}
+
+.preview-stage {
+  position: relative;
+  height: 340px;
+  background: #020617;
+}
+
+.preview-pane {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.preview-pane.active {
+  display: block;
+}
+
+.preview-pane canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mini-map-wrap {
+  width: 100%;
+  height: 100%;
+}
+
+.mini-map-wrap #gps-map {
+  width: 100%;
+  height: 100%;
+}
+
+.cam-overlay-stats {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.stat-pill {
+  background: rgba(10, 15, 28, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f1f5f9;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   SMART EMERGENCY OVERRIDE ALERT BANNER
+   -------------------------------------------------------------------------- */
+.emergency-override-banner {
+  background: rgba(185, 28, 28, 0.94);
+  backdrop-filter: blur(24px);
+  border: 2px solid #ef4444;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 50px rgba(239, 68, 68, 0.6), inset 0 0 30px rgba(0, 0, 0, 0.4);
+  animation: emergency-strobe 0.8s infinite alternate;
+  z-index: 900;
+}
+
+@keyframes emergency-strobe {
+  0% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); }
+  100% { box-shadow: 0 0 60px rgba(239, 68, 68, 0.85); }
+}
+
+.emergency-override-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.emergency-pulse-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #000;
+  color: #fca5a5;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1px solid #ef4444;
+}
+
+.strobe-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pulse-dot 0.6s infinite;
+}
+
+.emergency-threat-text {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.emergency-action-text {
+  font-size: 15px;
+  color: #fee2e2;
+  max-width: 600px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.emergency-sos-countdown-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 20px;
+  border-radius: 14px;
+  margin: 6px 0;
+}
+
+.sos-timer-ring {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sos-progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.sos-circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 6;
+}
+
+.sos-circle-bar {
+  fill: none;
+  stroke: #fca5a5;
+  stroke-width: 6;
+  stroke-dasharray: 276;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.sos-timer-num {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+}
+
+.sos-countdown-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 12px;
+  color: #fee2e2;
+}
+
+.sos-countdown-info strong {
+  font-size: 13.5px;
+  color: #fff;
+}
+
+.emergency-actions-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-cancel-sos {
+  background: #10b981;
+  color: #022c22;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.btn-cancel-sos:hover {
+  transform: scale(1.03);
+}
+
+.btn-instant-sos {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1.5px solid #fff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.btn-instant-sos:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.03);
+}
+
+/* --------------------------------------------------------------------------
+   🎯 FOCUS MODE OVERRIDES (Zero-Distraction Driving)
+   -------------------------------------------------------------------------- */
+body.focus-mode-active .drive-next-turn-card,
+body.focus-mode-active .smart-cards-grid,
+body.focus-mode-active .drive-preview-section,
+body.focus-mode-active .cockpit-tabs-bar {
+  display: none !important;
+}
+
+body.focus-mode-active .drive-hero-card {
+  margin: 40px auto;
+  padding: 40px 48px;
+  max-width: 800px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+body.focus-mode-active .hero-speed-num {
+  font-size: 120px;
+}
+
+body.focus-mode-active .risk-glow-ring {
+  width: 120px;
+  height: 120px;
+}
+
+body.focus-mode-active .risk-inner-core {
+  width: 102px;
+  height: 102px;
+}
+
+/* --------------------------------------------------------------------------
+   SCREEN 3: 📊 INSIGHTS & DRIVING SCORE STYLES
+   -------------------------------------------------------------------------- */
+.insights-screen-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.insights-hero-card {
+  background: rgba(14, 22, 38, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 20px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.insights-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.score-circle-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-cyan);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 132, 199, 0.15);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.3);
+  flex-shrink: 0;
+}
+
+.score-circle-large .num {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.score-circle-large .sub {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 1px;
+}
+
+.persona-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.savings-card {
+  background: rgba(10, 16, 30, 0.7);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.savings-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-emerald);
+  letter-spacing: 0.8px;
+}
+
+.savings-val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.savings-symbol {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-emerald);
+}
+
+.savings-num {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.savings-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+.savings-streak {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-top: 2px;
+}
+
+.radar-content-flex {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.bio-stats-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.bio-stat-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 4px;
+}
+
+.bio-stat-row span {
+  color: #94a3b8;
+}
+
+/* --------------------------------------------------------------------------
+   SCREEN 4: ⚙️ SETTINGS & DEVELOPER SANDBOX
+   -------------------------------------------------------------------------- */
+.settings-screen-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.developer-sandbox-card {
+  border-color: rgba(56, 189, 248, 0.35) !important;
+  background: rgba(14, 22, 38, 0.82) !important;
+}
+
+.sandbox-badge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   TESLA-STYLE BOTTOM APP NAVIGATION BAR
+   -------------------------------------------------------------------------- */
+.bottom-app-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(10, 15, 28, 0.88);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(56, 189, 248, 0.16);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 16px;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.bottom-nav-item {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 6px 18px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.bottom-nav-item .bnav-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.bottom-nav-item .bnav-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.bottom-nav-item:hover {
+  color: #fff;
+}
+
+.bottom-nav-item.active {
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+}
+
+.bottom-nav-item.active .bnav-label {
+  color: #38bdf8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .smart-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .insights-hero-card {
+    grid-template-columns: 1fr;
+  }
+  .hero-speed-num {
+    font-size: 64px;
+  }
+  .hero-center-row {
+    padding: 0;
+  }
+  .drive-hero-card {
+    padding: 20px;
+  }
+  .hero-copilot-summary {
+    font-size: 17px;
+  }
+}
+
 @media (max-width: 640px) {
   .wallpaper-grid {
     grid-template-columns: 1fr;
@@ -3381,9 +4617,10 @@ select option {
     align-items: flex-start;
   }
   .floating-atmosphere-chip {
-    bottom: 16px;
+    bottom: 74px;
     right: 16px;
     padding: 6px 12px;
     font-size: 11px;
   }
 }
+
